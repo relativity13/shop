@@ -1,27 +1,47 @@
+
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building2, Mail, Phone, Globe } from 'lucide-react';
+import { Building2, Mail, Phone, Globe, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export function AboutTab() {
+  const companyPhoneNumber = "1234567890";
+
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="text-center">
+        <CardHeader>
           <Image 
             src="https://placehold.co/600x400.png" 
             alt="Company building" 
             data-ai-hint="office building"
             width={600}
             height={400}
-            className="w-full h-48 object-cover rounded-t-lg"
+            className="w-full h-48 object-cover rounded-t-lg mb-4"
           />
-          <CardTitle className="text-3xl font-bold mt-4">About ShopFront</CardTitle>
-          <CardDescription className="text-muted-foreground">Your Trusted Partner in Modern Shopping</CardDescription>
+          <div className="flex justify-between items-start">
+            <div className="text-left">
+              <CardTitle className="text-3xl font-bold">About ShopFront</CardTitle>
+              <CardDescription className="text-muted-foreground mt-1">Your Trusted Partner in Modern Shopping</CardDescription>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <Button asChild variant="outline" size="sm">
+                <a href={`https://wa.me/${companyPhoneNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                  <MessageCircle className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
+                  <Phone className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-center text-muted-foreground">
+          <p className="text-left text-muted-foreground pt-4 border-t">
             At ShopFront, we're dedicated to bringing you the best products with a seamless shopping experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine e-commerce.
           </p>
           
