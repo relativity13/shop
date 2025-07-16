@@ -69,14 +69,6 @@ export function OrdersTab() {
                 <ul className="space-y-2">
                   {order.items.map((item) => (
                     <li key={item.id} className="flex items-center gap-4">
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.name}
-                        width={60}
-                        height={60}
-                        className="rounded-md object-cover"
-                        data-ai-hint={`${item.category}`}
-                      />
                       <div>
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-muted-foreground">

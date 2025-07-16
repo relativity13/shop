@@ -14,16 +14,6 @@ export function ProductsTab() {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {products.map((product) => (
         <Card key={product.id} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-          <CardHeader className="p-0">
-            <Image
-              src={product.imageUrl}
-              alt={product.name}
-              width={600}
-              height={400}
-              className="object-cover w-full h-48"
-              data-ai-hint={`${product.category}`}
-            />
-          </CardHeader>
           <CardContent className="p-4 flex-grow">
             <CardTitle className="text-lg font-semibold mb-2">{product.name}</CardTitle>
             <p className="text-sm text-muted-foreground">{product.description}</p>
