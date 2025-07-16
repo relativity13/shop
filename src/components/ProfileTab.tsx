@@ -239,7 +239,7 @@ export function ProfileTab() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-accent hover:bg-accent/90">Update Profile</Button>
+            <Button type="submit">Update Profile</Button>
           </form>
         </Form>
       </CardContent>

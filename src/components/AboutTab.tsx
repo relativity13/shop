@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 export function AboutTab() {
-  const companyPhoneNumber = "1234567890";
+  const companyPhoneNumber = "9876543210";
 
   return (
     <div className="space-y-6">
@@ -16,15 +16,15 @@ export function AboutTab() {
           <Image 
             src="https://placehold.co/600x400.png" 
             alt="Company building" 
-            data-ai-hint="office building"
+            data-ai-hint="chemical factory"
             width={600}
             height={400}
             className="w-full h-48 object-cover rounded-t-lg mb-4"
           />
           <div className="flex justify-between items-start">
             <div className="text-left">
-              <CardTitle className="text-3xl font-bold">About ShopFront</CardTitle>
-              <CardDescription className="text-muted-foreground mt-1">Your Trusted Partner in Modern Shopping</CardDescription>
+              <CardTitle className="text-3xl font-bold">About ChemTrade</CardTitle>
+              <CardDescription className="text-muted-foreground mt-1">Your Trusted Partner in Industrial Chemicals</CardDescription>
             </div>
             <div className="flex gap-2 flex-shrink-0">
               <Button asChild variant="outline" size="sm">
@@ -42,26 +42,26 @@ export function AboutTab() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-left text-muted-foreground pt-4 border-t">
-            At ShopFront, we're dedicated to bringing you the best products with a seamless shopping experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine e-commerce.
+            At ChemTrade, we're dedicated to supplying high-quality industrial chemicals with a seamless procurement experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine chemical distribution.
           </p>
           
           <div className="border-t pt-4 space-y-2">
             <h3 className="text-lg font-semibold">Contact Us</h3>
             <div className="flex items-center gap-3">
               <Building2 className="w-5 h-5 text-muted-foreground" />
-              <p>123 Tech Lane, Innovation City, 12345</p>
+              <p>789 Industrial Park, Chemical City, 54321</p>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-muted-foreground" />
-              <p>contact@shopfront.com</p>
+              <p>sales@chemtrade.com</p>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-muted-foreground" />
-              <p>(123) 456-7890</p>
+              <p>(987) 654-3210</p>
             </div>
              <div className="flex items-center gap-3">
               <Globe className="w-5 h-5 text-muted-foreground" />
-              <p>www.shopfront.com</p>
+              <p>www.chemtrade.com</p>
             </div>
           </div>
         </CardContent>
