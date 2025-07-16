@@ -1,3 +1,4 @@
+
 export interface Product {
   id: number;
   name: string;
@@ -24,6 +25,7 @@ export interface Order {
 export interface User {
   name: string;
   email: string;
+  phone: string;
   shippingAddress: string;
   billingAddress: string;
   gstNumber: string;

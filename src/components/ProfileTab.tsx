@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,11 +6,13 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import React from 'react';
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -34,10 +38,12 @@ const profileFormSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
+  phone: z.string().min(10, { message: "Please enter a valid 10-digit phone number." }),
   gstNumber: z.string().min(15, { message: "GST Number must be 15 characters." }).max(15, { message: "GST Number must be 15 characters." }),
   shippingAddress: z.string().min(10, {
     message: "Shipping address must be at least 10 characters.",
   }),
+  sameAsShipping: z.boolean().default(false).optional(),
   billingAddress: z.string().min(10, {
     message: "Billing address must be at least 10 characters.",
   }),
@@ -51,9 +57,27 @@ export function ProfileTab() {
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: mockUser,
+    defaultValues: {
+        ...mockUser,
+        sameAsShipping: false,
+    },
     mode: "onChange",
   });
+
+  const watchShippingAddress = form.watch("shippingAddress");
+  const watchSameAsShipping = form.watch("sameAsShipping");
+
+  React.useEffect(() => {
+    if (watchSameAsShipping) {
+      form.setValue("billingAddress", watchShippingAddress);
+    } else {
+        // If you want to clear it when unchecked:
+        if (form.getValues("billingAddress") === watchShippingAddress) {
+            form.setValue("billingAddress", mockUser.billingAddress);
+        }
+    }
+  }, [watchSameAsShipping, watchShippingAddress, form]);
+
 
   function onSubmit(data: ProfileFormValues) {
     console.log(data);
@@ -130,6 +154,19 @@ export function ProfileTab() {
             />
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contact Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your company's phone number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="gstNumber"
               render={({ field }) => (
                 <FormItem>
@@ -161,9 +198,28 @@ export function ProfileTab() {
                 <FormItem>
                   <FormLabel>Billing Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your company's billing address" {...field} />
+                    <Input placeholder="Your company's billing address" {...field} disabled={watchSameAsShipping} />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="sameAsShipping"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Billing address is the same as shipping address
+                    </FormLabel>
+                  </div>
                 </FormItem>
               )}
             />
