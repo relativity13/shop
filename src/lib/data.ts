@@ -84,9 +84,11 @@ export const products: Product[] = [
 ];
 
 export const user: User = {
-  name: 'Alex Doe',
-  email: 'alex.doe@example.com',
-  address: '123 Tech Lane, Innovation City, 12345',
+  name: 'ShopFront Inc.',
+  email: 'contact@shopfront.com',
+  shippingAddress: '123 Tech Lane, Innovation City, 12345',
+  billingAddress: '456 Commerce Ave, Business Bay, 67890',
+  gstNumber: '29ABCDE1234F1Z5',
   avatarUrl: 'https://placehold.co/100x100.png',
 };
 

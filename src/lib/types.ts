@@ -24,6 +24,8 @@ export interface Order {
 export interface User {
   name: string;
   email: string;
-  address: string;
+  shippingAddress: string;
+  billingAddress: string;
+  gstNumber: string;
   avatarUrl: string;
 }

@@ -29,13 +29,17 @@ import {
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "Company name must be at least 2 characters.",
   }),
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  address: z.string().min(10, {
-    message: "Address must be at least 10 characters.",
+  gstNumber: z.string().min(15, { message: "GST Number must be 15 characters." }).max(15, { message: "GST Number must be 15 characters." }),
+  shippingAddress: z.string().min(10, {
+    message: "Shipping address must be at least 10 characters.",
+  }),
+  billingAddress: z.string().min(10, {
+    message: "Billing address must be at least 10 characters.",
   }),
 });
 
@@ -55,7 +59,7 @@ export function ProfileTab() {
     console.log(data);
     toast({
       title: "Profile Updated",
-      description: "Your profile information has been successfully updated.",
+      description: "Your company profile information has been successfully updated.",
     });
   }
 
@@ -65,12 +69,12 @@ export function ProfileTab() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Avatar className="h-16 w-16">
-              <AvatarImage src={mockUser.avatarUrl} alt={mockUser.name} data-ai-hint="person" />
+              <AvatarImage src={mockUser.avatarUrl} alt={mockUser.name} data-ai-hint="company logo" />
               <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
               <CardTitle className="text-2xl">{mockUser.name}</CardTitle>
-              <CardDescription>Manage your profile settings here.</CardDescription>
+              <CardDescription>Manage your company profile settings here.</CardDescription>
             </div>
           </div>
           <DropdownMenu>
@@ -103,9 +107,9 @@ export function ProfileTab() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>Company Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your full name" {...field} />
+                    <Input placeholder="Your company name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,9 +120,9 @@ export function ProfileTab() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Contact Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="your.email@example.com" {...field} />
+                    <Input placeholder="contact@yourcompany.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,12 +130,38 @@ export function ProfileTab() {
             />
             <FormField
               control={form.control}
-              name="address"
+              name="gstNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>GST Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="123 Main St, Anytown, USA" {...field} />
+                    <Input placeholder="Your company's GST number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="shippingAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Shipping Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your company's shipping address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="billingAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Billing Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your company's billing address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
