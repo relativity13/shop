@@ -20,7 +20,7 @@ export default function Home() {
         </header>
 
         <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto md:h-10">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto md:h-10 sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
             <TabsTrigger value="products" className="py-2.5">
               <ShoppingBag className="w-5 h-5 mr-2" />
               Products
