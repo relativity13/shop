@@ -12,7 +12,7 @@ interface AppContextType {
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (productId: number) => void;
   isInWishlist: (productId: number) => boolean;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity: number) => void;
   removeFromCart: (productId: number) => void;
   updateCartItemQuantity: (productId: number, quantity: number) => void;
   getCartTotal: () => number;
@@ -46,17 +46,25 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     return wishlist.some(item => item.id === productId);
   };
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity: number) => {
+    if (quantity <= 0) {
+      toast({
+        title: "Invalid Quantity",
+        description: "Please enter a quantity greater than 0.",
+        variant: "destructive",
+      });
+      return;
+    }
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
         return prevCart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [...prevCart, { ...product, quantity }];
     });
-    toast({ title: "Added to cart", description: `${product.name} has been added to your cart.` });
+    toast({ title: "Added to cart", description: `${quantity} ${product.unit}(s) of ${product.name} added to your cart.` });
   };
 
   const removeFromCart = (productId: number) => {
