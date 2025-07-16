@@ -35,6 +35,9 @@ const profileFormSchema = z.object({
   name: z.string().min(2, {
     message: "Company name must be at least 2 characters.",
   }),
+  managerName: z.string().min(2, {
+    message: "Manager name must be at least 2 characters.",
+  }),
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
@@ -134,6 +137,19 @@ export function ProfileTab() {
                   <FormLabel>Company Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Your company name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="managerName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Manager/Owner Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Manager or owner's name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -24,6 +24,7 @@ export interface Order {
 
 export interface User {
   name: string;
+  managerName: string;
   email: string;
   phone: string;
   shippingAddress: string;

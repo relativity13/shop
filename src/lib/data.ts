@@ -86,6 +86,7 @@ export const products: Product[] = [
 
 export const user: User = {
   name: 'ShopFront Inc.',
+  managerName: 'John Doe',
   email: 'contact@shopfront.com',
   phone: '(123) 456-7890',
   shippingAddress: '123 Tech Lane, Innovation City, 12345',
