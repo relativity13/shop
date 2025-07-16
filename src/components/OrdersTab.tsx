@@ -45,29 +45,6 @@ export function OrdersTab() {
   return (
     <div className="space-y-8">
       <div>
-        <Card>
-          <CardContent className="pt-6">
-            <Button onClick={handleGetRecommendations} disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                'Get Recommendations'
-              )}
-            </Button>
-            {recommendations && (
-              <Alert className="mt-4">
-                <Lightbulb className="h-4 w-4" />
-                <AlertTitle>Recommendations For You!</AlertTitle>
-                <AlertDescription>{recommendations}</AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-      <div>
         <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
         <Accordion type="single" collapsible className="w-full space-y-4">
           {mockOrders.map((order) => (
