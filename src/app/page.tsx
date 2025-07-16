@@ -1,17 +1,18 @@
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User } from 'lucide-react';
+import { Heart, ListOrdered, ShoppingBag, User, Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { OrdersTab } from '@/components/OrdersTab';
 import { ProfileTab } from '@/components/ProfileTab';
+import { Input } from '@/components/ui/input';
 
 export default function Home() {
   return (
     <AppProvider>
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pb-24">
         <header className="text-center mb-8">
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
             ShopFront
@@ -19,38 +20,43 @@ export default function Home() {
           <p className="text-muted-foreground mt-2">Your Modern Shopping Experience</p>
         </header>
 
+        <div className="relative mb-8">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Input placeholder="Search for products..." className="pl-10 w-full" />
+        </div>
+
         <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto md:h-10 sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
-            <TabsTrigger value="products" className="py-2.5">
-              <ShoppingBag className="w-5 h-5 mr-2" />
+          <TabsContent value="products">
+            <ProductsTab />
+          </TabsContent>
+          <TabsContent value="wishlist">
+            <WishlistTab />
+          </TabsContent>
+          <TabsContent value="orders">
+            <OrdersTab />
+          </TabsContent>
+          <TabsContent value="profile">
+            <ProfileTab />
+          </TabsContent>
+          
+          <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+            <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
+              <ShoppingBag className="w-5 h-5" />
               Products
             </TabsTrigger>
-            <TabsTrigger value="wishlist" className="py-2.5">
-              <Heart className="w-5 h-5 mr-2" />
+            <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
+              <Heart className="w-5 h-5" />
               Wishlist
             </TabsTrigger>
-            <TabsTrigger value="orders" className="py-2.5">
-              <ListOrdered className="w-5 h-5 mr-2" />
+            <TabsTrigger value="orders" className="py-3 flex-col h-full gap-1">
+              <ListOrdered className="w-5 h-5" />
               Orders
             </TabsTrigger>
-            <TabsTrigger value="profile" className="py-2.5">
-              <User className="w-5 h-5 mr-2" />
+            <TabsTrigger value="profile" className="py-3 flex-col h-full gap-1">
+              <User className="w-5 h-5" />
               Profile
             </TabsTrigger>
           </TabsList>
-
-          <TabsContent value="products" className="mt-6">
-            <ProductsTab />
-          </TabsContent>
-          <TabsContent value="wishlist" className="mt-6">
-            <WishlistTab />
-          </TabsContent>
-          <TabsContent value="orders" className="mt-6">
-            <OrdersTab />
-          </TabsContent>
-          <TabsContent value="profile" className="mt-6">
-            <ProfileTab />
-          </TabsContent>
         </Tabs>
       </main>
     </AppProvider>
