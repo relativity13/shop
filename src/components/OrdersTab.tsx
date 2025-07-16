@@ -46,16 +46,7 @@ export function OrdersTab() {
     <div className="space-y-8">
       <div>
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Lightbulb className="text-accent" />
-              <span>AI Product Recommendations</span>
-            </CardTitle>
-            <CardDescription>
-              Based on your order history, we can suggest products you might like.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <Button onClick={handleGetRecommendations} disabled={isLoading}>
               {isLoading ? (
                 <>
