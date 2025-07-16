@@ -1,12 +1,13 @@
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User, Search } from 'lucide-react';
+import { Heart, ListOrdered, ShoppingBag, User, Search, Info } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { OrdersTab } from '@/components/OrdersTab';
 import { ProfileTab } from '@/components/ProfileTab';
+import { AboutTab } from '@/components/AboutTab';
 import { Input } from '@/components/ui/input';
 
 export default function Home() {
@@ -38,8 +39,11 @@ export default function Home() {
           <TabsContent value="profile">
             <ProfileTab />
           </TabsContent>
+          <TabsContent value="about">
+            <AboutTab />
+          </TabsContent>
           
-          <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+          <TabsList className="grid w-full grid-cols-5 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
               <ShoppingBag className="w-5 h-5" />
               Products
@@ -55,6 +59,10 @@ export default function Home() {
             <TabsTrigger value="profile" className="py-3 flex-col h-full gap-1">
               <User className="w-5 h-5" />
               Profile
+            </TabsTrigger>
+            <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
+              <Info className="w-5 h-5" />
+              About
             </TabsTrigger>
           </TabsList>
         </Tabs>
