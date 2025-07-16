@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useApp } from '@/context/AppContext';
@@ -7,19 +8,20 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 
 export function CartTab() {
   const { cart, removeFromCart, updateCartItemQuantity, getCartTotal, clearCart } = useApp();
   const { toast } = useToast();
 
   const handleCheckout = () => {
-    // In a real app, this would redirect to a checkout page or open a payment modal.
-    console.log('Checking out with total:', getCartTotal());
+    // This function is now deprecated in favor of the checkout tab
+    // We can show a toast or simply do nothing
     toast({
-      title: 'Checkout Successful!',
-      description: `Your order has been placed. Total: $${getCartTotal().toFixed(2)}`,
+      title: 'Proceed to Checkout',
+      description: 'Please navigate to the Checkout tab to complete your purchase.',
     });
-    clearCart();
   };
 
   if (cart.length === 0) {
@@ -72,9 +74,9 @@ export function CartTab() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" onClick={handleCheckout}>
-            Proceed to Checkout
-          </Button>
+            <p className="text-sm text-muted-foreground text-center w-full">
+              Ready to buy? Proceed to the 'Checkout' tab.
+            </p>
         </CardFooter>
        </Card>
     </div>
