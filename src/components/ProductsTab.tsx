@@ -1,13 +1,13 @@
 "use client";
 
-import { Heart } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export function ProductsTab() {
-  const { products, addToWishlist, removeFromWishlist, isInWishlist } = useApp();
+  const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
 
   return (
     <div className="space-y-4">
@@ -22,15 +22,24 @@ export function ProductsTab() {
                 <p>Ships from: {product.factoryLocation}</p>
               </div>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-shrink-0"
-              onClick={() => (isInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product))}
-              aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-            >
-              <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
-            </Button>
+            <div className="flex flex-col gap-2 flex-shrink-0">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => (isInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product))}
+                aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+              >
+                <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
+              </Button>
+               <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => addToCart(product)}
+                aria-label="Add to cart"
+              >
+                <ShoppingCart className="h-6 w-6 text-primary" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       ))}
