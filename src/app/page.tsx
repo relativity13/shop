@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User, Search, Info, ShoppingCart, CreditCard } from 'lucide-react';
+import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
@@ -9,7 +9,6 @@ import { WishlistTab } from '@/components/WishlistTab';
 import { OrdersTab } from '@/components/OrdersTab';
 import { ProfileTab } from '@/components/ProfileTab';
 import { AboutTab } from '@/components/AboutTab';
-import { CartTab } from '@/components/CartTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
 
@@ -39,9 +38,6 @@ export default function Home() {
           <TabsContent value="orders">
             <OrdersTab />
           </TabsContent>
-           <TabsContent value="cart">
-            <CartTab />
-          </TabsContent>
            <TabsContent value="checkout">
             <CheckoutTab />
           </TabsContent>
@@ -52,7 +48,7 @@ export default function Home() {
             <AboutTab />
           </TabsContent>
           
-          <TabsList className="grid w-full grid-cols-7 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+          <TabsList className="grid w-full grid-cols-6 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
               <ShoppingBag className="w-5 h-5" />
               Products
@@ -64,10 +60,6 @@ export default function Home() {
             <TabsTrigger value="orders" className="py-3 flex-col h-full gap-1">
               <ListOrdered className="w-5 h-5" />
               Orders
-            </TabsTrigger>
-            <TabsTrigger value="cart" className="py-3 flex-col h-full gap-1">
-              <ShoppingCart className="w-5 h-5" />
-              Cart
             </TabsTrigger>
             <TabsTrigger value="checkout" className="py-3 flex-col h-full gap-1">
               <CreditCard className="w-5 h-5" />
