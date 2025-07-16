@@ -15,24 +15,24 @@ export function ProductsTab() {
       {products.map((product) => (
         <Card key={product.id} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
           <CardContent className="p-4 flex-grow">
-            <CardTitle className="text-lg font-semibold mb-2">{product.name}</CardTitle>
+            <div className="flex justify-between items-start">
+              <CardTitle className="text-lg font-semibold mb-2 pr-2">{product.name}</CardTitle>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="flex-shrink-0"
+                onClick={() => (isInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product))}
+                aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+              >
+                <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
+              </Button>
+            </div>
             <p className="text-sm text-muted-foreground">{product.description}</p>
             <div className="text-sm text-muted-foreground mt-2">
-              <p>Price: ${product.price.toFixed(2)} / {product.unit}</p>
+              <p className="font-bold text-primary">${product.price.toFixed(2)} / {product.unit}</p>
               <p>Ships from: {product.factoryLocation}</p>
             </div>
           </CardContent>
-          <CardFooter className="p-4 flex justify-between items-center">
-            <p className="text-xl font-bold text-primary">${product.price}</p>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => (isInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product))}
-              aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-            >
-              <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
-            </Button>
-          </CardFooter>
         </Card>
       ))}
     </div>
