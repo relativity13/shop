@@ -1,6 +1,5 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/context/ThemeProvider';
 
 export const metadata: Metadata = {
@@ -27,7 +26,6 @@ export default function RootLayout({
           enableSystem
         >
           {children}
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

@@ -19,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
 import { CreditCard, ShoppingCart } from "lucide-react";
 
 const checkoutFormSchema = z.object({
@@ -47,7 +46,6 @@ type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
 
 export function CheckoutTab() {
   const { cart, getCartTotal, clearCart } = useApp();
-  const { toast } = useToast();
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -64,10 +62,7 @@ export function CheckoutTab() {
 
   function onSubmit(data: CheckoutFormValues) {
     console.log("Order submitted:", data);
-    toast({
-      title: "Order Placed!",
-      description: `Thank you for your purchase. Your order total was $${getCartTotal().toFixed(2)}.`,
-    });
+    console.log(`Thank you for your purchase. Your order total was $${getCartTotal().toFixed(2)}.`);
     clearCart();
     form.reset();
   }

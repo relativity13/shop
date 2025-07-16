@@ -6,18 +6,13 @@ import { orders as mockOrders } from '@/lib/data';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
 
 export function OrdersTab() {
-  const { toast } = useToast();
 
   const handleRepeatOrder = (orderId: string) => {
     // In a real app, this would add the items from the selected order to the cart.
     console.log(`Repeating order: ${orderId}`);
-    toast({
-      title: 'Order Repeated',
-      description: `The items from order #${orderId} have been added to your cart.`,
-    });
+    console.log(`The items from order #${orderId} have been added to your cart.`);
   };
 
   return (

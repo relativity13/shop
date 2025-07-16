@@ -7,21 +7,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ShoppingCart, Trash2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 
 export function CartTab() {
   const { cart, removeFromCart, updateCartItemQuantity, getCartTotal, clearCart } = useApp();
-  const { toast } = useToast();
 
   const handleCheckout = () => {
     // This function is now deprecated in favor of the checkout tab
     // We can show a toast or simply do nothing
-    toast({
-      title: 'Proceed to Checkout',
-      description: 'Please navigate to the Checkout tab to complete your purchase.',
-    });
+    console.log('Please navigate to the Checkout tab to complete your purchase.');
   };
 
   if (cart.length === 0) {

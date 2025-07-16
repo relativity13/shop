@@ -21,7 +21,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useToast } from "@/hooks/use-toast";
 import { user as mockUser } from "@/lib/data";
 import {
   DropdownMenu,
@@ -55,7 +54,6 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function ProfileTab() {
-  const { toast } = useToast();
   const { setTheme } = useTheme();
 
   const form = useForm<ProfileFormValues>({
@@ -84,10 +82,7 @@ export function ProfileTab() {
 
   function onSubmit(data: ProfileFormValues) {
     console.log(data);
-    toast({
-      title: "Profile Updated",
-      description: "Your company profile information has been successfully updated.",
-    });
+    console.log("Profile Updated: Your company profile information has been successfully updated.");
   }
 
   return (

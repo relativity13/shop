@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import type { Product, OrderItem } from '@/lib/types';
 import { products as initialProducts } from '@/lib/data';
-import { useToast } from '@/hooks/use-toast';
 
 interface AppContextType {
   products: Product[];
@@ -25,12 +24,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products] = useState<Product[]>(initialProducts);
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
-  const { toast } = useToast();
 
   const addToWishlist = (product: Product) => {
     setWishlist((prevWishlist) => {
       if (!prevWishlist.find(item => item.id === product.id)) {
-        toast({ title: "Added to wishlist", description: `${product.name} has been added to your wishlist.` });
+        console.log(`Added to wishlist: ${product.name}`);
         return [...prevWishlist, product];
       }
       return prevWishlist;
@@ -39,7 +37,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const removeFromWishlist = (productId: number) => {
     setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== productId));
-    toast({ title: "Removed from wishlist" });
+    console.log("Removed from wishlist");
   };
   
   const isInWishlist = (productId: number) => {
@@ -48,11 +46,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: Product, quantity: number) => {
     if (quantity <= 0) {
-      toast({
-        title: "Invalid Quantity",
-        description: "Please enter a quantity greater than 0.",
-        variant: "destructive",
-      });
+      console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
     }
     setCart((prevCart) => {
@@ -64,12 +58,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       }
       return [...prevCart, { ...product, quantity }];
     });
-    toast({ title: "Added to cart", description: `${quantity} ${product.unit}(s) of ${product.name} added to your cart.` });
+    console.log(`Added to cart: ${quantity} ${product.unit}(s) of ${product.name}`);
   };
 
   const removeFromCart = (productId: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-    toast({ title: "Removed from cart" });
+    console.log("Removed from cart");
   };
 
   const updateCartItemQuantity = (productId: number, quantity: number) => {
