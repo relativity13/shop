@@ -1,12 +1,12 @@
 "use client";
 
-import { Trash2, Heart } from 'lucide-react';
+import { Trash2, Heart, ShoppingCart } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export function WishlistTab() {
-  const { wishlist, removeFromWishlist } = useApp();
+  const { wishlist, removeFromWishlist, addToCart } = useApp();
 
   if (wishlist.length === 0) {
     return (
@@ -31,15 +31,24 @@ export function WishlistTab() {
                 <p>Ships from: {product.factoryLocation}</p>
               </div>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex-shrink-0"
-              onClick={() => removeFromWishlist(product.id)}
-              aria-label="Remove from wishlist"
-            >
-              <Trash2 className="h-5 w-5 text-red-500" />
-            </Button>
+            <div className="flex flex-col gap-2 flex-shrink-0">
+               <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => addToCart(product)}
+                aria-label="Add to cart"
+              >
+                <ShoppingCart className="h-6 w-6 text-primary" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => removeFromWishlist(product.id)}
+                aria-label="Remove from wishlist"
+              >
+                <Trash2 className="h-5 w-5 text-red-500" />
+              </Button>
+            </div>
           </CardContent>
         </Card>
       ))}
