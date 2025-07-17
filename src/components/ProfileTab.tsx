@@ -88,16 +88,7 @@ export function ProfileTab() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={mockUser.avatarUrl} alt={mockUser.name} data-ai-hint="company logo" />
-              <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <CardDescription>Manage your company profile settings here.</CardDescription>
-            </div>
-          </div>
+        <div className="flex items-center justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
