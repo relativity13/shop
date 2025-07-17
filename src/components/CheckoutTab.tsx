@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,10 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ShoppingCart, Trash2, Truck, Warehouse, Minus, Plus, ShieldAlert } from "lucide-react";
+import { ShoppingCart, Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 
 const checkoutFormSchema = z.object({
@@ -35,11 +34,23 @@ export function CheckoutTab() {
   const { cart, getCartTotal, clearCart, removeFromCart, updateCartItemQuantity } = useApp();
   const [deliveryMethod, setDeliveryMethod] = useState<'deliver' | 'pickup'>('deliver');
 
+  // Hardcoded WhatsApp number
+  const sellerWhatsAppNumber = "911234567890"; // Replace with your actual number, including country code without '+'
+
   const subtotal = getCartTotal();
   const taxRate = 0.18; // 18% tax
-  const deliveryCharge = deliveryMethod === 'deliver' ? 50.00 : 0.00; // $50 delivery fee
+  
+  const getDeliveryCharge = (method: 'deliver' | 'pickup') => method === 'deliver' ? 50.00 : 0.00;
+  
+  const calculateTotal = (method: 'deliver' | 'pickup') => {
+    const deliveryCharge = getDeliveryCharge(method);
+    const taxAmount = subtotal * taxRate;
+    return subtotal + taxAmount + deliveryCharge;
+  }
+
+  const deliveryCharge = getDeliveryCharge(deliveryMethod);
   const taxAmount = subtotal * taxRate;
-  const totalPayable = subtotal + taxAmount + deliveryCharge;
+  const totalPayable = calculateTotal(deliveryMethod);
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -49,12 +60,46 @@ export function CheckoutTab() {
     mode: "onChange",
   });
 
-  function onSubmit(data: CheckoutFormValues) {
-    console.log("Order submitted:", { ...data, deliveryMethod, total: totalPayable.toFixed(2) });
-    console.log(`Thank you for your purchase. Your order total was $${totalPayable.toFixed(2)}.`);
+  const handleOrderPlacement = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
+    const formData = form.getValues();
+    const finalTotal = calculateTotal(selectedDeliveryMethod);
+    const finalDeliveryCharge = getDeliveryCharge(selectedDeliveryMethod);
+
+    let message = `*New Order Details*\n\n`;
+    message += `*Customer Details:*\n`;
+    message += `Company: ${mockUser.name}\n`;
+    message += `Manager: ${mockUser.managerName}\n`;
+    message += `Email: ${mockUser.email}\n`;
+    message += `Phone: ${mockUser.phone}\n\n`;
+
+    message += `*Order Items:*\n`;
+    cart.forEach(item => {
+      message += `- ${item.name} (${item.quantity} ${item.unit}) - $${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    message += `\n`;
+
+    message += `*Bill Details:*\n`;
+    message += `Subtotal: $${subtotal.toFixed(2)}\n`;
+    message += `Tax (18%): $${(subtotal * taxRate).toFixed(2)}\n`;
+    message += `Delivery Charge: $${finalDeliveryCharge.toFixed(2)}\n`;
+    message += `*Total Payable: $${finalTotal.toFixed(2)}*\n\n`;
+
+    message += `*Delivery Method:*\n`;
+    message += `${selectedDeliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
+    if (selectedDeliveryMethod === 'deliver') {
+      message += `*Shipping Address:*\n${formData.shippingAddress}\n`;
+    }
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+
+    // Clear cart and form after sending
     clearCart();
     form.reset();
-  }
+  };
+
 
   if (cart.length === 0) {
     return (
@@ -140,7 +185,7 @@ export function CheckoutTab() {
 
       {/* Shipping & Final Actions */}
        <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
            {deliveryMethod === 'deliver' && (
               <Card>
                 <CardHeader>
@@ -166,21 +211,25 @@ export function CheckoutTab() {
           <div className="grid grid-cols-2 gap-4">
              <Button
                 type="button"
-                variant={deliveryMethod === 'pickup' ? 'default' : 'outline'}
                 className="flex flex-col h-auto py-3"
-                onClick={() => setDeliveryMethod('pickup')}
+                onClick={() => {
+                  setDeliveryMethod('pickup');
+                  handleOrderPlacement('pickup');
+                }}
             >
                 <p className="font-semibold">I will Pickup</p>
-                <p className="text-xs font-normal">No delivery fee</p>
+                <p className="text-xs font-normal">Confirm Order</p>
             </Button>
              <Button
-                type="submit"
-                variant={deliveryMethod === 'deliver' ? 'default' : 'outline'}
+                type="button"
                 className="flex flex-col h-auto py-3"
-                onClick={() => setDeliveryMethod('deliver')}
+                onClick={() => {
+                  setDeliveryMethod('deliver');
+                  form.handleSubmit(() => handleOrderPlacement('deliver'))();
+                }}
             >
                 <p className="font-semibold">Deliver</p>
-                <p className="text-xs font-normal">${deliveryCharge.toFixed(2)} charge</p>
+                <p className="text-xs font-normal">Confirm Order</p>
             </Button>
           </div>
         </form>
