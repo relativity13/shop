@@ -14,6 +14,10 @@ export interface OrderItem extends Product {
   quantity: number;
 }
 
+export interface WishlistItem extends Product {
+  quantity: number;
+}
+
 export interface Order {
   id: string;
   date: string;

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Heart, ShoppingCart } from 'lucide-react';
@@ -20,6 +21,15 @@ export function ProductsTab() {
   const handleAddToCart = (product: any) => {
     const quantity = quantities[product.id] || 1;
     addToCart(product, quantity);
+  };
+
+  const handleWishlistAction = (product: any) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      const quantity = quantities[product.id] || 1;
+      addToWishlist(product, quantity);
+    }
   };
 
   return (
@@ -52,7 +62,7 @@ export function ProductsTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => (isInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product))}
+                    onClick={() => handleWishlistAction(product)}
                     aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                   >
                     <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />

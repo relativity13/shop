@@ -1,14 +1,15 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import type { Product, OrderItem } from '@/lib/types';
+import type { Product, OrderItem, WishlistItem } from '@/lib/types';
 import { products as initialProducts } from '@/lib/data';
 
 interface AppContextType {
   products: Product[];
-  wishlist: Product[];
+  wishlist: WishlistItem[];
   cart: OrderItem[];
-  addToWishlist: (product: Product) => void;
+  addToWishlist: (product: Product, quantity: number) => void;
   removeFromWishlist: (productId: number) => void;
   isInWishlist: (productId: number) => boolean;
   addToCart: (product: Product, quantity: number) => void;
@@ -16,22 +17,30 @@ interface AppContextType {
   updateCartItemQuantity: (productId: number, quantity: number) => void;
   getCartTotal: () => number;
   clearCart: () => void;
+  addWishlistToCart: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products] = useState<Product[]>(initialProducts);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
+  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
 
-  const addToWishlist = (product: Product) => {
+  const addToWishlist = (product: Product, quantity: number) => {
+    if (quantity <= 0) {
+      console.error("Invalid Quantity: Please enter a quantity greater than 0.");
+      return;
+    }
     setWishlist((prevWishlist) => {
-      if (!prevWishlist.find(item => item.id === product.id)) {
-        console.log(`Added to wishlist: ${product.name}`);
-        return [...prevWishlist, product];
+      const existingItem = prevWishlist.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevWishlist.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+        );
       }
-      return prevWishlist;
+      console.log(`Added to wishlist: ${product.name} with quantity ${quantity}`);
+      return [...prevWishlist, { ...product, quantity }];
     });
   };
 
@@ -59,6 +68,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       return [...prevCart, { ...product, quantity }];
     });
     console.log(`Added to cart: ${quantity} ${product.unit}(s) of ${product.name}`);
+  };
+
+  const addWishlistToCart = () => {
+    wishlist.forEach(item => {
+      addToCart(item, item.quantity);
+    });
+    console.log("Added all wishlist items to cart.");
   };
 
   const removeFromCart = (productId: number) => {
@@ -95,7 +111,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     removeFromCart,
     updateCartItemQuantity,
     getCartTotal,
-    clearCart
+    clearCart,
+    addWishlistToCart,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
