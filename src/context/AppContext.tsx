@@ -12,6 +12,7 @@ interface AppContextType {
   addToWishlist: (product: Product, quantity: number) => void;
   removeFromWishlist: (productId: number) => void;
   isInWishlist: (productId: number) => boolean;
+  updateWishlistItemQuantity: (productId: number, quantity: number) => void;
   addToCart: (product: Product, quantity: number) => void;
   removeFromCart: (productId: number) => void;
   updateCartItemQuantity: (productId: number, quantity: number) => void;
@@ -51,6 +52,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   
   const isInWishlist = (productId: number) => {
     return wishlist.some(item => item.id === productId);
+  };
+
+  const updateWishlistItemQuantity = (productId: number, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromWishlist(productId);
+      return;
+    }
+    setWishlist((prevWishlist) =>
+      prevWishlist.map((item) => (item.id === productId ? { ...item, quantity } : item))
+    );
   };
 
   const addToCart = (product: Product, quantity: number) => {
@@ -107,6 +118,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     addToWishlist,
     removeFromWishlist,
     isInWishlist,
+    updateWishlistItemQuantity,
     addToCart,
     removeFromCart,
     updateCartItemQuantity,

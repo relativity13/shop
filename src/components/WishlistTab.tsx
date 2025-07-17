@@ -5,13 +5,18 @@ import { Trash2, Heart, ShoppingCart, Repeat } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export function WishlistTab() {
-  const { wishlist, removeFromWishlist, addWishlistToCart } = useApp();
+  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
 
   const handleRepeatOrder = () => {
     addWishlistToCart();
     console.log("Your saved wishlist order has been added to the cart.");
+  };
+  
+  const handleAddToCart = (product: any) => {
+    addToCart(product, product.quantity);
   };
 
   if (wishlist.length === 0) {
@@ -38,18 +43,36 @@ export function WishlistTab() {
                 <p className="text-sm text-muted-foreground">
                   ${product.price.toFixed(2)} / {product.unit}
                 </p>
-                <p className="text-sm text-primary font-bold mt-1">
-                  Quantity: {product.quantity} {product.unit}
-                </p>
+                <div className="flex items-center gap-2 mt-2">
+                   <Input
+                    type="number"
+                    min="1"
+                    value={product.quantity}
+                    onChange={(e) => updateWishlistItemQuantity(product.id, parseInt(e.target.value) || 1)}
+                    className="w-20 h-8 text-center"
+                    aria-label={`Quantity for ${product.name}`}
+                  />
+                   <span className="text-sm text-muted-foreground">{product.unit}</span>
+                </div>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => removeFromWishlist(product.id)}
-                aria-label="Remove from wishlist"
-              >
-                <Trash2 className="h-5 w-5 text-red-500" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-2">
+                 <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleAddToCart(product)}
+                    aria-label="Add to cart"
+                  >
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                  </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeFromWishlist(product.id)}
+                  aria-label="Remove from wishlist"
+                >
+                  <Trash2 className="h-5 w-5 text-red-500" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}
