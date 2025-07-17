@@ -1,4 +1,3 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,13 +68,6 @@ export function CheckoutTab() {
 
   return (
     <div className="space-y-4">
-       <Alert variant="default" className="bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950 dark:border-blue-800 dark:text-blue-200">
-         <ShieldAlert className="h-4 w-4 !text-blue-600 dark:!text-blue-300" />
-         <AlertDescription>
-          This store is for demonstration purposes. Pay only if you know the seller.
-         </AlertDescription>
-       </Alert>
-
       {/* Items in Cart */}
       <Card>
         <CardHeader>
@@ -204,4 +196,3 @@ export function CheckoutTab() {
     </div>
   );
 }
-
