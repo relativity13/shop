@@ -15,6 +15,17 @@ export function OrdersTab() {
     console.log(`The items from order #${orderId} have been added to your cart.`);
   };
 
+  const getOrderTitle = (order: typeof mockOrders[0]) => {
+    if (!order.items || order.items.length === 0) {
+      return `Order #${order.id}`;
+    }
+    const firstItemName = order.items[0].name;
+    if (order.items.length > 1) {
+      return `${firstItemName} & more`;
+    }
+    return firstItemName;
+  }
+
   return (
     <div className="space-y-8">
       <div>
@@ -26,8 +37,8 @@ export function OrdersTab() {
                 <AccordionTrigger className="p-4 hover:no-underline">
                   <div className="flex justify-between w-full pr-4">
                     <div className="text-left">
-                      <p className="font-bold text-primary">Order #{order.id}</p>
-                      <p className="text-sm text-muted-foreground">Status: {order.status}</p>
+                      <p className="font-bold text-primary">{getOrderTitle(order)}</p>
+                      <p className="text-sm text-muted-foreground">Order #{order.id} - {order.status}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">${order.total.toFixed(2)}</p>
@@ -46,7 +57,7 @@ export function OrdersTab() {
                         <div>
                           <p className="font-medium">{item.name}</p>
                           <p className="text-sm text-muted-foreground">
-                            Quantity: {item.quantity}
+                            Quantity: {item.quantity} {item.unit}
                           </p>
                         </div>
                         <p className="ml-auto font-semibold">
