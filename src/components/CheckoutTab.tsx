@@ -112,14 +112,6 @@ export function CheckoutTab() {
         </CardContent>
       </Card>
       
-       {/* Apply Coupon - Simplified */}
-      <Card>
-        <CardContent className="p-4 flex justify-between items-center">
-          <p className="font-semibold">Apply Coupon</p>
-          <Button variant="link">Select</Button>
-        </CardContent>
-      </Card>
-
       {/* Bill Details */}
       <Card>
         <CardHeader>
