@@ -3,7 +3,7 @@
 
 import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AppProvider } from '@/context/AppContext';
+import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { OrdersTab } from '@/components/OrdersTab';
@@ -11,6 +11,23 @@ import { ProfileTab } from '@/components/ProfileTab';
 import { AboutTab } from '@/components/AboutTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
+
+function CheckoutButton() {
+  const { cart } = useApp();
+  const itemCount = cart.length;
+
+  return (
+    <TabsTrigger value="checkout" className="py-3 flex-col h-full gap-1 relative">
+      <CreditCard className="w-5 h-5" />
+      {itemCount > 0 && (
+        <span className="absolute top-1 right-1/2 translate-x-[20px] bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+          {itemCount}
+        </span>
+      )}
+      Checkout
+    </TabsTrigger>
+  );
+}
 
 export default function Home() {
   return (
@@ -61,10 +78,7 @@ export default function Home() {
               <ListOrdered className="w-5 h-5" />
               Orders
             </TabsTrigger>
-            <TabsTrigger value="checkout" className="py-3 flex-col h-full gap-1">
-              <CreditCard className="w-5 h-5" />
-              Checkout
-            </TabsTrigger>
+            <CheckoutButton />
             <TabsTrigger value="profile" className="py-3 flex-col h-full gap-1">
               <User className="w-5 h-5" />
               Profile
