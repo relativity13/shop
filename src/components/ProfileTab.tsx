@@ -95,7 +95,6 @@ export function ProfileTab() {
               <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-2xl">{mockUser.name}</CardTitle>
               <CardDescription>Manage your company profile settings here.</CardDescription>
             </div>
           </div>
