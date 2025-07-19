@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard } from 'lucide-react';
+import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard, Phone, MessageCircle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
@@ -11,6 +11,7 @@ import { ProfileTab } from '@/components/ProfileTab';
 import { AboutTab } from '@/components/AboutTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 function CheckoutButton() {
   const { cart } = useApp();
@@ -30,13 +31,30 @@ function CheckoutButton() {
 }
 
 export default function Home() {
+  const companyPhoneNumber = "9876543210";
+  const sellerWhatsAppNumber = "919310619600";
+
   return (
     <AppProvider>
       <main className="container mx-auto px-4 py-8 pb-24">
         <header className="text-center mb-8">
-          <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
-            ShopFront
-          </h1>
+          <div className="flex justify-center items-center gap-4">
+            <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
+              ShopFront
+            </h1>
+            <div className="flex gap-2">
+               <Button asChild variant="outline" size="icon">
+                <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                  <MessageCircle className="h-5 w-5" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="icon">
+                <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
+                  <Phone className="h-5 w-5" />
+                </a>
+              </Button>
+            </div>
+          </div>
           <p className="text-muted-foreground mt-2">Your Modern Shopping Experience</p>
         </header>
 
