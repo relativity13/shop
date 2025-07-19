@@ -85,11 +85,11 @@ export const products: Product[] = [
 ];
 
 export const user: User = {
-  name: 'ChemTrade Inc.',
+  name: 'HIKE CORPORATION',
   managerName: 'Jane Smith',
-  email: 'sales@chemtrade.com',
+  email: 'sales@hikecorporation.com',
   phone: '(987) 654-3210',
-  shippingAddress: '789 Industrial Park, Chemical City, 54321',
+  shippingAddress: '789 Industrial Park, Metro City, 54321',
   billingAddress: '101 Finance Tower, Commerce Bay, 09876',
   gstNumber: '27ZYXWV9876G1Z4',
   avatarUrl: 'https://placehold.co/100x100.png',

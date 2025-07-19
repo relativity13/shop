@@ -3,7 +3,7 @@ import './globals.css';
 import { ThemeProvider } from '@/context/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: 'ShopFront',
+  title: 'HIKE CORPORATION',
   description: 'A modern product showcasing app.',
 };
 

@@ -39,7 +39,7 @@ function HomePageContent() {
       <header className="text-center mb-8">
         <div className="flex justify-center items-center gap-4">
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
-            ShopFront
+            HIKE CORPORATION
           </h1>
           <div className="flex gap-2">
              <Button asChild variant="outline" size="icon">
