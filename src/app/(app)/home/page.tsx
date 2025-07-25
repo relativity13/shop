@@ -130,7 +130,7 @@ function HomePageContent() {
           <AboutTab />
         </TabsContent>
         
-        <TabsList className="grid w-full grid-cols-6 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+        <TabsList className="grid w-full grid-cols-5 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
           <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
             <ShoppingBag className="w-5 h-5" />
             Products
@@ -138,10 +138,6 @@ function HomePageContent() {
           <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
             <Heart className="w-5 h-5" />
             Wishlist
-          </TabsTrigger>
-          <TabsTrigger value="orders" className="py-3 flex-col h-full gap-1">
-            <ListOrdered className="w-5 h-5" />
-            Orders
           </TabsTrigger>
           <CheckoutButton />
           <TabsTrigger value="profile" className="py-3 flex-col h-full gap-1">
