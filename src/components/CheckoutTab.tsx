@@ -52,17 +52,13 @@ export function CheckoutTab() {
   const subtotal = getCartTotal();
   const taxRate = 0.18; // 18% tax
   
-  const getDeliveryCharge = (method: 'deliver' | 'pickup') => method === 'deliver' ? 50.00 : 0.00;
-  
-  const calculateTotal = (method: 'deliver' | 'pickup') => {
-    const deliveryCharge = getDeliveryCharge(method);
+  const calculateTotal = () => {
     const taxAmount = subtotal * taxRate;
-    return subtotal + taxAmount + deliveryCharge;
+    return subtotal + taxAmount;
   }
 
-  const deliveryCharge = getDeliveryCharge(deliveryMethod);
   const taxAmount = subtotal * taxRate;
-  const totalPayable = calculateTotal(deliveryMethod);
+  const totalPayable = calculateTotal();
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -71,8 +67,7 @@ export function CheckoutTab() {
 
   const prepareAndConfirmOrder = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
     const formData = form.getValues();
-    const finalTotal = calculateTotal(selectedDeliveryMethod);
-    const finalDeliveryCharge = getDeliveryCharge(selectedDeliveryMethod);
+    const finalTotal = calculateTotal();
 
     let message = `*New Order Details*\n\n`;
     message += `*Customer Details:*\n`;
@@ -87,7 +82,6 @@ export function CheckoutTab() {
     message += `*Bill Details:*\n`;
     message += `Subtotal: ₹${subtotal.toFixed(2)}\n`;
     message += `Tax (18%): ₹${(subtotal * taxRate).toFixed(2)}\n`;
-    message += `Delivery Charge: ₹${finalDeliveryCharge.toFixed(2)}\n`;
     message += `*Total Payable: ₹${finalTotal.toFixed(2)}*\n\n`;
 
     message += `*Delivery Method:*\n`;
@@ -184,10 +178,6 @@ export function CheckoutTab() {
               <span className="text-muted-foreground">Tax (18%)</span>
               <span>₹{taxAmount.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Delivery Charge</span>
-              <span>₹{deliveryCharge.toFixed(2)}</span>
-            </div>
             <Separator />
              <div className="flex justify-between font-bold text-lg">
               <span>Payable</span>
@@ -267,4 +257,3 @@ export function CheckoutTab() {
     </>
   );
 }
- 
