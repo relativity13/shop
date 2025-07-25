@@ -156,7 +156,7 @@ export function CheckoutTab() {
                       type="number"
                       value={item.quantity}
                       onChange={(e) => updateCartItemQuantity(item.id, parseInt(e.target.value) || 1)}
-                      className="w-12 h-8 text-center border-0 focus-visible:ring-0"
+                      className="w-16 h-8 text-center border-0 focus-visible:ring-0"
                     />
                      <span className="text-sm text-muted-foreground pr-2">{item.unit}</span>
                      <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}>
