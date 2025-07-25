@@ -87,7 +87,7 @@ export function CheckoutTab() {
 
     message += `*Delivery Method:*\n`;
     message += `${selectedDeliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
-    if (selectedDeliveryMethod === 'deliver') {
+    if (selectedDeliveryMethod === 'deliver' && formData.shippingAddress) {
       message += `*Shipping Address:*\n${formData.shippingAddress}\n`;
     }
 
