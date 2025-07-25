@@ -3,19 +3,19 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { Product, OrderItem, WishlistItem } from '@/lib/types';
-import { products as initialProducts } from '@/lib/data';
+// import { products as initialProducts } from '@/lib/data';
 
 interface AppContextType {
   products: Product[];
   wishlist: WishlistItem[];
   cart: OrderItem[];
   addToWishlist: (product: Product, quantity: number) => void;
-  removeFromWishlist: (productId: number) => void;
-  isInWishlist: (productId: number) => boolean;
-  updateWishlistItemQuantity: (productId: number, quantity: number) => void;
+  removeFromWishlist: (productId: number | string) => void;
+  isInWishlist: (productId: number | string) => boolean;
+  updateWishlistItemQuantity: (productId: number | string, quantity: number) => void;
   addToCart: (product: Product, quantity: number) => void;
-  removeFromCart: (productId: number) => void;
-  updateCartItemQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: number | string) => void;
+  updateCartItemQuantity: (productId: number | string, quantity: number) => void;
   getCartTotal: () => number;
   clearCart: () => void;
   addWishlistToCart: () => void;
@@ -25,7 +25,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const WISHLIST_STORAGE_KEY = 'hike-wishlist';
 
-export const AppProvider = ({ children }: { children: ReactNode }) => {
+export const AppProvider = ({ children, initialProducts = [] }: { children: ReactNode, initialProducts?: Product[] }) => {
   const [products] = useState<Product[]>(initialProducts);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
@@ -70,16 +70,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeFromWishlist = (productId: number) => {
+  const removeFromWishlist = (productId: number | string) => {
     setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== productId));
     console.log("Removed from wishlist");
   };
   
-  const isInWishlist = (productId: number) => {
+  const isInWishlist = (productId: number | string) => {
     return wishlist.some(item => item.id === productId);
   };
 
-  const updateWishlistItemQuantity = (productId: number, quantity: number) => {
+  const updateWishlistItemQuantity = (productId: number | string, quantity: number) => {
     if (quantity <= 0) {
       removeFromWishlist(productId);
       return;
@@ -114,12 +114,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     console.log("Added all wishlist items to cart.");
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: number | string) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
     console.log("Removed from cart");
   };
 
-  const updateCartItemQuantity = (productId: number, quantity: number) => {
+  const updateCartItemQuantity = (productId: number | string, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId);
       return;

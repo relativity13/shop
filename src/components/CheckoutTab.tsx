@@ -131,7 +131,7 @@ export function CheckoutTab() {
               />
               <div className="flex-grow">
                 <p className="font-semibold">{item.name}</p>
-                 <Button variant="link" size="sm" className="p-0 h-auto text-red-500" onClick={() => removeFromCart(item.id)}>
+                 <Button variant="link" size="sm" className="p-0 h-auto text-red-500" onClick={() => removeFromCart(item.id.toString())}>
                    Remove
                  </Button>
               </div>

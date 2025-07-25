@@ -16,24 +16,24 @@ interface ProductsTabProps {
 
 export function ProductsTab({ products }: ProductsTabProps) {
   const { addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
-  const [quantities, setQuantities] = useState<Record<number, number>>({});
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const sellerWhatsAppNumber = "919310619600";
 
-  const handleQuantityChange = (productId: number, quantity: string) => {
+  const handleQuantityChange = (productId: string | number, quantity: string) => {
     const numQuantity = parseInt(quantity, 10);
-    setQuantities(prev => ({ ...prev, [productId]: isNaN(numQuantity) ? 0 : numQuantity }));
+    setQuantities(prev => ({ ...prev, [productId.toString()]: isNaN(numQuantity) ? 0 : numQuantity }));
   };
   
   const handleAddToCart = (product: Product) => {
     if (!product.price) return;
-    const quantity = quantities[product.id] || 1;
+    const quantity = quantities[product.id.toString()] || 1;
     addToCart(product, quantity);
   };
 
   const handleWishlistAction = (product: Product) => {
     // For products without a price, we can add to wishlist with quantity 1 and price 0.
     const price = product.price || 0;
-    const quantity = quantities[product.id] || 1;
+    const quantity = quantities[product.id.toString()] || 1;
 
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
@@ -84,7 +84,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
                         min="1"
                         placeholder="Qty"
                         className="w-20 h-8 text-center"
-                        value={quantities[product.id] || ''}
+                        value={quantities[product.id.toString()] || ''}
                         onChange={(e) => handleQuantityChange(product.id, e.target.value)}
                         aria-label={`Quantity for ${product.name} in ${product.unit}s`}
                       />

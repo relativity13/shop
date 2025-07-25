@@ -14,9 +14,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { user as mockUser } from '@/lib/data';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
+import { getProducts } from '@/services/productService';
 
 
 function CheckoutButton() {
@@ -158,8 +159,30 @@ function HomePageContent() {
 }
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Optionally, set some error state to show in the UI
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <div>Loading products...</div>;
+  }
+  
   return (
-    <AppProvider>
+    <AppProvider initialProducts={products}>
       <HomePageContent />
     </AppProvider>
   )
