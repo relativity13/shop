@@ -41,7 +41,7 @@ export function WishlistTab() {
             <CardContent className="p-4 flex items-center gap-4">
               <div className="flex-grow">
                 <p className="font-semibold">{product.name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-base font-medium text-muted-foreground">
                   ₹{formatIndianCurrency(product.price)} / {product.unit}
                 </p>
                 <div className="flex items-center gap-2 mt-2">

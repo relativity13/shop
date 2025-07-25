@@ -171,11 +171,11 @@ export function CheckoutTab() {
             <CardTitle>Bill Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="flex justify-between">
+            <div className="flex justify-between text-base">
               <span className="text-muted-foreground">Sub Total</span>
               <span>₹{formatIndianCurrency(subtotal)}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-base">
               <span className="text-muted-foreground">Tax (18%)</span>
               <span>₹{formatIndianCurrency(taxAmount)}</span>
             </div>
