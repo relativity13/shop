@@ -152,7 +152,6 @@ export default function Home() {
         setProducts(fetchedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
-        // Optionally, set some error state to show in the UI
       } finally {
         setLoading(false);
       }
