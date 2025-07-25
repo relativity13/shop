@@ -10,8 +10,12 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import type { Product } from '@/lib/types';
 
-export function ProductsTab() {
-  const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
+interface ProductsTabProps {
+  products: Product[];
+}
+
+export function ProductsTab({ products }: ProductsTabProps) {
+  const { addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const sellerWhatsAppNumber = "919310619600";
 
@@ -44,6 +48,15 @@ export function ProductsTab() {
     const whatsappUrl = `https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-lg text-muted-foreground">No products found.</p>
+        <p className="text-sm text-muted-foreground">Try adjusting your search or category filter.</p>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">

@@ -14,6 +14,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { user as mockUser } from '@/lib/data';
+import React, { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import type { Product } from '@/lib/types';
+
 
 function CheckoutButton() {
   const { cart } = useApp();
@@ -33,8 +37,25 @@ function CheckoutButton() {
 }
 
 function HomePageContent() {
+  const { products } = useApp();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
   const companyPhoneNumber = "9876543210";
   const sellerWhatsAppNumber = "919310619600";
+
+  const categories = useMemo(() => {
+    const allCategories = products.map(p => p.category);
+    return ['All', ...Array.from(new Set(allCategories))];
+  }, [products]);
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const matchesCategory = selectedCategory === 'All' || !selectedCategory || product.category === selectedCategory;
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [products, searchQuery, selectedCategory]);
 
   return (
     <main className="container mx-auto px-4 py-8 pb-24">
@@ -65,14 +86,32 @@ function HomePageContent() {
         </div>
       </header>
 
-      <div className="relative mb-8">
+      <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        <Input placeholder="Search for products..." className="pl-10 w-full" />
+        <Input 
+          placeholder="Search for products..." 
+          className="pl-10 w-full"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-8 flex flex-wrap justify-center gap-2">
+        {categories.map(category => (
+          <Button
+            key={category}
+            variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
+            onClick={() => setSelectedCategory(category === 'All' ? null : category)}
+            className="rounded-full"
+          >
+            {category}
+          </Button>
+        ))}
       </div>
 
       <Tabs defaultValue="products" className="w-full">
         <TabsContent value="products">
-          <ProductsTab />
+          <ProductsTab products={filteredProducts} />
         </TabsContent>
         <TabsContent value="wishlist">
           <WishlistTab />
