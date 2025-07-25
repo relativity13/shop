@@ -1,16 +1,11 @@
-import { db } from '@/lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { products } from '@/lib/data';
 import type { Product } from '@/lib/types';
 
 export async function getProducts(): Promise<Product[]> {
-  const productsCollection = collection(db, 'products');
-  const productSnapshot = await getDocs(productsCollection);
-  const productList = productSnapshot.docs.map(doc => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      ...data,
-    } as unknown as Product;
+  // Simulate an async operation
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(products);
+    }, 500);
   });
-  return productList;
 }
