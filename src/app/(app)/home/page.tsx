@@ -45,7 +45,6 @@ function HomePageContent() {
             HIKE CORPORATION
           </h1>
         </div>
-        <p className="text-muted-foreground mt-2">Your Modern Shopping Experience</p>
         <div className="flex items-center justify-center gap-2 text-muted-foreground mt-2">
             <MapPin className="h-4 w-4" />
             <p>{mockUser.shippingAddress}</p>
