@@ -27,12 +27,14 @@ export function ProductsTab() {
   };
 
   const handleWishlistAction = (product: Product) => {
-    if (!product.price) return;
+    // For products without a price, we can add to wishlist with quantity 1 and price 0.
+    const price = product.price || 0;
+    const quantity = quantities[product.id] || 1;
+
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
-      const quantity = quantities[product.id] || 1;
-      addToWishlist(product, quantity);
+      addToWishlist({ ...product, price }, quantity);
     }
   };
 
@@ -95,10 +97,20 @@ export function ProductsTab() {
                   </div>
                 </>
               ) : (
-                <Button onClick={() => handleAskForQuote(product.name)}>
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Ask for Quote
-                </Button>
+                <div className="flex flex-col items-center gap-2">
+                   <Button onClick={() => handleAskForQuote(product.name)} className="w-full">
+                     <MessageCircle className="mr-2 h-4 w-4" />
+                     Ask for Quote
+                   </Button>
+                   <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleWishlistAction(product)}
+                      aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                    >
+                      <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
+                    </Button>
+                </div>
               )}
             </div>
           </CardContent>
