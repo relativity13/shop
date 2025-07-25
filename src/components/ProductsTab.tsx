@@ -68,7 +68,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
               <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
               <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center">
                 {product.price && product.price > 0 ? (
-                  <p className="font-bold text-primary">${product.price.toFixed(2)} / {product.unit}</p>
+                  <p className="font-bold text-primary">₹{product.price.toFixed(2)} / {product.unit}</p>
                 ) : (
                    <p className="font-bold text-primary">Price on request</p>
                 )}

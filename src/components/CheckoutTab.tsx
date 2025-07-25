@@ -74,15 +74,15 @@ export function CheckoutTab() {
 
     message += `*Order Items:*\n`;
     cart.forEach(item => {
-      message += `- ${item.name} (${item.quantity} ${item.unit}) - $${(item.price * item.quantity).toFixed(2)}\n`;
+      message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${(item.price * item.quantity).toFixed(2)}\n`;
     });
     message += `\n`;
 
     message += `*Bill Details:*\n`;
-    message += `Subtotal: $${subtotal.toFixed(2)}\n`;
-    message += `Tax (18%): $${(subtotal * taxRate).toFixed(2)}\n`;
-    message += `Delivery Charge: $${finalDeliveryCharge.toFixed(2)}\n`;
-    message += `*Total Payable: $${finalTotal.toFixed(2)}*\n\n`;
+    message += `Subtotal: ₹${subtotal.toFixed(2)}\n`;
+    message += `Tax (18%): ₹${(subtotal * taxRate).toFixed(2)}\n`;
+    message += `Delivery Charge: ₹${finalDeliveryCharge.toFixed(2)}\n`;
+    message += `*Total Payable: ₹${finalTotal.toFixed(2)}*\n\n`;
 
     message += `*Delivery Method:*\n`;
     message += `${selectedDeliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
@@ -136,7 +136,7 @@ export function CheckoutTab() {
                  </Button>
               </div>
               <div className="text-right">
-                <p className="font-semibold text-lg">${(item.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-lg">₹{(item.price * item.quantity).toFixed(2)}</p>
                 <div className="flex items-center justify-end gap-1 border rounded-md mt-1">
                   <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}>
                     <Minus className="h-4 w-4" />
@@ -165,20 +165,20 @@ export function CheckoutTab() {
         <CardContent className="space-y-3">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Sub Total</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Tax (18%)</span>
-            <span>${taxAmount.toFixed(2)}</span>
+            <span>₹{taxAmount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Delivery Charge</span>
-            <span>${deliveryCharge.toFixed(2)}</span>
+            <span>₹{deliveryCharge.toFixed(2)}</span>
           </div>
           <Separator />
            <div className="flex justify-between font-bold text-lg">
             <span>Payable</span>
-            <span>${totalPayable.toFixed(2)}</span>
+            <span>₹{totalPayable.toFixed(2)}</span>
           </div>
         </CardContent>
       </Card>

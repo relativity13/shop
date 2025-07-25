@@ -41,7 +41,7 @@ export function WishlistTab() {
               <div className="flex-grow">
                 <p className="font-semibold">{product.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  ${product.price.toFixed(2)} / {product.unit}
+                  ₹{product.price.toFixed(2)} / {product.unit}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                    <Input

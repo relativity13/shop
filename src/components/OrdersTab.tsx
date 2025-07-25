@@ -42,7 +42,7 @@ export function OrdersTab() {
                       <p className="text-sm text-muted-foreground">Order #{order.id} - {order.status}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">${order.total.toFixed(2)}</p>
+                      <p className="font-semibold">₹{order.total.toFixed(2)}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1 justify-end">
                         <Calendar className="w-4 h-4" />
                         {order.date}
@@ -62,7 +62,7 @@ export function OrdersTab() {
                           </p>
                         </div>
                         <p className="ml-auto font-semibold">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ₹{(item.price * item.quantity).toFixed(2)}
                         </p>
                       </li>
                     ))}
