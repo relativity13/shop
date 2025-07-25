@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard, Phone, MessageCircle } from 'lucide-react';
+import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
@@ -13,6 +13,7 @@ import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { user as mockUser } from '@/lib/data';
 
 function CheckoutButton() {
   const { cart } = useApp();
@@ -43,22 +44,26 @@ function HomePageContent() {
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
             HIKE CORPORATION
           </h1>
-          <div className="flex gap-2">
-             <Button asChild variant="outline">
-              <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-                <MessageCircle className="h-5 w-5" />
-                Send WhatsApp
-              </a>
-            </Button>
-            <Button asChild variant="outline">
-              <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
-                <Phone className="h-5 w-5" />
-                Call us
-              </a>
-            </Button>
-          </div>
         </div>
         <p className="text-muted-foreground mt-2">Your Modern Shopping Experience</p>
+        <div className="flex items-center justify-center gap-2 text-muted-foreground mt-2">
+            <MapPin className="h-4 w-4" />
+            <p>{mockUser.shippingAddress}</p>
+        </div>
+        <div className="flex justify-center gap-2 mt-4">
+            <Button asChild variant="outline">
+            <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                <MessageCircle className="h-5 w-5" />
+                Send WhatsApp
+            </a>
+            </Button>
+            <Button asChild variant="outline">
+            <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
+                <Phone className="h-5 w-5" />
+                Call us
+            </a>
+            </Button>
+        </div>
       </header>
 
       <div className="relative mb-8">
