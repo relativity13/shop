@@ -26,7 +26,7 @@ export const products: Product[] = [
     id: 3,
     name: 'Ammonia (NH₃)',
     description: 'Anhydrous ammonia for agricultural use as a fertilizer and as a building block for other chemicals.',
-    price: 0, // Set to 0 to demonstrate "Ask for Quote"
+    // Price is omitted for "Price on request"
     unit: 'MT',
     factoryLocation: 'Dammam, SA',
     imageUrl: 'https://placehold.co/600x400.png',

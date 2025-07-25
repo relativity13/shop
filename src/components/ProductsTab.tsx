@@ -26,7 +26,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
   };
   
   const handleAddToCart = (product: Product) => {
-    if (!product.price) return;
+    if (product.price === undefined) return;
     const quantity = quantities[product.id.toString()] || 1;
     addToCart(product, quantity);
   };
@@ -68,8 +68,8 @@ export function ProductsTab({ products }: ProductsTabProps) {
               <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
               <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center">
-                {product.price && product.price > 0 ? (
-                  <p className="text-lg font-bold text-primary">₹{formatIndianCurrency(product.price)} / {product.unit}</p>
+                {typeof product.price === 'number' && product.price > 0 ? (
+                  <p className="text-xl font-bold text-primary">₹{formatIndianCurrency(product.price)} / {product.unit}</p>
                 ) : (
                    <p className="text-lg font-bold text-primary">Price on request</p>
                 )}
@@ -77,7 +77,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
               </div>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
-              {product.price && product.price > 0 ? (
+              {typeof product.price === 'number' && product.price > 0 ? (
                 <>
                   <div className="flex items-center gap-2">
                     <Input

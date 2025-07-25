@@ -53,7 +53,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
 
 
   const addToWishlist = (product: Product, quantity: number) => {
-    if (!product.price) return;
+    const price = product.price ?? 0;
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
@@ -66,7 +66,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
         );
       }
       console.log(`Added to wishlist: ${product.name} with quantity ${quantity}`);
-      return [...prevWishlist, { ...product, quantity, price: product.price }];
+      return [...prevWishlist, { ...product, quantity, price }];
     });
   };
 
@@ -90,7 +90,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
   };
 
   const addToCart = (product: Product, quantity: number) => {
-    if (!product.price) return;
+    if (product.price === undefined) return;
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
