@@ -21,6 +21,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import Image from "next/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 
 const checkoutFormSchema = z.object({
@@ -32,6 +41,10 @@ type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
 export function CheckoutTab() {
   const { cart, getCartTotal, clearCart, removeFromCart, updateCartItemQuantity } = useApp();
   const [deliveryMethod, setDeliveryMethod] = useState<'deliver' | 'pickup'>('deliver');
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [whatsappMessage, setWhatsappMessage] = useState('');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
+
 
   // Hardcoded WhatsApp number
   const sellerWhatsAppNumber = "919310619600"; 
@@ -56,7 +69,7 @@ export function CheckoutTab() {
         mode: "onChange",
   });
 
-  const handleOrderPlacement = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
+  const prepareAndConfirmOrder = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
     const formData = form.getValues();
     const finalTotal = calculateTotal(selectedDeliveryMethod);
     const finalDeliveryCharge = getDeliveryCharge(selectedDeliveryMethod);
@@ -84,13 +97,17 @@ export function CheckoutTab() {
     }
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`;
     
-    window.open(whatsappUrl, '_blank');
+    setWhatsappMessage(message);
+    setWhatsappUrl(`https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`);
+    setShowConfirmation(true);
+  };
 
-    // Clear cart and form after sending
+  const handleSendToWhatsApp = () => {
+    window.open(whatsappUrl, '_blank');
     clearCart();
     form.reset();
+    setShowConfirmation(false);
   };
 
 
@@ -105,128 +122,146 @@ export function CheckoutTab() {
   }
 
   return (
-    <div className="space-y-4">
-      {/* Items in Cart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Items ({cart.length})</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {cart.map((item) => (
-            <div key={item.id} className="flex items-center gap-4">
-              <Image 
-                src={item.imageUrl} 
-                alt={item.name} 
-                width={64} 
-                height={64}
-                className="w-16 h-16 rounded-md object-cover border"
-                data-ai-hint="chemical container"
-              />
-              <div className="flex-grow">
-                <p className="font-semibold">{item.name}</p>
-                 <Button variant="link" size="sm" className="p-0 h-auto text-red-500" onClick={() => removeFromCart(item.id.toString())}>
-                   Remove
-                 </Button>
-              </div>
-              <div className="text-right">
-                <p className="font-semibold text-lg">₹{(item.price * item.quantity).toFixed(2)}</p>
-                <div className="flex items-center justify-end gap-1 border rounded-md mt-1">
-                  <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}>
-                    <Minus className="h-4 w-4" />
-                  </Button>
-                  <Input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => updateCartItemQuantity(item.id, parseInt(e.target.value) || 1)}
-                    className="w-12 h-8 text-center border-0 focus-visible:ring-0"
-                  />
-                   <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}>
-                    <Plus className="h-4 w-4" />
-                  </Button>
+    <>
+      <div className="space-y-4">
+        {/* Items in Cart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Items ({cart.length})</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {cart.map((item) => (
+              <div key={item.id} className="flex items-center gap-4">
+                <Image 
+                  src={item.imageUrl} 
+                  alt={item.name} 
+                  width={64} 
+                  height={64}
+                  className="w-16 h-16 rounded-md object-cover border"
+                  data-ai-hint="chemical container"
+                />
+                <div className="flex-grow">
+                  <p className="font-semibold">{item.name}</p>
+                   <Button variant="link" size="sm" className="p-0 h-auto text-red-500" onClick={() => removeFromCart(item.id.toString())}>
+                     Remove
+                   </Button>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold text-lg">₹{(item.price * item.quantity).toFixed(2)}</p>
+                  <div className="flex items-center justify-end gap-1 border rounded-md mt-1">
+                    <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}>
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <Input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) => updateCartItemQuantity(item.id, parseInt(e.target.value) || 1)}
+                      className="w-12 h-8 text-center border-0 focus-visible:ring-0"
+                    />
+                     <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}>
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
+            ))}
+          </CardContent>
+        </Card>
+        
+        {/* Bill Details */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Bill Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Sub Total</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
-          ))}
-        </CardContent>
-      </Card>
-      
-      {/* Bill Details */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Bill Details</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Sub Total</span>
-            <span>₹{subtotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Tax (18%)</span>
-            <span>₹{taxAmount.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Delivery Charge</span>
-            <span>₹{deliveryCharge.toFixed(2)}</span>
-          </div>
-          <Separator />
-           <div className="flex justify-between font-bold text-lg">
-            <span>Payable</span>
-            <span>₹{totalPayable.toFixed(2)}</span>
-          </div>
-        </CardContent>
-      </Card>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Tax (18%)</span>
+              <span>₹{taxAmount.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Delivery Charge</span>
+              <span>₹{deliveryCharge.toFixed(2)}</span>
+            </div>
+            <Separator />
+             <div className="flex justify-between font-bold text-lg">
+              <span>Payable</span>
+              <span>₹{totalPayable.toFixed(2)}</span>
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Shipping & Final Actions */}
-       <Form {...form}>
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-           {deliveryMethod === 'deliver' && (
-              <Card>
-                <CardHeader>
-                    <CardTitle>Shipping Address</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <FormField
-                        control={form.control}
-                        name="shippingAddress"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormControl>
-                                <Input placeholder="Enter your shipping address" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                </CardContent>
-              </Card>
-           )}
-          
-          <div className="grid grid-cols-2 gap-4">
-             <Button
-                type="button"
-                className="flex flex-col h-auto py-3"
-                onClick={() => {
-                  setDeliveryMethod('pickup');
-                  handleOrderPlacement('pickup');
-                }}
-            >
-                <p className="font-semibold">I will Pickup</p>
-                <p className="text-xs font-normal">Confirm Order</p>
-            </Button>
-             <Button
-                type="button"
-                className="flex flex-col h-auto py-3"
-                onClick={() => {
-                  setDeliveryMethod('deliver');
-                  form.handleSubmit(() => handleOrderPlacement('deliver'))();
-                }}
-            >
-                <p className="font-semibold">Deliver</p>
-                <p className="text-xs font-normal">Confirm Order</p>
-            </Button>
+        {/* Shipping & Final Actions */}
+         <Form {...form}>
+          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+             {deliveryMethod === 'deliver' && (
+                <Card>
+                  <CardHeader>
+                      <CardTitle>Shipping Address</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                      <FormField
+                          control={form.control}
+                          name="shippingAddress"
+                          render={({ field }) => (
+                              <FormItem>
+                              <FormControl>
+                                  <Input placeholder="Enter your shipping address" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                              </FormItem>
+                          )}
+                      />
+                  </CardContent>
+                </Card>
+             )}
+            
+            <div className="grid grid-cols-2 gap-4">
+               <Button
+                  type="button"
+                  className="flex flex-col h-auto py-3"
+                  onClick={() => {
+                    setDeliveryMethod('pickup');
+                    prepareAndConfirmOrder('pickup');
+                  }}
+              >
+                  <p className="font-semibold">I will Pickup</p>
+                  <p className="text-xs font-normal">Confirm Order</p>
+              </Button>
+               <Button
+                  type="button"
+                  className="flex flex-col h-auto py-3"
+                  onClick={() => {
+                    setDeliveryMethod('deliver');
+                    form.handleSubmit(() => prepareAndConfirmOrder('deliver'))();
+                  }}
+              >
+                  <p className="font-semibold">Deliver</p>
+                  <p className="text-xs font-normal">Confirm Order</p>
+              </Button>
+            </div>
+          </form>
+         </Form>
+      </div>
+
+      <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Your Order</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please review your order message below. Clicking "Send" will open WhatsApp with this message pre-filled.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="my-4 p-4 bg-muted rounded-md whitespace-pre-wrap text-sm">
+            {whatsappMessage}
           </div>
-        </form>
-       </Form>
-    </div>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleSendToWhatsApp}>Send</AlertDialogAction>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
