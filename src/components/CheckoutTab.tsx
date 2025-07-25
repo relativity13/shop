@@ -35,7 +35,7 @@ export function CheckoutTab() {
   const [deliveryMethod, setDeliveryMethod] = useState<'deliver' | 'pickup'>('deliver');
 
   // Hardcoded WhatsApp number
-  const sellerWhatsAppNumber = "919310619600"; // Replace with your actual number, including country code without '+'
+  const sellerWhatsAppNumber = "919310619600"; 
 
   const subtotal = getCartTotal();
   const taxRate = 0.18; // 18% tax

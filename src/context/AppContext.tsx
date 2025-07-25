@@ -29,6 +29,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<OrderItem[]>([]);
 
   const addToWishlist = (product: Product, quantity: number) => {
+    if (!product.price) return;
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
@@ -41,7 +42,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         );
       }
       console.log(`Added to wishlist: ${product.name} with quantity ${quantity}`);
-      return [...prevWishlist, { ...product, quantity }];
+      return [...prevWishlist, { ...product, quantity, price: product.price }];
     });
   };
 
@@ -65,6 +66,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addToCart = (product: Product, quantity: number) => {
+    if (!product.price) return;
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
@@ -76,7 +78,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
-      return [...prevCart, { ...product, quantity }];
+      return [...prevCart, { ...product, quantity, price: product.price }];
     });
     console.log(`Added to cart: ${quantity} ${product.unit}(s) of ${product.name}`);
   };

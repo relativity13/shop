@@ -3,7 +3,7 @@ export interface Product {
   id: number;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   unit: string;
   factoryLocation: string;
   imageUrl: string;
@@ -12,10 +12,12 @@ export interface Product {
 
 export interface OrderItem extends Product {
   quantity: number;
+  price: number;
 }
 
 export interface WishlistItem extends Product {
   quantity: number;
+  price: number;
 }
 
 export interface Order {

@@ -6,6 +6,7 @@ import { orders as mockOrders } from '@/lib/data';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import { OrderItem } from '@/lib/types';
 
 export function OrdersTab() {
 
@@ -52,7 +53,7 @@ export function OrdersTab() {
                 <AccordionContent className="p-4 border-t">
                   <h4 className="font-semibold mb-2">Items:</h4>
                   <ul className="space-y-2">
-                    {order.items.map((item) => (
+                    {order.items.map((item: OrderItem) => (
                       <li key={item.id} className="flex items-center gap-4">
                         <div>
                           <p className="font-medium">{item.name}</p>

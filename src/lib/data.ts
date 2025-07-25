@@ -26,7 +26,7 @@ export const products: Product[] = [
     id: 3,
     name: 'Ammonia (NH₃)',
     description: 'Anhydrous ammonia for agricultural use as a fertilizer and as a building block for other chemicals.',
-    price: 600.00,
+    price: 0, // Set to 0 to demonstrate "Ask for Quote"
     unit: 'ton',
     factoryLocation: 'Dammam, SA',
     imageUrl: 'https://placehold.co/600x400.png',
@@ -100,8 +100,8 @@ export const orders: Order[] = [
     id: 'ORD-001',
     date: '2023-10-15',
     items: [
-      { ...products[1], quantity: 10 },
-      { ...products[3], quantity: 5 },
+      { ...products[1], quantity: 10, price: products[1].price! },
+      { ...products[3], quantity: 5, price: products[3].price! },
     ],
     total: 7505.00,
     status: 'Delivered',
@@ -109,7 +109,7 @@ export const orders: Order[] = [
   {
     id: 'ORD-002',
     date: '2023-11-01',
-    items: [{ ...products[6], quantity: 20 }],
+    items: [{ ...products[6], quantity: 20, price: products[6].price! }],
     total: 50000.00,
     status: 'Delivered',
   },
@@ -117,8 +117,8 @@ export const orders: Order[] = [
     id: 'ORD-003',
     date: '2024-01-20',
     items: [
-      { ...products[0], quantity: 15 },
-      { ...products[7], quantity: 50 },
+      { ...products[0], quantity: 15, price: products[0].price! },
+      { ...products[7], quantity: 50, price: products[7].price! },
     ],
     total: 19250.00,
     status: 'Processing',
