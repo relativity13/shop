@@ -16,3 +16,7 @@ export interface WishlistItem extends Product {
 }
 
 
+export interface OrderItem extends Product {
+  quantity: number;
+  price: number;
+}
