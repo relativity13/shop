@@ -53,7 +53,7 @@ function HomePageContent() {
             <Button asChild variant="outline">
               <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
                 <Phone className="h-5 w-5" />
-                Call
+                Call us
               </a>
             </Button>
           </div>
