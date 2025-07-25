@@ -12,6 +12,7 @@ import { AboutTab } from '@/components/AboutTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 function CheckoutButton() {
   const { cart } = useApp();
@@ -38,6 +39,7 @@ function HomePageContent() {
     <main className="container mx-auto px-4 py-8 pb-24">
       <header className="text-center mb-8">
         <div className="flex justify-center items-center gap-4">
+          <Image src="/logo.png" alt="HIKE CORPORATION Logo" width={50} height={50} />
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
             HIKE CORPORATION
           </h1>
