@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useApp } from '@/context/AppContext';
-import { user as mockUser } from '@/lib/data';
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -54,10 +53,7 @@ export function CheckoutTab() {
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
-    defaultValues: {
-      shippingAddress: mockUser.shippingAddress,
-    },
-    mode: "onChange",
+        mode: "onChange",
   });
 
   const handleOrderPlacement = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
@@ -67,10 +63,7 @@ export function CheckoutTab() {
 
     let message = `*New Order Details*\n\n`;
     message += `*Customer Details:*\n`;
-    message += `Company: ${mockUser.name}\n`;
-    message += `Manager: ${mockUser.managerName}\n`;
-    message += `Email: ${mockUser.email}\n`;
-    message += `Phone: ${mockUser.phone}\n\n`;
+  
 
     message += `*Order Items:*\n`;
     cart.forEach(item => {

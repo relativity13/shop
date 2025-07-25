@@ -21,7 +21,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { user as mockUser } from "@/lib/data";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,8 +58,14 @@ export function ProfileTab() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-        ...mockUser,
-        sameAsShipping: false,
+      name: "",
+      managerName: "",
+      email: "",
+      phone: "",
+      gstNumber: "",
+      shippingAddress: "",
+      billingAddress: "",
+      sameAsShipping: false,
     },
     mode: "onChange",
   });
@@ -74,7 +79,7 @@ export function ProfileTab() {
     } else {
         // If you want to clear it when unchecked:
         if (form.getValues("billingAddress") === watchShippingAddress) {
-            form.setValue("billingAddress", mockUser.billingAddress);
+            form.setValue("billingAddress", "");
         }
     }
   }, [watchSameAsShipping, watchShippingAddress, form]);

@@ -1,14 +1,14 @@
 
-import type { Product, Order, User } from './types';
+import type { Product, OrderItem } from './types';
 
 export const products: Product[] = [
   {
     id: 1,
-    name: 'Sulfuric Acid (H₂SO₄)',
-    description: 'High-purity sulfuric acid for various industrial applications, including fertilizer production and chemical synthesis.',
-    price: 350.00,
+    name: 'Stearic Acid',
+    description: 'Godrej Distric Grade',
+    price: 108000,
     unit: 'ton',
-    factoryLocation: 'Houston, US',
+    factoryLocation: 'Sector 4, Bawana',
     imageUrl: 'https://placehold.co/600x400.png',
     category: 'Acids',
   },
@@ -84,43 +84,31 @@ export const products: Product[] = [
   },
 ];
 
-export const user: User = {
-  name: 'HIKE CORPORATION',
-  managerName: 'Jane Smith',
-  email: 'sales@hikecorporation.com',
-  phone: '(987) 654-3210',
-  shippingAddress: '789 Industrial Park, Metro City, 54321',
-  billingAddress: '101 Finance Tower, Commerce Bay, 09876',
-  gstNumber: '27ZYXWV9876G1Z4',
-  avatarUrl: 'https://placehold.co/100x100.png',
-};
 
-export const orders: Order[] = [
+export const orders: {
+  id: string;
+  items: OrderItem[];
+  total: number;
+  status: string;
+  date: string;
+}[] = [
   {
-    id: 'ORD-001',
+    id: 'ORD001',
+    items: [
+      { id: 1, name: 'Stearic Acid', quantity: 2, price: 108000, unit: 'ton', description: 'Godrej Distric Grade', factoryLocation: 'Sector 4, Bawana', imageUrl: 'https://placehold.co/600x400.png', category: 'Acids' },
+      { id: 2, name: 'Sodium Hydroxide (NaOH)', quantity: 1, price: 450.50, unit: 'ton', description: 'Also known as caustic soda, used in manufacturing of pulp and paper, textiles, and soaps.', factoryLocation: 'Ludwigshafen, DE', imageUrl: 'https://placehold.co/600x400.png', category: 'Bases' }
+    ],
+    total: 216450.50,
+    status: 'Delivered',
     date: '2023-10-15',
-    items: [
-      { ...products[1], quantity: 10, price: products[1].price! },
-      { ...products[3], quantity: 5, price: products[3].price! },
-    ],
-    total: 7505.00,
-    status: 'Delivered',
   },
   {
-    id: 'ORD-002',
-    date: '2023-11-01',
-    items: [{ ...products[6], quantity: 20, price: products[6].price! }],
-    total: 50000.00,
-    status: 'Delivered',
-  },
-  {
-    id: 'ORD-003',
-    date: '2024-01-20',
+    id: 'ORD002',
     items: [
-      { ...products[0], quantity: 15, price: products[0].price! },
-      { ...products[7], quantity: 50, price: products[7].price! },
+      { id: 4, name: 'Methanol (CH₃OH)', quantity: 5, price: 300.75, unit: 'ton', description: 'A versatile solvent and fuel, also used in the production of formaldehyde and acetic acid.', factoryLocation: 'Shanghai, CN', imageUrl: 'https://placehold.co/600x400.png', category: 'Solvents' }
     ],
-    total: 19250.00,
-    status: 'Processing',
+    total: 1503.75,
+    status: 'Shipped',
+    date: '2023-10-20',
   },
 ];

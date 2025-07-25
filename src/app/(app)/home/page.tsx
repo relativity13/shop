@@ -11,7 +11,7 @@ import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { user as mockUser } from '@/lib/data';
+
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/services/productService';
@@ -39,7 +39,7 @@ function HomePageContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
-  const companyPhoneNumber = "9876543210";
+  const companyPhoneNumber = "919310619600";
   const sellerWhatsAppNumber = "919310619600";
 
   const categories = useMemo(() => {
@@ -59,15 +59,12 @@ function HomePageContent() {
     <main className="container mx-auto px-4 py-8 pb-24">
       <header className="text-center mb-8">
         <div className="flex justify-center items-center gap-4">
-          <Image src="/logo.png" alt="HIKE CORPORATION Logo" width={50} height={50} />
+          <Image src="/logo.png" alt="Logo" width={50} height={50} />
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
-            HIKE CORPORATION
+            HIKE CORPORATION 
           </h1>
         </div>
-        <div className="flex items-center justify-center gap-2 text-muted-foreground mt-2">
-            <MapPin className="h-4 w-4" />
-            <p>{mockUser.shippingAddress}</p>
-        </div>
+       
         <div className="flex justify-center gap-2 mt-4">
             <Button asChild variant="outline">
             <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
