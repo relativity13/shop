@@ -23,7 +23,7 @@ export function AboutTab() {
           />
           <div className="flex justify-between items-start">
             <div className="text-left">
-              <CardTitle className="text-3xl font-bold">About HIKE CORPORATION</CardTitle>
+              <CardTitle className="text-3xl font-bold">About Us</CardTitle>
               <CardDescription className="text-muted-foreground mt-1">Your Trusted Partner in Excellence</CardDescription>
             </div>
             <div className="flex gap-2 flex-shrink-0">

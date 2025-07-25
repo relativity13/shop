@@ -1,13 +1,11 @@
 
 "use client";
 
-import { Heart, ListOrdered, ShoppingBag, User, Search, Info, CreditCard, Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
-import { OrdersTab } from '@/components/OrdersTab';
-import { ProfileTab } from '@/components/ProfileTab';
 import { AboutTab } from '@/components/AboutTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
@@ -15,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { user as mockUser } from '@/lib/data';
 import React, { useState, useMemo, useEffect } from 'react';
-import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/services/productService';
 
@@ -136,7 +133,7 @@ function HomePageContent() {
           <CheckoutButton />
           <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
             <Info className="w-5 h-5" />
-            About
+            About Us
           </TabsTrigger>
         </TabsList>
       </Tabs>
