@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { Product, OrderItem, WishlistItem } from '@/lib/types';
 import { products as initialProducts } from '@/lib/data';
 
@@ -23,10 +23,34 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+const WISHLIST_STORAGE_KEY = 'hike-wishlist';
+
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products] = useState<Product[]>(initialProducts);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
+  
+  // Load wishlist from localStorage on initial render
+  useEffect(() => {
+    try {
+      const storedWishlist = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
+      if (storedWishlist) {
+        setWishlist(JSON.parse(storedWishlist));
+      }
+    } catch (error) {
+      console.error("Failed to parse wishlist from localStorage", error);
+    }
+  }, []);
+
+  // Save wishlist to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    } catch (error) {
+      console.error("Failed to save wishlist to localStorage", error);
+    }
+  }, [wishlist]);
+
 
   const addToWishlist = (product: Product, quantity: number) => {
     if (!product.price) return;
