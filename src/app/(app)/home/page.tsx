@@ -44,9 +44,10 @@ function HomePageContent() {
             HIKE CORPORATION
           </h1>
           <div className="flex gap-2">
-             <Button asChild variant="outline" size="icon">
+             <Button asChild variant="outline">
               <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
                 <MessageCircle className="h-5 w-5" />
+                Send WhatsApp
               </a>
             </Button>
             <Button asChild variant="outline">
