@@ -6,8 +6,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatIndianCurrency(amount: number) {
-  return amount.toLocaleString('en-IN', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const options: Intl.NumberFormatOptions = {
+    style: 'decimal',
+  };
+
+  if (amount % 1 !== 0) {
+    options.minimumFractionDigits = 2;
+    options.maximumFractionDigits = 2;
+  } else {
+    options.maximumFractionDigits = 0;
+  }
+
+  return amount.toLocaleString('en-IN', options);
 }
