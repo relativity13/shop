@@ -49,9 +49,10 @@ function HomePageContent() {
                 <MessageCircle className="h-5 w-5" />
               </a>
             </Button>
-            <Button asChild variant="outline" size="icon">
+            <Button asChild variant="outline">
               <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
                 <Phone className="h-5 w-5" />
+                Call
               </a>
             </Button>
           </div>
