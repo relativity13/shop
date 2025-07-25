@@ -154,8 +154,9 @@ export function CheckoutTab() {
                     </Button>
                     <Input
                       type="number"
+                      step="any"
                       value={item.quantity}
-                      onChange={(e) => updateCartItemQuantity(item.id, parseInt(e.target.value) || 1)}
+                      onChange={(e) => updateCartItemQuantity(item.id, parseFloat(e.target.value) || 1)}
                       className="w-16 h-8 text-center border-0 focus-visible:ring-0"
                     />
                      <span className="text-sm text-muted-foreground pr-2">{item.unit}</span>
@@ -266,3 +267,4 @@ export function CheckoutTab() {
     </>
   );
 }
+ 
