@@ -6,6 +6,7 @@ import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { formatIndianCurrency } from '@/lib/utils';
 
 export function WishlistTab() {
   const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
@@ -41,7 +42,7 @@ export function WishlistTab() {
               <div className="flex-grow">
                 <p className="font-semibold">{product.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  ₹{product.price.toFixed(2)} / {product.unit}
+                  ₹{formatIndianCurrency(product.price)} / {product.unit}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                    <Input

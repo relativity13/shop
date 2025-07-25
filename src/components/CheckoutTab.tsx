@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useApp } from '@/context/AppContext';
 import React, { useState } from "react";
+import { formatIndianCurrency } from '@/lib/utils';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -75,14 +76,14 @@ export function CheckoutTab() {
 
     message += `*Order Items:*\n`;
     cart.forEach(item => {
-      message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${(item.price * item.quantity).toFixed(2)}\n`;
+      message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${formatIndianCurrency(item.price * item.quantity)}\n`;
     });
     message += `\n`;
 
     message += `*Bill Details:*\n`;
-    message += `Subtotal: ₹${subtotal.toFixed(2)}\n`;
-    message += `Tax (18%): ₹${(subtotal * taxRate).toFixed(2)}\n`;
-    message += `*Total Payable: ₹${finalTotal.toFixed(2)}*\n\n`;
+    message += `Subtotal: ₹${formatIndianCurrency(subtotal)}\n`;
+    message += `Tax (18%): ₹${formatIndianCurrency(subtotal * taxRate)}\n`;
+    message += `*Total Payable: ₹${formatIndianCurrency(finalTotal)}*\n\n`;
 
     message += `*Delivery Method:*\n`;
     message += `${selectedDeliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
@@ -141,7 +142,7 @@ export function CheckoutTab() {
                    </Button>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-lg">₹{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-semibold text-lg">₹{formatIndianCurrency(item.price * item.quantity)}</p>
                   <div className="flex items-center justify-end gap-1 border rounded-md mt-1">
                     <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}>
                       <Minus className="h-4 w-4" />
@@ -172,16 +173,16 @@ export function CheckoutTab() {
           <CardContent className="space-y-3">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Sub Total</span>
-              <span>₹{subtotal.toFixed(2)}</span>
+              <span>₹{formatIndianCurrency(subtotal)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Tax (18%)</span>
-              <span>₹{taxAmount.toFixed(2)}</span>
+              <span>₹{formatIndianCurrency(taxAmount)}</span>
             </div>
             <Separator />
              <div className="flex justify-between font-bold text-lg">
               <span>Payable</span>
-              <span>₹{totalPayable.toFixed(2)}</span>
+              <span>₹{formatIndianCurrency(totalPayable)}</span>
             </div>
           </CardContent>
         </Card>

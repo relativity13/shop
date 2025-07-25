@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { OrderItem } from '@/lib/types';
+import { formatIndianCurrency } from '@/lib/utils';
 
 export function OrdersTab() {
 
@@ -42,7 +43,7 @@ export function OrdersTab() {
                       <p className="text-sm text-muted-foreground">Order #{order.id} - {order.status}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">₹{order.total.toFixed(2)}</p>
+                      <p className="font-semibold">₹{formatIndianCurrency(order.total)}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1 justify-end">
                         <Calendar className="w-4 h-4" />
                         {order.date}
@@ -62,7 +63,7 @@ export function OrdersTab() {
                           </p>
                         </div>
                         <p className="ml-auto font-semibold">
-                          ₹{(item.price * item.quantity).toFixed(2)}
+                          ₹{formatIndianCurrency(item.price * item.quantity)}
                         </p>
                       </li>
                     ))}
