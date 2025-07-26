@@ -90,28 +90,45 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
   };
 
   const addToCart = (product: Product, quantity: number) => {
-    if (product.price === undefined) return;
+    // A product must have a price to be added to the cart.
+    if (typeof product.price !== 'number') {
+        console.error("Cannot add product without a price to the cart.");
+        return;
+    }
+
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
     }
+
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
+      
+      const cartItem: OrderItem = {
+          ...product,
+          price: product.price as number, // We've already checked this, so we can assert the type
+          quantity: quantity
+      };
+
       if (existingItem) {
         return prevCart.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
-      return [...prevCart, { ...product, quantity, price: product.price }];
+      
+      console.log(`Added to cart: ${quantity} ${product.unit}(s) of ${product.name}`);
+      return [...prevCart, cartItem];
     });
-    console.log(`Added to cart: ${quantity} ${product.unit}(s) of ${product.name}`);
   };
 
   const addWishlistToCart = () => {
     wishlist.forEach(item => {
-      addToCart(item, item.quantity);
+      // Only add items from wishlist that have a price
+      if (typeof item.price === 'number' && item.price > 0) {
+        addToCart(item, item.quantity);
+      }
     });
-    console.log("Added all wishlist items to cart.");
+    console.log("Added all applicable wishlist items to cart.");
   };
 
   const removeFromCart = (productId: number | string) => {
@@ -151,6 +168,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     getCartTotal,
     clearCart,
     addWishlistToCart,
+  
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
