@@ -15,6 +15,7 @@ import Image from 'next/image';
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/services/productService';
+import { productCategories } from '@/lib/data';
 
 
 function CheckoutButton() {
@@ -43,9 +44,8 @@ function HomePageContent() {
   const sellerWhatsAppNumber = "919310619600";
 
   const categories = useMemo(() => {
-    const allCategories = products.map(p => p.category);
-    return ['All', ...Array.from(new Set(allCategories))];
-  }, [products]);
+    return ['All', ...productCategories];
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {

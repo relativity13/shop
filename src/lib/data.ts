@@ -1,6 +1,16 @@
 
 import type { Product, OrderItem } from './types';
 
+export const productCategories: string[] = [
+  'Acids',
+  'Bases',
+  'Fertilizers',
+  'Solvents',
+  'Polymers',
+  'Pigments',
+  'Salts',
+];
+
 export const products: Product[] = [
   {
     id: 1,
@@ -8,7 +18,7 @@ export const products: Product[] = [
     description: 'Godrej Distric Grade',
     price: 108000,
     unit: 'MT',
-    factoryLocation: 'Sector 4, Bawana',
+    factoryLocation: 'Bawana, Delhi',
     imageUrl: 'https://placehold.co/600x400.png',
     category: 'Acids',
   },
@@ -37,7 +47,7 @@ export const products: Product[] = [
     name: 'Methanol (CH₃OH)',
     description: 'A versatile solvent and fuel, also used in the production of formaldehyde and acetic acid.',
     price: 300.75,
-    unit: 'MT',
+    unit: 'KG',
     factoryLocation: 'Shanghai, CN',
     imageUrl: 'https://placehold.co/600x400.png',
     category: 'Solvents',
@@ -84,31 +94,4 @@ export const products: Product[] = [
   },
 ];
 
-
-export const orders: {
-  id: string;
-  items: OrderItem[];
-  total: number;
-  status: string;
-  date: string;
-}[] = [
-  {
-    id: 'ORD001',
-    items: [
-      { id: 1, name: 'Stearic Acid', quantity: 2, price: 108000, unit: 'MT', description: 'Godrej Distric Grade', factoryLocation: 'Sector 4, Bawana', imageUrl: 'https://placehold.co/600x400.png', category: 'Acids' },
-      { id: 2, name: 'Sodium Hydroxide (NaOH)', quantity: 1, price: 450.50, unit: 'MT', description: 'Also known as caustic soda, used in manufacturing of pulp and paper, textiles, and soaps.', factoryLocation: 'Ludwigshafen, DE', imageUrl: 'https://placehold.co/600x400.png', category: 'Bases' }
-    ],
-    total: 216450.50,
-    status: 'Delivered',
-    date: '2023-10-15',
-  },
-  {
-    id: 'ORD002',
-    items: [
-      { id: 4, name: 'Methanol (CH₃OH)', quantity: 5, price: 300.75, unit: 'MT', description: 'A versatile solvent and fuel, also used in the production of formaldehyde and acetic acid.', factoryLocation: 'Shanghai, CN', imageUrl: 'https://placehold.co/600x400.png', category: 'Solvents' }
-    ],
-    total: 1503.75,
-    status: 'Shipped',
-    date: '2023-10-20',
-  },
-];
+;
