@@ -1,14 +1,13 @@
 
 "use client";
 
-import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin, Sparkles } from 'lucide-react';
+import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { AboutTab } from '@/components/AboutTab';
 import { CheckoutTab } from '@/components/CheckoutTab';
-import { RecommendationsTab } from '@/components/RecommendationsTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -118,11 +117,8 @@ function HomePageContent() {
         <TabsContent value="about">
           <AboutTab />
         </TabsContent>
-        <TabsContent value="recommendations">
-          <RecommendationsTab />
-        </TabsContent>
         
-        <TabsList className="grid w-full grid-cols-5 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+        <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
           <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
             <ShoppingBag className="w-5 h-5" />
             Products
@@ -130,10 +126,6 @@ function HomePageContent() {
           <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
             <Heart className="w-5 h-5" />
             Wishlist
-          </TabsTrigger>
-          <TabsTrigger value="recommendations" className="py-3 flex-col h-full gap-1">
-            <Sparkles className="w-5 h-5" />
-            For You
           </TabsTrigger>
           <CheckoutButton />
           <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
