@@ -171,6 +171,15 @@ export function CheckoutTab() {
             <CardTitle>Bill Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+             <div className="space-y-2">
+              {cart.map(item => (
+                <div key={item.id} className="flex justify-between text-muted-foreground text-sm">
+                    <span>{item.name} ({item.quantity} {item.unit} x ₹{formatIndianCurrency(item.price)})</span>
+                    <span>₹{formatIndianCurrency(item.price * item.quantity)}</span>
+                </div>
+              ))}
+            </div>
+            <Separator />
             <div className="flex justify-between text-base">
               <span className="text-muted-foreground">Sub Total</span>
               <span>₹{formatIndianCurrency(subtotal)}</span>
@@ -192,10 +201,7 @@ export function CheckoutTab() {
           <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
              {deliveryMethod === 'deliver' && (
                 <Card>
-                  <CardHeader>
-                      <CardTitle>Shipping Address</CardTitle>
-                  </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-6">
                       <FormField
                           control={form.control}
                           name="shippingAddress"
