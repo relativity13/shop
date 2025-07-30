@@ -15,7 +15,7 @@ import Image from 'next/image';
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/services/productService';
-import { productCategories } from '@/lib/data';
+import { productCategories, companyInfo } from '@/lib/data';
 
 
 function CheckoutButton() {
@@ -40,9 +40,6 @@ function HomePageContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
-  const companyPhoneNumber = "919310619600";
-  const sellerWhatsAppNumber = "919310619600";
-
   const categories = useMemo(() => {
     return ['All', ...productCategories];
   }, []);
@@ -61,19 +58,19 @@ function HomePageContent() {
         <div className="flex justify-center items-center gap-4">
           <Image src="/logo.png" alt="Logo" width={50} height={50} />
           <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
-            HIKE CORPORATION 
+            {companyInfo.name}
           </h1>
         </div>
        
         <div className="flex justify-center gap-2 mt-4">
             <Button asChild variant="outline">
-            <a href={`https://wa.me/${sellerWhatsAppNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+            <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
                 <MessageCircle className="h-5 w-5" />
                 Send WhatsApp
             </a>
             </Button>
             <Button asChild variant="outline">
-            <a href={`tel:${companyPhoneNumber}`} aria-label="Call the store">
+            <a href={`tel:${companyInfo.phoneNumber}`} aria-label="Call the store">
                 <Phone className="h-5 w-5" />
                 Call us
             </a>

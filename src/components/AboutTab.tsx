@@ -12,9 +12,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { companyInfo } from '@/lib/data';
 
 export function AboutTab() {
-  const companyPhoneNumber = "9876543210";
   const { setTheme } = useTheme();
 
   return (
@@ -32,7 +32,7 @@ export function AboutTab() {
           <div className="flex justify-between items-start">
             <div className="text-left">
               <CardTitle className="text-3xl font-bold">About Us</CardTitle>
-              <CardDescription className="text-muted-foreground mt-1">Your Trusted Partner in Excellence</CardDescription>
+              <CardDescription className="text-muted-foreground mt-1">{companyInfo.tagline}</CardDescription>
             </div>
             <div className="flex gap-2 flex-shrink-0">
                <DropdownMenu>
@@ -60,26 +60,26 @@ export function AboutTab() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-left text-muted-foreground pt-4 border-t">
-            At HIKE CORPORATION, we're dedicated to supplying high-quality products with a seamless procurement experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine distribution.
+            {companyInfo.about}
           </p>
           
           <div className="border-t pt-4 space-y-2">
             <h3 className="text-lg font-semibold">Contact Us</h3>
             <div className="flex items-center gap-3">
               <Building2 className="w-5 h-5 text-muted-foreground" />
-              <p>789 Industrial Park, Metro City, 54321</p>
+              <p>{companyInfo.address}</p>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-muted-foreground" />
-              <p>sales@hikecorporation.com</p>
+              <p>{companyInfo.email}</p>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-muted-foreground" />
-              <p>(987) 654-3210</p>
+              <p>{companyInfo.phoneNumber}</p>
             </div>
              <div className="flex items-center gap-3">
               <Globe className="w-5 h-5 text-muted-foreground" />
-              <p>www.hikecorporation.com</p>
+              <p>{companyInfo.website}</p>
             </div>
           </div>
         </CardContent>

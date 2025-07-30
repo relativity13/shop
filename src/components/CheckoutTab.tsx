@@ -7,6 +7,7 @@ import * as z from "zod";
 import { useApp } from '@/context/AppContext';
 import React, { useState } from "react";
 import { formatIndianCurrency } from '@/lib/utils';
+import { companyInfo } from '@/lib/data';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -48,9 +49,6 @@ export function CheckoutTab() {
   const [whatsappMessage, setWhatsappMessage] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
 
-
-  // Hardcoded WhatsApp number
-  const sellerWhatsAppNumber = "919310619600"; 
 
   const subtotal = getCartTotal();
   const taxRate = 0.18; // 18% tax
@@ -97,7 +95,7 @@ export function CheckoutTab() {
     const encodedMessage = encodeURIComponent(message);
     
     setWhatsappMessage(message);
-    setWhatsappUrl(`https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`);
+    setWhatsappUrl(`https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`);
     setShowConfirmation(true);
   };
 

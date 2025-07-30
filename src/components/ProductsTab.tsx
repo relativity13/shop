@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import type { Product } from '@/lib/types';
 import { formatIndianCurrency } from '@/lib/utils';
+import { companyInfo } from '@/lib/data';
 
 interface ProductsTabProps {
   products: Product[];
@@ -18,7 +19,6 @@ interface ProductsTabProps {
 export function ProductsTab({ products }: ProductsTabProps) {
   const { addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const sellerWhatsAppNumber = "919310619600";
 
   const handleQuantityChange = (productId: string | number, quantity: string) => {
     const numQuantity = parseInt(quantity, 10);
@@ -46,7 +46,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
   const handleAskForQuote = (productName: string) => {
     const message = `I would like a quote for the following product: ${productName}`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${sellerWhatsAppNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 

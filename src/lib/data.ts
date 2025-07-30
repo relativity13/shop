@@ -1,6 +1,18 @@
 
 import type { Product, OrderItem } from './types';
 
+export const companyInfo = {
+  name: 'HIKE CORPORATION',
+  logo: '/logo.png',
+  tagline: 'Your Trusted Partner in Excellence',
+  about: "At HIKE CORPORATION, we're dedicated to supplying high-quality products with a seamless procurement experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine distribution.",
+  address: '789 Industrial Park, Metro City, 54321',
+  phoneNumber: '919310619600',
+  whatsappNumber: '919310619600',
+  email: 'sales@hikecorporation.com',
+  website: 'www.hikecorporation.com',
+};
+
 export const productCategories: string[] = [
   'Acids',
   'Bases',
