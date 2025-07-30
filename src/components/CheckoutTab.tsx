@@ -31,17 +31,27 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 
 const checkoutFormSchema = z.object({
+  deliveryMethod: z.enum(['deliver', 'pickup']),
   shippingAddress: z.string().optional(),
+}).refine(data => {
+    if (data.deliveryMethod === 'deliver') {
+        return data.shippingAddress && data.shippingAddress.length > 10;
+    }
+    return true;
+}, {
+    message: "Shipping address must be at least 10 characters.",
+    path: ["shippingAddress"],
 });
+
 
 type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
 
 export function CheckoutTab() {
   const { cart, getCartTotal, clearCart, removeFromCart, updateCartItemQuantity } = useApp();
-  const [deliveryMethod, setDeliveryMethod] = useState<'deliver' | 'pickup'>('deliver');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [whatsappMessage, setWhatsappMessage] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
@@ -63,17 +73,18 @@ export function CheckoutTab() {
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
-        mode: "onChange",
+    defaultValues: {
+        deliveryMethod: 'deliver',
+    },
+    mode: "onChange",
   });
 
-  const prepareAndConfirmOrder = (selectedDeliveryMethod: 'deliver' | 'pickup') => {
-    const formData = form.getValues();
+  const deliveryMethod = form.watch("deliveryMethod");
+
+  const prepareAndConfirmOrder = (formData: CheckoutFormValues) => {
     const finalTotal = calculateTotal();
 
     let message = `*New Order Details*\n\n`;
-    message += `*Customer Details:*\n`;
-  
-
     message += `*Order Items:*\n`;
     cart.forEach(item => {
       message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${formatIndianCurrency(item.price * item.quantity)}\n`;
@@ -86,8 +97,8 @@ export function CheckoutTab() {
     message += `*Total Payable: ₹${formatIndianCurrency(finalTotal)}*\n\n`;
 
     message += `*Delivery Method:*\n`;
-    message += `${selectedDeliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
-    if (selectedDeliveryMethod === 'deliver' && formData.shippingAddress) {
+    message += `${formData.deliveryMethod === 'deliver' ? 'Deliver' : 'I will Pickup'}\n`;
+    if (formData.deliveryMethod === 'deliver' && formData.shippingAddress) {
       message += `*Shipping Address:*\n${formData.shippingAddress}\n`;
     }
 
@@ -201,31 +212,70 @@ export function CheckoutTab() {
 
         {/* Shipping & Final Actions */}
          <Form {...form}>
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+          <form onSubmit={form.handleSubmit(prepareAndConfirmOrder)} className="space-y-4">
+             <Card>
+                <CardHeader>
+                    <CardTitle>Delivery Method</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <FormField
+                      control={form.control}
+                      name="deliveryMethod"
+                      render={({ field }) => (
+                        <FormItem className="space-y-3">
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              className="flex flex-col space-y-1"
+                            >
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem value="deliver" />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  Deliver to my address
+                                </FormLabel>
+                              </FormItem>
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem value="pickup" />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                 I will pickup from store
+                                </FormLabel>
+                              </FormItem>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {deliveryMethod === 'deliver' && (
+                        <FormField
+                            control={form.control}
+                            name="shippingAddress"
+                            render={({ field }) => (
+                                <FormItem className="mt-4">
+                                <FormLabel>Shipping Address</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter your full shipping address" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    )}
+                </CardContent>
+             </Card>
             
-            <div className="grid grid-cols-2 gap-4">
+            
                <Button
-                  type="button"
-                  className="flex flex-col h-auto py-3"
-                  onClick={() => {
-                    setDeliveryMethod('pickup');
-                    prepareAndConfirmOrder('pickup');
-                  }}
+                  type="submit"
+                  className="w-full h-auto py-3"
               >
-                  <p className="font-semibold">I will Pickup</p>
-                  <p className="text-xs font-normal">Confirm Order</p>
+                  <p className="font-semibold">Confirm Order on WhatsApp</p>
               </Button>
-               <Button
-                  type="button"
-                  className="flex flex-col h-auto py-3"
-                  onClick={() => {
-                    setDeliveryMethod('deliver');
-                    form.handleSubmit(() => prepareAndConfirmOrder('deliver'))();
-                  }}
-              >
-                  <p className="font-semibold">Confirm Order on whatsapp</p>
-              </Button>
-            </div>
           </form>
          </Form>
       </div>
