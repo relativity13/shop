@@ -76,7 +76,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
                 {product.moq && (
                   <p className="font-semibold">MOQ: {product.moq}</p>
                 )}
-                <p>Ships from: {product.factoryLocation}</p>
+                <p>Ex: {product.factoryLocation}</p>
               </div>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
