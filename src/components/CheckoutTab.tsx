@@ -143,6 +143,9 @@ export function CheckoutTab() {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-lg">₹{formatIndianCurrency(item.price * item.quantity)}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {item.quantity} {item.unit} x ₹{formatIndianCurrency(item.price)}
+                  </p>
                   <div className="flex items-center justify-end gap-1 border rounded-md mt-1">
                     <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => updateCartItemQuantity(item.id, item.quantity - 1)}>
                       <Minus className="h-4 w-4" />
@@ -199,10 +202,6 @@ export function CheckoutTab() {
         {/* Shipping & Final Actions */}
          <Form {...form}>
           <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-             {deliveryMethod === 'deliver' && (
-                <Card>
-                </Card>
-             )}
             
             <div className="grid grid-cols-2 gap-4">
                <Button
@@ -224,8 +223,7 @@ export function CheckoutTab() {
                     form.handleSubmit(() => prepareAndConfirmOrder('deliver'))();
                   }}
               >
-                  <p className="font-semibold">Deliver</p>
-                  <p className="text-xs font-normal">Confirm Order</p>
+                  <p className="font-semibold">Confirm Order on whatsapp</p>
               </Button>
             </div>
           </form>
