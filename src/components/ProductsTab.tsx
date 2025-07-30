@@ -67,11 +67,14 @@ export function ProductsTab({ products }: ProductsTabProps) {
             <div className="flex-grow">
               <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
-              <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center">
+              <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
                 {typeof product.price === 'number' && product.price > 0 ? (
                   <p className="text-xl font-bold text-primary">₹{formatIndianCurrency(product.price)} / {product.unit}</p>
                 ) : (
                    <p className="text-lg font-bold text-primary">Price on request</p>
+                )}
+                {product.moq && (
+                  <p className="font-semibold">MOQ: {product.moq}</p>
                 )}
                 <p>Ships from: {product.factoryLocation}</p>
               </div>

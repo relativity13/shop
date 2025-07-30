@@ -8,6 +8,7 @@ export interface Product {
   factoryLocation: string;
   imageUrl: string;
   category: string;
+  moq?: string;
 }
 
 export interface WishlistItem extends Product {
