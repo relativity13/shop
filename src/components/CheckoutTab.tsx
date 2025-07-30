@@ -242,7 +242,7 @@ export function CheckoutTab() {
                                   <RadioGroupItem value="pickup" />
                                 </FormControl>
                                 <FormLabel className="font-normal">
-                                 I will pickup from store
+                                 I will pickup from warehouse
                                 </FormLabel>
                               </FormItem>
                             </RadioGroup>
