@@ -33,7 +33,7 @@ export function WishlistTab() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Your Saved Order</CardTitle>
+        <CardTitle>Wishlist</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {wishlist.map((product) => (
