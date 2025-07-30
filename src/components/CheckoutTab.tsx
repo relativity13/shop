@@ -37,14 +37,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const checkoutFormSchema = z.object({
   deliveryMethod: z.enum(['deliver', 'pickup']),
   shippingAddress: z.string().optional(),
-}).refine(data => {
-    if (data.deliveryMethod === 'deliver') {
-        return data.shippingAddress && data.shippingAddress.length > 10;
-    }
-    return true;
-}, {
-    message: "Shipping address must be at least 10 characters.",
-    path: ["shippingAddress"],
 });
 
 
