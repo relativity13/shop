@@ -201,7 +201,6 @@ export function CheckoutTab() {
           <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
              {deliveryMethod === 'deliver' && (
                 <Card>
-                  <CardContent className="p-6">
                       <FormField
                           control={form.control}
                           name="shippingAddress"
@@ -214,7 +213,6 @@ export function CheckoutTab() {
                               </FormItem>
                           )}
                       />
-                  </CardContent>
                 </Card>
              )}
             
