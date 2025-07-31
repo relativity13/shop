@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { formatIndianCurrency } from '@/lib/utils';
 import type { WishlistItem } from '@/lib/types';
+import { Tabs, TabsTrigger } from '@/components/ui/tabs';
 
 export function WishlistTab() {
   const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
@@ -30,7 +31,13 @@ export function WishlistTab() {
       <div className="flex flex-col items-center justify-center text-center py-16 rounded-lg bg-card border">
         <Heart className="w-16 h-16 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-semibold mb-2">Your Wishlist is Empty</h2>
-        <p className="text-muted-foreground">Add products you love to your wishlist to keep track of them.</p>
+        <p className="text-muted-foreground">
+          Browse our {' '}
+            <Button variant="link" className="p-0 h-auto" asChild>
+                <TabsTrigger value="products">products</TabsTrigger>
+            </Button>
+          {' '} and add them here.
+        </p>
       </div>
     );
   }

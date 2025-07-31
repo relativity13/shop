@@ -39,6 +39,7 @@ function HomePageContent() {
   const { products } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('products');
   
   const categories = useMemo(() => {
     return ['All', ...productCategories];
@@ -78,30 +79,30 @@ function HomePageContent() {
         </div>
       </header>
 
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        <Input 
-          placeholder="Search for products..." 
-          className="pl-10 w-full border-border"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="relative mb-4">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input 
+              placeholder="Search for products..." 
+              className="pl-10 w-full border-border"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
 
-      <div className="mb-8 flex flex-wrap justify-center gap-2">
-        {categories.map(category => (
-          <Button
-            key={category}
-            variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
-            onClick={() => setSelectedCategory(category === 'All' ? null : category)}
-            className="rounded-full"
-          >
-            {category}
-          </Button>
-        ))}
-      </div>
-
-      <Tabs defaultValue="products" className="w-full">
+          <div className="mb-8 flex flex-wrap justify-center gap-2">
+            {categories.map(category => (
+              <Button
+                key={category}
+                variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category === 'All' ? null : category)}
+                className="rounded-full"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        
         <TabsContent value="products">
           <ProductsTab products={filteredProducts} />
         </TabsContent>
