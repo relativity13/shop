@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
@@ -82,7 +82,7 @@ function HomePageContent() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input 
           placeholder="Search for products..." 
-          className="pl-10 w-full border-white"
+          className="pl-10 w-full border-border"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -126,7 +126,7 @@ function HomePageContent() {
           </TabsTrigger>
           <CheckoutButton />
           <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
-            <Info className="w-5 h-5" />
+            <Building2 className="w-5 h-5" />
             About Us
           </TabsTrigger>
         </TabsList>
