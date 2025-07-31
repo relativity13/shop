@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingCart, Minus, Plus } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Info } from "lucide-react";
 import Image from "next/image";
 import {
   AlertDialog,
@@ -33,6 +33,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 const checkoutFormSchema = z.object({
@@ -261,12 +262,26 @@ export function CheckoutTab() {
              </Card>
             
             
-               <Button
-                  type="submit"
-                  className="w-full h-auto py-3"
-              >
-                  <p className="font-semibold">Submit order request via whatsapp</p>
-              </Button>
+            <div className="flex items-center gap-2">
+                <Button
+                    type="submit"
+                    className="w-full h-auto py-3"
+                >
+                    <p className="font-semibold">Submit order request via whatsapp</p>
+                </Button>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button type="button" variant="ghost" size="icon" className="flex-shrink-0">
+                        <Info className="h-5 w-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This action is a non-binding request. Final confirmation will be sent after we verify availability and pricing.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+            </div>
           </form>
          </Form>
       </div>
