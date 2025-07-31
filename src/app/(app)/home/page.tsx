@@ -107,7 +107,7 @@ function HomePageContent() {
           <ProductsTab products={filteredProducts} />
         </TabsContent>
         <TabsContent value="wishlist">
-          <WishlistTab />
+          <WishlistTab setActiveTab={setActiveTab} />
         </TabsContent>
          <TabsContent value="checkout">
           <CheckoutTab />

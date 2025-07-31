@@ -8,9 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { formatIndianCurrency } from '@/lib/utils';
 import type { WishlistItem } from '@/lib/types';
-import { Tabs, TabsTrigger } from '@/components/ui/tabs';
 
-export function WishlistTab() {
+interface WishlistTabProps {
+  setActiveTab: (tab: string) => void;
+}
+
+export function WishlistTab({ setActiveTab }: WishlistTabProps) {
   const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
 
   const handleRepeatOrder = () => {
@@ -32,9 +35,9 @@ export function WishlistTab() {
         <Heart className="w-16 h-16 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-semibold mb-2">Your Wishlist is Empty</h2>
         <p className="text-muted-foreground">
-          Browse our {' '}
-            <Button variant="link" className="p-0 h-auto" asChild>
-                <TabsTrigger value="products">products</TabsTrigger>
+          Browse our{' '}
+            <Button variant="link" className="p-0 h-auto" onClick={() => setActiveTab('products')}>
+                products
             </Button>
           {' '} and add them here.
         </p>
