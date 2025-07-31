@@ -3,7 +3,7 @@ export interface Product {
   id: number | string;
   name: string;
   description: string;
-  price?: number;
+  price?: number | { min: number; max: number };
   unit: string;
   factoryLocation: string;
   imageUrl: string;
@@ -13,7 +13,7 @@ export interface Product {
 
 export interface WishlistItem extends Product {
   quantity: number;
-  price: number;
+  price: number; // For wishlist, we'll store a single price, perhaps the min for ranged items
 }
 
 

@@ -7,6 +7,7 @@ import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { formatIndianCurrency } from '@/lib/utils';
+import type { WishlistItem } from '@/lib/types';
 
 export function WishlistTab() {
   const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
@@ -16,8 +17,12 @@ export function WishlistTab() {
     console.log("Your saved wishlist order has been added to the cart.");
   };
   
-  const handleAddToCart = (product: any) => {
-    addToCart(product, product.quantity);
+  const handleAddToCart = (product: WishlistItem) => {
+    if (typeof product.price === 'number') {
+        addToCart(product, product.quantity);
+    } else {
+        console.error("Cannot add product with price range to cart directly from wishlist.");
+    }
   };
 
   if (wishlist.length === 0) {
@@ -42,7 +47,7 @@ export function WishlistTab() {
               <div className="flex-grow">
                 <p className="font-semibold">{product.name}</p>
                 <p className="text-base font-medium text-muted-foreground">
-                  ₹{formatIndianCurrency(product.price)} / {product.unit}
+                  {typeof product.price === 'number' ? `₹${formatIndianCurrency(product.price)}` : 'Price on request'} / {product.unit}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                    <Input
@@ -62,6 +67,7 @@ export function WishlistTab() {
                     size="icon"
                     onClick={() => handleAddToCart(product)}
                     aria-label="Add to cart"
+                    disabled={typeof product.price !== 'number'}
                   >
                     <ShoppingCart className="h-5 w-5 text-primary" />
                   </Button>

@@ -61,7 +61,7 @@ export const products: Product[] = [
     id: 4,
     name: 'Methanol (CH₃OH)',
     description: 'A versatile solvent and fuel, also used in the production of formaldehyde and acetic acid.',
-    price: 300.75,
+    price: { min: 290, max: 310 },
     unit: 'KG',
     moq: '25 KG',
     factoryLocation: 'Shanghai, CN',

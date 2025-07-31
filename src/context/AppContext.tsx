@@ -53,7 +53,15 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
 
 
   const addToWishlist = (product: Product, quantity: number) => {
-    const price = product.price ?? 0;
+    let price: number;
+    if (typeof product.price === 'number') {
+        price = product.price;
+    } else if (typeof product.price === 'object' && product.price !== null) {
+        price = product.price.min; // Default to min price for wishlist
+    } else {
+        price = 0; // No price
+    }
+
     if (quantity <= 0) {
       console.error("Invalid Quantity: Please enter a quantity greater than 0.");
       return;
@@ -66,7 +74,13 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
         );
       }
       console.log(`Added to wishlist: ${product.name} with quantity ${quantity}`);
-      return [...prevWishlist, { ...product, quantity, price }];
+      const wishlistItem: WishlistItem = {
+        ...product,
+        quantity,
+        price,
+      };
+
+      return [...prevWishlist, wishlistItem];
     });
   };
 
@@ -90,9 +104,9 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
   };
 
   const addToCart = (product: Product, quantity: number) => {
-    // A product must have a price to be added to the cart.
+    // A product must have a numeric price to be added to the cart.
     if (typeof product.price !== 'number') {
-        console.error("Cannot add product without a price to the cart.");
+        console.error("Cannot add product with a price range or no price to the cart directly.");
         return;
     }
 
@@ -125,7 +139,11 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     wishlist.forEach(item => {
       // Only add items from wishlist that have a price
       if (typeof item.price === 'number' && item.price > 0) {
-        addToCart(item, item.quantity);
+          const productToAdd: Product = {
+              ...item,
+              price: item.price
+          }
+        addToCart(productToAdd, item.quantity);
       }
     });
     console.log("Added all applicable wishlist items to cart.");

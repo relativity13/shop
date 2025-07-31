@@ -77,7 +77,8 @@ export function CheckoutTab() {
     let message = `*New Order Details*\n\n`;
     message += `*Order Items:*\n`;
     cart.forEach(item => {
-      message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${formatIndianCurrency(item.price * item.quantity)}\n`;
+      const price = typeof item.price === 'number' ? item.price : 0;
+      message += `- ${item.name} (${item.quantity} ${item.unit}) - ₹${formatIndianCurrency(price * item.quantity)}\n`;
     });
     message += `\n`;
 

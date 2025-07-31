@@ -26,20 +26,19 @@ export function ProductsTab({ products }: ProductsTabProps) {
   };
   
   const handleAddToCart = (product: Product) => {
-    if (product.price === undefined) return;
+    if (typeof product.price !== 'number') return;
     const quantity = quantities[product.id.toString()] || 1;
     addToCart(product, quantity);
   };
 
   const handleWishlistAction = (product: Product) => {
     // For products without a price, we can add to wishlist with quantity 1 and price 0.
-    const price = product.price || 0;
     const quantity = quantities[product.id.toString()] || 1;
 
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
-      addToWishlist({ ...product, price }, quantity);
+      addToWishlist(product, quantity);
     }
   };
 
@@ -49,6 +48,20 @@ export function ProductsTab({ products }: ProductsTabProps) {
     const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  const renderPrice = (product: Product) => {
+    if (typeof product.price === 'number' && product.price > 0) {
+      return `₹${formatIndianCurrency(product.price)} / ${product.unit}`;
+    }
+    if (typeof product.price === 'object' && product.price !== null) {
+        return `₹${formatIndianCurrency(product.price.min)} - ₹${formatIndianCurrency(product.price.max)} / ${product.unit}`;
+    }
+    return 'Price on request';
+  }
+
+  const canAddToCart = (product: Product) => {
+      return typeof product.price === 'number' && product.price > 0;
+  }
 
   if (products.length === 0) {
     return (
@@ -68,11 +81,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
               <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
               <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
-                {typeof product.price === 'number' && product.price > 0 ? (
-                  <p className="text-xl font-bold text-primary">₹{formatIndianCurrency(product.price)} / {product.unit}</p>
-                ) : (
-                   <p className="text-lg font-bold text-primary">Price on request</p>
-                )}
+                <p className="text-lg font-bold text-primary">{renderPrice(product)}</p>
                 {product.moq && (
                   <p className="font-semibold">MOQ: {product.moq}</p>
                 )}
@@ -80,7 +89,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
               </div>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
-              {typeof product.price === 'number' && product.price > 0 ? (
+              {canAddToCart(product) ? (
                 <>
                   <div className="flex items-center gap-2">
                     <Input
