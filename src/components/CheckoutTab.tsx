@@ -262,26 +262,20 @@ export function CheckoutTab() {
              </Card>
             
             
-            <div className="flex items-center gap-2">
-                <Button
-                    type="submit"
-                    className="w-full h-auto py-3"
-                >
-                    <p className="font-semibold">Submit order request via whatsapp</p>
-                </Button>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button type="button" variant="ghost" size="icon" className="flex-shrink-0">
-                        <Info className="h-5 w-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>This action is a non-binding request. Final confirmation will be sent after we verify availability and pricing.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button type="submit" className="w-full h-auto py-3">
+                    <span className="font-semibold flex-grow text-center">Submit order request via whatsapp</span>
+                    <Info className="h-5 w-5 ml-2" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>This action is a non-binding request. Final confirmation will be sent after we verify availability and pricing.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
           </form>
          </Form>
       </div>
