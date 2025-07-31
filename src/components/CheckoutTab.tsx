@@ -283,7 +283,7 @@ export function CheckoutTab() {
       <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Your Order</AlertDialogTitle>
+            <AlertDialogTitle>Confirm Your Request</AlertDialogTitle>
             <AlertDialogDescription>
               Please review your order message below. Clicking "Send" will open WhatsApp with this message pre-filled.
             </AlertDialogDescription>
