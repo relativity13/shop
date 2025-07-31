@@ -265,7 +265,7 @@ export function CheckoutTab() {
                   type="submit"
                   className="w-full h-auto py-3"
               >
-                  <p className="font-semibold">Confirm Order on WhatsApp</p>
+                  <p className="font-semibold">Submit order request via whatsapp</p>
               </Button>
           </form>
          </Form>
