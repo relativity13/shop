@@ -113,7 +113,7 @@ export function CheckoutTab() {
     return (
       <div className="flex flex-col items-center justify-center text-center py-16 rounded-lg bg-card border">
         <ShoppingCart className="w-16 h-16 text-muted-foreground mb-4" />
-        <h2 className="text-2xl font-semibold mb-2">Your Cart is Empty</h2>
+        <h2 className="text-2xl font-semibold mb-2 text-card-foreground">Your Cart is Empty</h2>
         <p className="text-muted-foreground">You cannot checkout with an empty cart. Add some products first.</p>
       </div>
     );
