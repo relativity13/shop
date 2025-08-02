@@ -92,7 +92,7 @@ function HomePageContent() {
                 />
               </div>
 
-              <div className="mb-8 flex flex-wrap justify-center gap-2">
+              <div className="mb-8 p-4 bg-card rounded-lg shadow-sm flex flex-wrap justify-center gap-2">
                 {categories.map(category => (
                   <Button
                     key={category}

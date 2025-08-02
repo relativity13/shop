@@ -42,7 +42,7 @@ export const products: Product[] = [
     unit: 'KG',
     moq: '500 KG',
     factoryLocation: 'Bawana',
-      category: 'PVC RESIN',
+    category: 'PVC Resin',
   },
   {
     id: 3,
@@ -52,10 +52,9 @@ export const products: Product[] = [
     unit: 'KG',
     moq: '250 KG',
     factoryLocation: 'Delhi',
-
-    category: 'Fertilizers',
+    category: 'Phthalate',
   },
-  {
+  /*{
     id: 4,
     name: 'Methanol (CH₃OH)',
     description: 'A versatile solvent and fuel, also used in the production of formaldehyde and acetic acid.',
@@ -102,14 +101,14 @@ export const products: Product[] = [
   {
     id: 8,
     name: 'Calcium Chloride (CaCl₂)',
-    description: 'Used for de-icing, dust control, and as a brine for refrigeration plants.',
-    price: 280.00,
-    unit: 'MT',
-    moq: '5 MT',
+   description: 'Used for de-icing, dust control, and as a brine for refrigeration plants.',
+   price: 280.00,
+   unit: 'MT',
+   moq: '5 MT',
     factoryLocation: 'Midland, US',
     
     category: 'Salts',
-  },
+  },*/
 ];
 
 ;
