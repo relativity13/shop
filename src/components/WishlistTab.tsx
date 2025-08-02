@@ -77,7 +77,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                     size="icon"
                     onClick={() => handleAddToCart(product)}
                     aria-label="Add to cart"
-                    disabled={typeof product.price !== 'number'}
+                    disabled={typeof product.price !== 'number' || product.price <= 0}
                   >
                     <ShoppingCart className="h-5 w-5 text-primary" />
                   </Button>

@@ -10,9 +10,9 @@ export interface Product {
   moq?: string;
 }
 
-export interface WishlistItem extends Product {
+export interface WishlistItem extends Omit<Product, 'price'> {
   quantity: number;
-  price: number; // For wishlist, we'll store a single price, perhaps the min for ranged items
+  price?: number; // For wishlist, a price is optional
 }
 
 

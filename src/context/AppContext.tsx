@@ -53,13 +53,11 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
 
 
   const addToWishlist = (product: Product, quantity: number) => {
-    let price: number;
+    let price: number | undefined;
     if (typeof product.price === 'number') {
         price = product.price;
-    } else if (typeof product.price === 'object' && product.price !== null) {
-        price = product.price.min; // Default to min price for wishlist
     } else {
-        price = 0; // No price
+        price = undefined; // No price or price range
     }
 
     if (quantity <= 0) {
