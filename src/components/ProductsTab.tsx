@@ -42,8 +42,8 @@ export function ProductsTab({ products }: ProductsTabProps) {
     }
   };
 
-  const handleAskForQuote = (productName: string) => {
-    const message = `I would like a quote for the following product: ${productName}`;
+  const handleAskForQuote = (productName: string, productDescription: string) => {
+    const message = `I would like a quote for the following product:\n\nName: ${productName}\nDescription: ${productDescription}`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
@@ -124,7 +124,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
                 </>
               ) : (
                 <div className="flex flex-col items-center gap-2">
-                   <Button onClick={() => handleAskForQuote(product.name)} className="w-full">
+                   <Button onClick={() => handleAskForQuote(product.name, product.description)} className="w-full">
                      <MessageCircle className="mr-2 h-4 w-4" />
                      Ask for Quote
                    </Button>
