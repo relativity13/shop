@@ -3,7 +3,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Building2, Mail, Phone, Globe, MessageCircle, Moon, Sun } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useTheme } from "next-themes";
 import {
@@ -21,14 +20,6 @@ export function AboutTab() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <Image 
-            src="https://placehold.co/600x400.png" 
-            alt="Company building" 
-            data-ai-hint="office building"
-            width={600}
-            height={400}
-            className="w-full h-48 object-cover rounded-t-lg mb-4"
-          />
           <div className="flex justify-between items-start">
             <div className="text-left">
               <CardTitle className="text-3xl font-bold">About Us</CardTitle>
