@@ -57,26 +57,31 @@ function HomePageContent() {
   return (
     <main className="container mx-auto px-4 py-8 pb-24">
       <header className="flex justify-between items-center mb-8">
-        <div className="flex items-center gap-4">
+        <div className="flex-1">
+            {/* Empty div for spacing */}
+        </div>
+        <div className="flex-1 flex justify-center items-center gap-4">
           <Image src="/logo.png" alt="Logo" width={50} height={50} />
-          <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
+          <h1 className="font-headline text-4xl font-bold tracking-tight text-accent md:text-5xl">
             {companyInfo.name}
           </h1>
         </div>
        
-        <div className="flex flex-col gap-2">
-            <Button asChild variant="outline">
-            <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-                <MessageCircle className="h-5 w-5" />
-                Send WhatsApp
-            </a>
-            </Button>
-            <Button asChild variant="outline">
-            <a href={`tel:${companyInfo.phoneNumber}`} aria-label="Call the store">
-                <Phone className="h-5 w-5" />
-                Call us
-            </a>
-            </Button>
+        <div className="flex-1 flex justify-end">
+            <div className="flex flex-col gap-2">
+                <Button asChild variant="outline">
+                <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                    <MessageCircle className="h-5 w-5" />
+                    Send WhatsApp
+                </a>
+                </Button>
+                <Button asChild variant="outline">
+                <a href={`tel:${companyInfo.phoneNumber}`} aria-label="Call the store">
+                    <Phone className="h-5 w-5" />
+                    Call us
+                </a>
+                </Button>
+            </div>
         </div>
       </header>
 
