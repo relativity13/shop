@@ -62,7 +62,7 @@ function HomePageContent() {
         </div>
         <div className="flex-1 flex justify-center items-center gap-4">
           <Image src="/logo.png" alt="Logo" width={50} height={50} />
-          <h1 className="font-headline text-4xl font-bold tracking-tight text-accent md:text-5xl">
+          <h1 className="font-headline text-4xl font-bold tracking-tight text-accent whitespace-nowrap">
             {companyInfo.name}
           </h1>
         </div>
