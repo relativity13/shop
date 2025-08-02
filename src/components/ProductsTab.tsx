@@ -43,7 +43,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
   };
 
   const handleAskForQuote = (productName: string, productDescription: string) => {
-    const message = `I would like a quote for the following product:\n\nName: ${productName}\nDescription: ${productDescription}`;
+    const message = `Quote Needed\n\nName: ${productName}\nDescription: ${productDescription}`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
