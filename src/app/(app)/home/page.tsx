@@ -16,6 +16,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/services/productService';
 import { productCategories, companyInfo } from '@/lib/data';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 
 function CheckoutButton() {
@@ -92,17 +93,22 @@ function HomePageContent() {
                 />
               </div>
 
-              <div className="mb-8 p-4 bg-card rounded-lg shadow-sm flex flex-wrap justify-center gap-2">
-                {categories.map(category => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(category === 'All' ? null : category)}
-                    className="rounded-full"
-                  >
-                    {category}
-                  </Button>
-                ))}
+              <div className="mb-8">
+                <Carousel opts={{ align: "start", dragFree: true }} className="w-full">
+                  <CarouselContent>
+                    {categories.map((category, index) => (
+                      <CarouselItem key={index} className="basis-auto">
+                        <Button
+                          variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
+                          onClick={() => setSelectedCategory(category === 'All' ? null : category)}
+                          className="rounded-full"
+                        >
+                          {category}
+                        </Button>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
               </div>
             </>
           )}
