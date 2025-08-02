@@ -75,7 +75,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
   return (
     <div className="space-y-4">
       {products.map((product) => (
-        <Card key={product.id} className="transition-shadow duration-300 hover:shadow-lg hover:border-primary/30">
+        <Card key={product.id} className="transition-shadow duration-300 hover:shadow-lg hover:border-accent">
           <CardContent className="p-4 flex items-center gap-4">
             <div className="flex-grow">
               <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
