@@ -6,17 +6,17 @@ export const companyInfo = {
   logo: '/logo.png',
   tagline: 'Your Trusted Partner in Excellence',
   about: "At HIKE CORPORATION, we're dedicated to supplying high-quality products with a seamless procurement experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine distribution.",
-  address: '789 Industrial Park, Metro City, 54321',
-  phoneNumber: '919310619600',
-  whatsappNumber: '919310619600',
-  email: 'sales@hikecorporation.com',
-  website: 'www.hikecorporation.com',
+  address: 'G-41, Sector-4, Bawana Industrial Area, Delhi-110039',
+  phoneNumber: '+91-8920912782',
+  whatsappNumber: '+91-8920912782',
+  email: 'hikecorp@gmail.com',
+  website: 'www.hikecorporation.in',
 };
 
 export const productCategories: string[] = [
   'Acids',
-  'Bases',
-  'Fertilizers',
+  'PVC Resin',
+  'Phthalate',
   'Solvents',
   'Polymers',
   'Pigments',
@@ -28,33 +28,31 @@ export const products: Product[] = [
     id: 1,
     name: 'Stearic Acid',
     description: 'Godrej Distric Grade',
-    price: 108000,
-    unit: 'MT',
+    price: 108,
+    unit: 'KG',
     moq: '1 MT',
     factoryLocation: 'Bawana, Delhi',
-    imageUrl: 'https://placehold.co/600x400.png',
     category: 'Acids',
   },
   {
     id: 2,
-    name: 'Sodium Hydroxide (NaOH)',
-    description: 'Also known as caustic soda, used in manufacturing of pulp and paper, textiles, and soaps.',
-    price: 450.50,
-    unit: 'MT',
+    name: 'PVC Resin',
+    description: 'CGPC H66 Paper Bag',
+    //price: 72,
+    unit: 'KG',
     moq: '500 KG',
-    factoryLocation: 'Ludwigshafen, DE',
-    imageUrl: 'https://placehold.co/600x400.png',
-    category: 'Bases',
+    factoryLocation: 'Bawana',
+      category: 'PVC RESIN',
   },
   {
     id: 3,
-    name: 'Ammonia (NH₃)',
-    description: 'Anhydrous ammonia for agricultural use as a fertilizer and as a building block for other chemicals.',
-    // Price is omitted for "Price on request"
-    unit: 'MT',
-    moq: '1 MT',
-    factoryLocation: 'Dammam, SA',
-    imageUrl: 'https://placehold.co/600x400.png',
+    name: 'DMP',
+    description: 'KLG Group- Dimethyl Phthalate',
+    //price : 120,
+    unit: 'KG',
+    moq: '250 KG',
+    factoryLocation: 'Delhi',
+
     category: 'Fertilizers',
   },
   {
@@ -65,7 +63,7 @@ export const products: Product[] = [
     unit: 'KG',
     moq: '25 KG',
     factoryLocation: 'Shanghai, CN',
-    imageUrl: 'https://placehold.co/600x400.png',
+   
     category: 'Solvents',
   },
   {
@@ -76,7 +74,7 @@ export const products: Product[] = [
     unit: 'MT',
     moq: '1 MT',
     factoryLocation: 'Antwerp, BE',
-    imageUrl: 'https://placehold.co/600x400.png',
+   
     category: 'Polymers',
   },
   {
@@ -87,7 +85,7 @@ export const products: Product[] = [
     unit: 'MT',
     moq: '1 MT',
     factoryLocation: 'Jurong Island, SG',
-    imageUrl: 'https://placehold.co/600x400.png',
+    
     category: 'Solvents',
   },
   {
@@ -98,7 +96,7 @@ export const products: Product[] = [
     unit: 'MT',
     moq: '1 MT',
     factoryLocation: 'Yanbu, SA',
-    imageUrl: 'https://placehold.co/600x400.png',
+ 
     category: 'Pigments',
   },
   {
@@ -109,7 +107,7 @@ export const products: Product[] = [
     unit: 'MT',
     moq: '5 MT',
     factoryLocation: 'Midland, US',
-    imageUrl: 'https://placehold.co/600x400.png',
+    
     category: 'Salts',
   },
 ];

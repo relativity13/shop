@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Minus, Plus, Info } from "lucide-react";
-import Image from "next/image";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -130,14 +130,7 @@ export function CheckoutTab() {
           <CardContent className="space-y-4">
             {cart.map((item) => (
               <div key={item.id} className="flex items-center gap-4">
-                <Image 
-                  src={item.imageUrl} 
-                  alt={item.name} 
-                  width={64} 
-                  height={64}
-                  className="w-16 h-16 rounded-md object-cover border"
-                  data-ai-hint="chemical container"
-                />
+                
                 <div className="flex-grow">
                   <p className="font-semibold">{item.name}</p>
                    <Button variant="link" size="sm" className="p-0 h-auto text-red-500" onClick={() => removeFromCart(item.id.toString())}>

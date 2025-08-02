@@ -6,7 +6,6 @@ export interface Product {
   price?: number | { min: number; max: number };
   unit: string;
   factoryLocation: string;
-  imageUrl: string;
   category: string;
   moq?: string;
 }
