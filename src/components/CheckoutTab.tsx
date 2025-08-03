@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingCart, Minus, Plus, Info } from "lucide-react";
+import { ShoppingCart, Minus, Plus } from "lucide-react";
 
 import {
   AlertDialog,
@@ -260,7 +260,6 @@ export function CheckoutTab() {
                 <TooltipTrigger asChild>
                   <Button type="submit" className="w-full h-auto py-3">
                     <span className="font-semibold flex-grow text-center">Submit order request via whatsapp</span>
-                    <Info className="h-5 w-5 ml-2" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>

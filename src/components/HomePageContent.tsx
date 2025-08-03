@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ShoppingBag, Search, Info, CreditCard, Phone, MessageCircle, MapPin, Building2 } from 'lucide-react';
+import { Heart, ShoppingBag, Search, CreditCard, Phone, MessageCircle, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AppProvider, useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { Product } from '@/lib/types';
 import { productCategories, companyInfo } from '@/lib/data';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
