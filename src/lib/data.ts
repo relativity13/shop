@@ -64,7 +64,9 @@ export const products: Product[] = [
     factoryLocation: 'Shanghai, CN',
    
     category: 'Solvents',
+
   },
+  
   {
     id: 5,
     name: 'Propylene Glycol (C₃H₈O₂)',
