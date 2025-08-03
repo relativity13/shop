@@ -6,9 +6,9 @@ export const companyInfo = {
   logo: '/logo.png',
   tagline: 'Your Trusted Partner in Excellence',
   about: "At HIKE CORPORATION, we're dedicated to supplying high-quality products with a seamless procurement experience. Our mission is to combine quality, convenience, and cutting-edge technology to redefine distribution.",
-  address: 'G-41, Sector-4, Bawana Industrial Area, Delhi-110039',
+  address: 'G-41, Sector-4, Bawana Industrial Area,DSIIDC, Delhi-110039',
   phoneNumber: '+91-8920912782',
-  whatsappNumber: '+91-8920912782',
+  whatsappNumber: '918920912782',
   email: 'hikecorp@gmail.com',
   website: 'www.hikecorporation.in',
 };
