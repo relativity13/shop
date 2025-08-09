@@ -24,6 +24,7 @@ interface AppContextType {
   clearCart: () => void;
   addWishlistToCart: () => void;
   openWhatsApp: (product: Product | WishlistItem, quantity: number, type: ActionType) => void;
+  openWhatsAppForWishlist: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -184,6 +185,34 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     window.open(whatsappUrl, '_blank');
   }
 
+  const openWhatsAppForWishlist = () => {
+    if (wishlist.length === 0) return;
+
+    let message = '*Wishlist Request*\n\nI would like to inquire about the following items from my wishlist:\n';
+
+    const orderItems = wishlist.filter(item => typeof item.price === 'number');
+    const priceRequestItems = wishlist.filter(item => typeof item.price !== 'number');
+
+    if (orderItems.length > 0) {
+      message += '\n*Order Items:*\n';
+      orderItems.forEach(item => {
+        message += `- *Product:* ${item.name}\n  - *Quantity:* ${item.quantity} ${item.unit}\n  - *Price:* ₹${formatIndianCurrency(item.price!)} / ${item.unit}\n`;
+      });
+    }
+
+    if (priceRequestItems.length > 0) {
+      message += '\n*Price Request Items:*\n';
+      priceRequestItems.forEach(item => {
+        message += `- *Product:* ${item.name}\n  - *Quantity:* ${item.quantity} ${item.unit}\n`;
+      });
+    }
+
+    message += '\nThank you!';
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
 
   const value = {
     products,
@@ -200,6 +229,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     clearCart,
     addWishlistToCart,
     openWhatsApp,
+    openWhatsAppForWishlist,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

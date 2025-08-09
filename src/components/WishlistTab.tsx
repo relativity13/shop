@@ -28,7 +28,7 @@ interface WishlistTabProps {
 }
 
 export function WishlistTab({ setActiveTab }: WishlistTabProps) {
-  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, openWhatsApp, addToCart } = useApp();
+  const { wishlist, removeFromWishlist, updateWishlistItemQuantity, openWhatsApp, openWhatsAppForWishlist } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<WishlistItem | null>(null);
   const [actionType, setActionType] = useState<ActionType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -52,18 +52,12 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
       return;
     }
     
-    // If it's an order action, add it to the cart first
-    if (actionType === 'order' && typeof selectedProduct.price === 'number') {
-        addToCart(selectedProduct, quantity);
-    }
-    
     openWhatsApp(selectedProduct, quantity, actionType as ActionType);
     closeDialog();
   };
 
   const handleRepeatOrder = () => {
-    addWishlistToCart();
-    console.log("Your saved wishlist order has been added to the cart.");
+    openWhatsAppForWishlist();
   };
 
   const canOrder = (product: WishlistItem) => {
@@ -143,11 +137,11 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                 <TooltipTrigger asChild>
                     <Button onClick={handleRepeatOrder} className="w-full">
                       <Repeat className="mr-2 h-4 w-4" />
-                      Repeat Order
+                      Send Wishlist via WhatsApp
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>Adds all items with a price to your cart.</p>
+                    <p>Sends all items with their saved quantities to the seller.</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
