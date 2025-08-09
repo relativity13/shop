@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Trash2, Heart, ShoppingCart, Repeat } from 'lucide-react';
+import { Trash2, Heart, Repeat } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,22 +9,61 @@ import { Input } from '@/components/ui/input';
 import { formatIndianCurrency } from '@/lib/utils';
 import type { WishlistItem } from '@/lib/types';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import React, { useState, useRef } from 'react';
+
+type ActionType = 'order' | 'price';
 
 interface WishlistTabProps {
   setActiveTab: (tab: string) => void;
 }
 
 export function WishlistTab({ setActiveTab }: WishlistTabProps) {
-  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, openWhatsApp } = useApp();
+  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, openWhatsApp, addToCart } = useApp();
+  const [selectedProduct, setSelectedProduct] = useState<WishlistItem | null>(null);
+  const [actionType, setActionType] = useState<ActionType | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const quantityRef = useRef<HTMLInputElement>(null);
+
+  const openDialog = (product: WishlistItem, type: ActionType) => {
+    setSelectedProduct(product);
+    setActionType(type);
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+    setSelectedProduct(null);
+    setActionType(null);
+  }
+  
+  const handleConfirmAction = () => {
+    const quantity = parseInt(quantityRef.current?.value || '0', 10);
+    if (!selectedProduct || quantity <= 0) {
+      return;
+    }
+    
+    // If it's an order action, add it to the cart first
+    if (actionType === 'order' && typeof selectedProduct.price === 'number') {
+        addToCart(selectedProduct, quantity);
+    }
+    
+    openWhatsApp(selectedProduct, quantity, actionType as ActionType);
+    closeDialog();
+  };
 
   const handleRepeatOrder = () => {
     addWishlistToCart();
     console.log("Your saved wishlist order has been added to the cart.");
-  };
-  
-  const handleOrderAction = (product: WishlistItem) => {
-    const actionType = typeof product.price === 'number' && product.price > 0 ? 'order' : 'price';
-    openWhatsApp(product, product.quantity, actionType);
   };
 
   const canOrder = (product: WishlistItem) => {
@@ -48,6 +87,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
   }
 
   return (
+    <>
     <Card>
       <CardHeader>
         <CardTitle>Wishlist</CardTitle>
@@ -73,13 +113,13 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                    <span className="text-sm text-muted-foreground">{product.unit}</span>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 flex-shrink-0">
+              <div className="flex flex-col gap-2 flex-shrink-0 w-32">
                  {canOrder(product) ? (
-                    <Button variant="whatsapp" className="w-full" onClick={() => handleOrderAction(product)}>
+                    <Button variant="whatsapp" className="w-full" onClick={() => openDialog(product, 'order')}>
                         Order
                     </Button>
                  ) : (
-                    <Button className="w-full" onClick={() => handleOrderAction(product)}>
+                    <Button className="w-full" onClick={() => openDialog(product, 'price')}>
                         Ask for Price
                     </Button>
                  )}
@@ -113,5 +153,36 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
         </TooltipProvider>
       </CardFooter>
     </Card>
+    
+    <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Enter Quantity for {selectedProduct?.name}</AlertDialogTitle>
+          <AlertDialogDescription>
+            Please specify the quantity you would like to {actionType === 'price' ? 'get a price for' : 'order'}.
+            {selectedProduct?.moq && ` (Minimum Order: ${selectedProduct.moq})`}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="flex items-center gap-2 py-4">
+            <Input
+              ref={quantityRef}
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              min="1"
+              placeholder="Quantity"
+              defaultValue={selectedProduct?.quantity}
+              className="w-full text-center"
+              aria-label={`Quantity for ${selectedProduct?.name} in ${selectedProduct?.unit}s`}
+            />
+            <span className="text-sm font-medium text-muted-foreground">{selectedProduct?.unit}</span>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={closeDialog}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleConfirmAction}>Confirm</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }

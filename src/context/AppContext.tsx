@@ -17,7 +17,7 @@ interface AppContextType {
   removeFromWishlist: (productId: number | string) => void;
   isInWishlist: (productId: number | string) => boolean;
   updateWishlistItemQuantity: (productId: number | string, quantity: number) => void;
-  addToCart: (product: Product, quantity: number) => void;
+  addToCart: (product: Product | WishlistItem, quantity: number) => void;
   removeFromCart: (productId: number | string) => void;
   updateCartItemQuantity: (productId: number | string, quantity: number) => void;
   getCartTotal: () => number;
@@ -106,7 +106,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     );
   };
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: Product | WishlistItem, quantity: number) => {
     // A product must have a numeric price to be added to the cart.
     if (typeof product.price !== 'number') {
         console.error("Cannot add product with a price range or no price to the cart directly.");
@@ -142,11 +142,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     wishlist.forEach(item => {
       // Only add items from wishlist that have a price
       if (typeof item.price === 'number' && item.price > 0) {
-          const productToAdd: Product = {
-              ...item,
-              price: item.price
-          }
-        addToCart(productToAdd, item.quantity);
+        addToCart(item, item.quantity);
       }
     });
     console.log("Added all applicable wishlist items to cart.");
@@ -176,19 +172,16 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
   }
 
   const openWhatsApp = (product: Product | WishlistItem, quantity: number, type: ActionType) => {
+     let message = '';
      if (type === 'order') {
         if (typeof product.price !== 'number') return;
-        addToCart(product as Product, quantity);
-        const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${product.name}\n- *Quantity:* ${quantity} ${product.unit}\n- *Price per unit:* ₹${formatIndianCurrency(product.price)}\n\nThank you!`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
+        message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${product.name}\n- *Quantity:* ${quantity} ${product.unit}\n- *Price per unit:* ₹${formatIndianCurrency(product.price)}\n\nThank you!`;
     } else if (type === 'price') {
-        const message = `*Price Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a price. Thank you!`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
+        message = `*Price Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a price. Thank you!`;
     }
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
   }
 
 
