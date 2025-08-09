@@ -137,7 +137,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                 <TooltipTrigger asChild>
                     <Button onClick={handleRepeatOrder} className="w-full">
                       <Repeat className="mr-2 h-4 w-4" />
-                      Send Wishlist via WhatsApp
+                      Request all via Whatsapp
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
