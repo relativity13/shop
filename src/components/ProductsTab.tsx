@@ -79,8 +79,8 @@ export function ProductsTab() {
   
   const getMoqValue = (product: Product | null) => {
     if (!product || !product.moq) return "1";
-    const moqValue = parseInt(product.moq, 10);
-    return isNaN(moqValue) ? "1" : moqValue.toString();
+    const moqValue = parseInt(product.moq.replace(/\D/g, ''), 10);
+    return isNaN(moqValue) || moqValue < 1 ? "1" : moqValue.toString();
   };
 
   if (products.length === 0) {
@@ -158,7 +158,7 @@ export function ProductsTab() {
           <AlertDialogHeader>
             <AlertDialogTitle>Enter Quantity for {selectedProduct?.name}</AlertDialogTitle>
             <AlertDialogDescription>
-              Please specify the quantity you would like to {actionType === 'price' ? 'get a price for' : actionType}.
+              Please specify the quantity you would like to {actionType === 'price' ? 'get a price for' : 'order'}.
               {selectedProduct?.moq && ` (Minimum Order: ${selectedProduct.moq})`}
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -166,6 +166,8 @@ export function ProductsTab() {
               <Input
                 ref={quantityRef}
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 min="1"
                 placeholder="Quantity"
                 className="w-full text-center"
