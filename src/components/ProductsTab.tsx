@@ -21,11 +21,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { WhatsappIcon } from './icons/WhatsappIcon';
 
 type ActionType = 'order' | 'quote';
 
 export function ProductsTab() {
-  const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
+  const { products, addToWishlist, removeFromWishlist, isInWishlist, openWhatsApp } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [actionType, setActionType] = useState<ActionType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -52,20 +53,7 @@ export function ProductsTab() {
       return;
     }
     
-    if (actionType === 'order') {
-        if (typeof selectedProduct.price !== 'number') return;
-        addToCart(selectedProduct, quantity);
-        const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${selectedProduct.name}\n- *Quantity:* ${quantity} ${selectedProduct.unit}\n- *Price per unit:* ₹${formatIndianCurrency(selectedProduct.price)}\n\nThank you!`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
-    } else if (actionType === 'quote') {
-        const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${selectedProduct.name}\n- *Description:* ${selectedProduct.description}\n- *Quantity:* ${quantity} ${selectedProduct.unit}\n\nPlease provide a quote. Thank you!`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
-    }
-
+    openWhatsApp(selectedProduct, quantity, actionType as ActionType);
     closeDialog();
   };
 

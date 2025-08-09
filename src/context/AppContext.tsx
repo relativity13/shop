@@ -3,7 +3,11 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { Product, OrderItem, WishlistItem } from '@/lib/types';
+import { companyInfo } from '@/lib/data';
+import { formatIndianCurrency } from '@/lib/utils';
 // import { products as initialProducts } from '@/lib/data';
+
+type ActionType = 'order' | 'quote';
 
 interface AppContextType {
   products: Product[];
@@ -19,6 +23,7 @@ interface AppContextType {
   getCartTotal: () => number;
   clearCart: () => void;
   addWishlistToCart: () => void;
+  openWhatsApp: (product: Product | WishlistItem, quantity: number, type: ActionType) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -170,6 +175,23 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     setCart([]);
   }
 
+  const openWhatsApp = (product: Product | WishlistItem, quantity: number, type: ActionType) => {
+     if (type === 'order') {
+        if (typeof product.price !== 'number') return;
+        addToCart(product as Product, quantity);
+        const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${product.name}\n- *Quantity:* ${quantity} ${product.unit}\n- *Price per unit:* ₹${formatIndianCurrency(product.price)}\n\nThank you!`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    } else if (type === 'quote') {
+        const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a quote. Thank you!`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    }
+  }
+
+
   const value = {
     products,
     wishlist,
@@ -184,7 +206,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     getCartTotal,
     clearCart,
     addWishlistToCart,
-  
+    openWhatsApp,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -14,19 +14,20 @@ interface WishlistTabProps {
 }
 
 export function WishlistTab({ setActiveTab }: WishlistTabProps) {
-  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, addToCart } = useApp();
+  const { wishlist, removeFromWishlist, addWishlistToCart, updateWishlistItemQuantity, openWhatsApp } = useApp();
 
   const handleRepeatOrder = () => {
     addWishlistToCart();
     console.log("Your saved wishlist order has been added to the cart.");
   };
   
-  const handleAddToCart = (product: WishlistItem) => {
-    if (typeof product.price === 'number') {
-        addToCart(product, product.quantity);
-    } else {
-        console.error("Cannot add product with price range to cart directly from wishlist.");
-    }
+  const handleOrderAction = (product: WishlistItem) => {
+    const actionType = typeof product.price === 'number' && product.price > 0 ? 'order' : 'quote';
+    openWhatsApp(product, product.quantity, actionType);
+  };
+
+  const canOrder = (product: WishlistItem) => {
+    return typeof product.price === 'number' && product.price > 0;
   };
 
   if (wishlist.length === 0) {
@@ -71,21 +72,22 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                    <span className="text-sm text-muted-foreground">{product.unit}</span>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                 <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleAddToCart(product)}
-                    aria-label="Add to cart"
-                    disabled={typeof product.price !== 'number' || product.price <= 0}
-                  >
-                    <ShoppingCart className="h-5 w-5 text-primary" />
-                  </Button>
+              <div className="flex flex-col gap-2 flex-shrink-0">
+                 {canOrder(product) ? (
+                    <Button variant="whatsapp" onClick={() => handleOrderAction(product)}>
+                        Order
+                    </Button>
+                 ) : (
+                    <Button onClick={() => handleOrderAction(product)}>
+                        Ask for Quote
+                    </Button>
+                 )}
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => removeFromWishlist(product.id)}
                   aria-label="Remove from wishlist"
+                  className="self-center"
                 >
                   <Trash2 className="h-5 w-5 text-red-500" />
                 </Button>
