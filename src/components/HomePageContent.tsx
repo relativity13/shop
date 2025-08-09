@@ -14,7 +14,7 @@ import Image from 'next/image';
 import React, { useState, useMemo } from 'react';
 import { productCategories, companyInfo } from '@/lib/data';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { WhatsappIcon } from './icons/WhatsappIcon';
+import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
 
 
 export function HomePageContent() {
