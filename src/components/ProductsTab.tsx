@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { WhatsappIcon } from './icons/WhatsappIcon';
 
-type ActionType = 'order' | 'quote';
+type ActionType = 'order' | 'price';
 
 export function ProductsTab() {
   const { products, addToWishlist, removeFromWishlist, isInWishlist, openWhatsApp } = useApp();
@@ -132,10 +132,10 @@ export function ProductsTab() {
                   ) : (
                     <div className="flex flex-col items-center gap-2 w-full">
                        <Button 
-                         onClick={() => openDialog(product, 'quote')} 
+                         onClick={() => openDialog(product, 'price')} 
                          className="w-full"
                        >
-                         Ask for Quote
+                         Ask for Price
                        </Button>
                        <Button
                           variant="ghost"
@@ -158,7 +158,7 @@ export function ProductsTab() {
           <AlertDialogHeader>
             <AlertDialogTitle>Enter Quantity for {selectedProduct?.name}</AlertDialogTitle>
             <AlertDialogDescription>
-              Please specify the quantity you would like to {actionType}.
+              Please specify the quantity you would like to {actionType === 'price' ? 'get a price for' : actionType}.
               {selectedProduct?.moq && ` (Minimum Order: ${selectedProduct.moq})`}
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -22,7 +22,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
   };
   
   const handleOrderAction = (product: WishlistItem) => {
-    const actionType = typeof product.price === 'number' && product.price > 0 ? 'order' : 'quote';
+    const actionType = typeof product.price === 'number' && product.price > 0 ? 'order' : 'price';
     openWhatsApp(product, product.quantity, actionType);
   };
 
@@ -79,7 +79,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                     </Button>
                  ) : (
                     <Button onClick={() => handleOrderAction(product)}>
-                        Ask for Quote
+                        Ask for Price
                     </Button>
                  )}
                 <Button

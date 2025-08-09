@@ -19,7 +19,7 @@ Build a modern, mobile-first Progressive Web App (PWA) for a chemical supply com
 - **Product Listing**: Display a list of all available products on the main screen. Each product card should show its name, description, unit (e.g., 'MT', 'KG'), and factory location.
 - **Dynamic Pricing**: Products can have a fixed price per unit or be marked as "Price on request".
   - If a price exists, show the price and provide options to add to cart/wishlist.
-  - If no price exists, display a "Price on request" message and provide an "Ask for Quote" button.
+  - If no price exists, display a "Price on request" message and provide an "Ask for Price" button.
 - **Search Functionality**: A prominent search bar to filter products by name or description.
 - **Category Filtering**: A set of filter buttons to view products by category (e.g., 'Acids', 'Solvents'). The categories should be easily managed from a central data file (`src/lib/data.ts`).
 
@@ -33,7 +33,7 @@ Build a modern, mobile-first Progressive Web App (PWA) for a chemical supply com
   - Add products to a wishlist for future reference or to create a recurring order template.
   - Wishlist data must persist in the user's browser `localStorage`, so it's not lost when the tab is closed.
 - **WhatsApp Integration**:
-  - **Ask for Quote/Sample**: Buttons on product cards that open WhatsApp with a pre-filled message to the seller asking for a price quote or a sample.
+  - **Ask for Price/Sample**: Buttons on product cards that open WhatsApp with a pre-filled message to the seller asking for a price or a sample.
   - **Order Placement**: The final step in the checkout process should not be a payment gateway. Instead, it should summarize the entire order (items, quantities, prices, taxes, shipping) into a formatted message and send it to the seller's WhatsApp number.
 
 ### 3. App Structure & UI/UX

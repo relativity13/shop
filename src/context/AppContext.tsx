@@ -7,7 +7,7 @@ import { companyInfo } from '@/lib/data';
 import { formatIndianCurrency } from '@/lib/utils';
 // import { products as initialProducts } from '@/lib/data';
 
-type ActionType = 'order' | 'quote';
+type ActionType = 'order' | 'price';
 
 interface AppContextType {
   products: Product[];
@@ -183,8 +183,8 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
-    } else if (type === 'quote') {
-        const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a quote. Thank you!`;
+    } else if (type === 'price') {
+        const message = `*Price Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a price. Thank you!`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
