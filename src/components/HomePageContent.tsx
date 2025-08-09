@@ -112,7 +112,7 @@ export function HomePageContent() {
             
             <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
-                <ShoppingBag className="w-5 h-5" />
+                <FlaskConical className="w-5 h-5" />
                 Products
             </TabsTrigger>
             <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
@@ -120,7 +120,7 @@ export function HomePageContent() {
                 Wishlist
             </TabsTrigger>
             <TabsTrigger value="requests" className="py-3 flex-col h-full gap-1">
-                <FlaskConical className="w-5 h-5" />
+                <ShoppingBag className="w-5 h-5" />
                 Requests
             </TabsTrigger>
             <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
