@@ -11,7 +11,6 @@ import { useState, useRef } from 'react';
 import type { Product } from '@/lib/types';
 import { formatIndianCurrency } from '@/lib/utils';
 import { companyInfo } from '@/lib/data';
-import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +22,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-type ActionType = 'order' | 'quote' | 'wishlist';
+type ActionType = 'order' | 'quote';
 
 export function ProductsTab() {
   const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
@@ -42,8 +41,7 @@ export function ProductsTab() {
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
-      // For wishlist, we can ask for quantity or just add with a default of 1
-      openDialog(product, 'wishlist');
+      addToWishlist(product, 1);
     }
   };
   
@@ -66,8 +64,6 @@ export function ProductsTab() {
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
-    } else if (actionType === 'wishlist') {
-        addToWishlist(selectedProduct, quantity);
     }
 
     closeDialog();
