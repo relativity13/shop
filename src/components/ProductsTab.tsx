@@ -88,6 +88,12 @@ export function ProductsTab() {
   const canOrder = (product: Product) => {
       return typeof product.price === 'number' && product.price > 0;
   }
+  
+  const getMoqValue = (product: Product | null) => {
+    if (!product || !product.moq) return "1";
+    const moqValue = parseInt(product.moq, 10);
+    return isNaN(moqValue) ? "1" : moqValue.toString();
+  };
 
   if (products.length === 0) {
     return (
@@ -165,6 +171,7 @@ export function ProductsTab() {
             <AlertDialogTitle>Enter Quantity for {selectedProduct?.name}</AlertDialogTitle>
             <AlertDialogDescription>
               Please specify the quantity you would like to {actionType}.
+              {selectedProduct?.moq && ` (Minimum Order: ${selectedProduct.moq})`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex items-center gap-2 py-4">
@@ -174,7 +181,7 @@ export function ProductsTab() {
                 min="1"
                 placeholder="Quantity"
                 className="w-full text-center"
-                defaultValue="1"
+                defaultValue={getMoqValue(selectedProduct)}
                 aria-label={`Quantity for ${selectedProduct?.name} in ${selectedProduct?.unit}s`}
               />
               <span className="text-sm font-medium text-muted-foreground">{selectedProduct?.unit}</span>
