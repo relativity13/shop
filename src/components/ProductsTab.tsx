@@ -128,7 +128,6 @@ export function ProductsTab() {
                             aria-label="Order now via WhatsApp"
                             className="w-full"
                           >
-                            <WhatsappIcon />
                             Order
                           </Button>
                           <Button
