@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { formatIndianCurrency } from '@/lib/utils';
 import type { WishlistItem } from '@/lib/types';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface WishlistTabProps {
   setActiveTab: (tab: string) => void;
@@ -97,10 +98,19 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
         ))}
       </CardContent>
       <CardFooter>
-        <Button onClick={handleRepeatOrder} className="w-full">
-          <Repeat className="mr-2 h-4 w-4" />
-          Add All to Cart & Repeat Order
-        </Button>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button onClick={handleRepeatOrder} className="w-full">
+                      <Repeat className="mr-2 h-4 w-4" />
+                      Repeat Order
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Adds all items with a price to your cart.</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
       </CardFooter>
     </Card>
   );
