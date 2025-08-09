@@ -41,8 +41,9 @@ export function ProductsTab() {
     }
   };
 
-  const handleAskForQuote = (productName: string, productDescription: string) => {
-    const message = `Quote Needed\n\nName: ${productName}\nDescription: ${productDescription}`;
+  const handleAskForQuote = (product: Product) => {
+    const quantity = quantities[product.id.toString()] || 1;
+    const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a quote. Thank you!`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
@@ -88,20 +89,20 @@ export function ProductsTab() {
               </div>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
+              <div className="flex items-center gap-2">
+                <Input
+                    type="number"
+                    min="1"
+                    placeholder="Qty"
+                    className="w-20 h-8 text-center"
+                    value={quantities[product.id.toString()] || ''}
+                    onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                    aria-label={`Quantity for ${product.name} in ${product.unit}s`}
+                  />
+                  <span className="text-sm text-muted-foreground">{product.unit}</span>
+              </div>
+
               {canOrder(product) ? (
-                <>
-                  <div className="flex items-center gap-2">
-                    <Input
-                        type="number"
-                        min="1"
-                        placeholder="Qty"
-                        className="w-20 h-8 text-center"
-                        value={quantities[product.id.toString()] || ''}
-                        onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-                        aria-label={`Quantity for ${product.name} in ${product.unit}s`}
-                      />
-                      <span className="text-sm text-muted-foreground">{product.unit}</span>
-                  </div>
                   <div className="flex gap-2 w-full">
                       <Button
                         variant="ghost"
@@ -119,10 +120,9 @@ export function ProductsTab() {
                         Order
                       </Button>
                   </div>
-                </>
               ) : (
-                <div className="flex flex-col items-center gap-2">
-                   <Button onClick={() => handleAskForQuote(product.name, product.description)} className="w-full">
+                <div className="flex flex-col items-center gap-2 w-full">
+                   <Button onClick={() => handleAskForQuote(product)} className="w-full">
                      <MessageCircle className="mr-2 h-4 w-4" />
                      Ask for Quote
                    </Button>
