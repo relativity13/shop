@@ -1,12 +1,13 @@
 
 "use client";
 
-import { Heart, ShoppingBag, Search, CreditCard, Phone, Building2 } from 'lucide-react';
+import { Heart, ShoppingBag, Search, CreditCard, Phone, Building2, FlaskConical } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { AboutTab } from '@/components/AboutTab';
+import { RequestTab } from '@/components/RequestTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -102,11 +103,14 @@ export function HomePageContent() {
             <TabsContent value="wishlist">
                 <WishlistTab setActiveTab={setActiveTab} />
             </TabsContent>
+            <TabsContent value="requests">
+                <RequestTab />
+            </TabsContent>
             <TabsContent value="about">
                 <AboutTab />
             </TabsContent>
             
-            <TabsList className="grid w-full grid-cols-3 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+            <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
                 <ShoppingBag className="w-5 h-5" />
                 Products
@@ -114,6 +118,10 @@ export function HomePageContent() {
             <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
                 <Heart className="w-5 h-5" />
                 Wishlist
+            </TabsTrigger>
+            <TabsTrigger value="requests" className="py-3 flex-col h-full gap-1">
+                <FlaskConical className="w-5 h-5" />
+                Requests
             </TabsTrigger>
             <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
                 <Building2 className="w-5 h-5" />

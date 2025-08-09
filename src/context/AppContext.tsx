@@ -8,6 +8,7 @@ import { formatIndianCurrency } from '@/lib/utils';
 // import { products as initialProducts } from '@/lib/data';
 
 type ActionType = 'order' | 'price';
+type RequestType = 'sample' | 'new_product';
 
 interface AppContextType {
   products: Product[];
@@ -25,6 +26,7 @@ interface AppContextType {
   addWishlistToCart: () => void;
   openWhatsApp: (product: Product | WishlistItem, quantity: number, type: ActionType) => void;
   openWhatsAppForWishlist: () => void;
+  openWhatsAppForRequest: (requestType: RequestType, productName: string, details: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -213,6 +215,25 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     window.open(whatsappUrl, '_blank');
   };
 
+  const openWhatsAppForRequest = (requestType: RequestType, productName: string, details: string) => {
+    let message = '';
+    if (requestType === 'sample') {
+      message = `*Sample Request*\n\nI would like to request a sample for the following product:\n\n- *Product Name:* ${productName}`;
+    } else {
+      message = `*New Product Request*\n\nI am looking for a product that is not in the catalog:\n\n- *Requested Product:* ${productName}`;
+    }
+
+    if (details) {
+      message += `\n- *Additional Details:* ${details}`;
+    }
+
+    message += '\n\nThank you!';
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
 
   const value = {
     products,
@@ -230,6 +251,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
     addWishlistToCart,
     openWhatsApp,
     openWhatsAppForWishlist,
+    openWhatsAppForRequest,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
