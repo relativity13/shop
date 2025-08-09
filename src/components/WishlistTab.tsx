@@ -75,11 +75,11 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
               </div>
               <div className="flex flex-col gap-2 flex-shrink-0">
                  {canOrder(product) ? (
-                    <Button variant="whatsapp" onClick={() => handleOrderAction(product)}>
+                    <Button variant="whatsapp" className="w-full" onClick={() => handleOrderAction(product)}>
                         Order
                     </Button>
                  ) : (
-                    <Button onClick={() => handleOrderAction(product)}>
+                    <Button className="w-full" onClick={() => handleOrderAction(product)}>
                         Ask for Price
                     </Button>
                  )}
