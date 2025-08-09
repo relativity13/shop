@@ -145,7 +145,6 @@ export function ProductsTab() {
                          onClick={() => openDialog(product, 'quote')} 
                          className="w-full"
                        >
-                         <MessageCircle className="mr-2 h-4 w-4" />
                          Ask for Quote
                        </Button>
                        <Button
