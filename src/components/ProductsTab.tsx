@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Heart, ShoppingCart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,12 +12,8 @@ import type { Product } from '@/lib/types';
 import { formatIndianCurrency } from '@/lib/utils';
 import { companyInfo } from '@/lib/data';
 
-interface ProductsTabProps {
-  products: Product[];
-}
-
-export function ProductsTab({ products }: ProductsTabProps) {
-  const { addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
+export function ProductsTab() {
+  const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   const handleQuantityChange = (productId: string | number, quantity: string) => {
@@ -25,16 +21,19 @@ export function ProductsTab({ products }: ProductsTabProps) {
     setQuantities(prev => ({ ...prev, [productId.toString()]: isNaN(numQuantity) ? 0 : numQuantity }));
   };
   
-  const handleAddToCart = (product: Product) => {
+  const handleOrder = (product: Product) => {
     if (typeof product.price !== 'number') return;
     const quantity = quantities[product.id.toString()] || 1;
     addToCart(product, quantity);
+    
+    const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${product.name}\n- *Quantity:* ${quantity} ${product.unit}\n- *Price per unit:* ₹${formatIndianCurrency(product.price)}\n\nThank you!`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleWishlistAction = (product: Product) => {
-    // For products without a price, we can add to wishlist with quantity 1 and price 0.
     const quantity = quantities[product.id.toString()] || 1;
-
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
@@ -59,7 +58,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
     return 'Price on request';
   }
 
-  const canAddToCart = (product: Product) => {
+  const canOrder = (product: Product) => {
       return typeof product.price === 'number' && product.price > 0;
   }
 
@@ -89,7 +88,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
               </div>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
-              {canAddToCart(product) ? (
+              {canOrder(product) ? (
                 <>
                   <div className="flex items-center gap-2">
                     <Input
@@ -103,7 +102,7 @@ export function ProductsTab({ products }: ProductsTabProps) {
                       />
                       <span className="text-sm text-muted-foreground">{product.unit}</span>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full">
                       <Button
                         variant="ghost"
                         size="icon"
@@ -113,12 +112,11 @@ export function ProductsTab({ products }: ProductsTabProps) {
                         <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
                       </Button>
                       <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleAddToCart(product)}
-                        aria-label="Add to cart"
+                        onClick={() => handleOrder(product)}
+                        aria-label="Order now via WhatsApp"
+                        className="flex-grow"
                       >
-                        <ShoppingCart className="h-6 w-6 text-primary" />
+                        Order
                       </Button>
                   </div>
                 </>

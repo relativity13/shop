@@ -1,13 +1,12 @@
 
 "use client";
 
-import { Heart, ShoppingBag, Search, CreditCard, Phone, MessageCircle, Building2 } from 'lucide-react';
+import { Heart, ShoppingBag, Search, CreditCard, Phone, Building2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useApp } from '@/context/AppContext';
 import { ProductsTab } from '@/components/ProductsTab';
 import { WishlistTab } from '@/components/WishlistTab';
 import { AboutTab } from '@/components/AboutTab';
-import { CheckoutTab } from '@/components/CheckoutTab';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -15,24 +14,8 @@ import Image from 'next/image';
 import React, { useState, useMemo } from 'react';
 import { productCategories, companyInfo } from '@/lib/data';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { WhatsappIcon } from './icons/WhatsappIcon';
 
-
-function CheckoutButton() {
-  const { cart } = useApp();
-  const itemCount = cart.length;
-
-  return (
-    <TabsTrigger value="checkout" className="py-3 flex-col h-full gap-1 relative">
-      <CreditCard className="w-5 h-5" />
-      {itemCount > 0 && (
-        <span className="absolute top-1 right-1/2 translate-x-[20px] bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-          {itemCount}
-        </span>
-      )}
-      Checkout
-    </TabsTrigger>
-  );
-}
 
 export function HomePageContent() {
   const { products } = useApp();
@@ -66,7 +49,7 @@ export function HomePageContent() {
                 <div className="flex items-center gap-2">
                     <Button asChild variant="outline" className="p-2 md:px-4 md:py-2">
                     <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="flex items-center gap-2">
-                        <MessageCircle className="h-5 w-5" />
+                        <WhatsappIcon />
                         <span className="hidden md:inline">Send WhatsApp</span>
                     </a>
                     </Button>
@@ -114,19 +97,16 @@ export function HomePageContent() {
             )}
             
             <TabsContent value="products">
-                <ProductsTab products={filteredProducts} />
+                <ProductsTab />
             </TabsContent>
             <TabsContent value="wishlist">
                 <WishlistTab setActiveTab={setActiveTab} />
-            </TabsContent>
-            <TabsContent value="checkout">
-                <CheckoutTab />
             </TabsContent>
             <TabsContent value="about">
                 <AboutTab />
             </TabsContent>
             
-            <TabsList className="grid w-full grid-cols-4 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
+            <TabsList className="grid w-full grid-cols-3 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
                 <ShoppingBag className="w-5 h-5" />
                 Products
@@ -135,7 +115,6 @@ export function HomePageContent() {
                 <Heart className="w-5 h-5" />
                 Wishlist
             </TabsTrigger>
-            <CheckoutButton />
             <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
                 <Building2 className="w-5 h-5" />
                 About Us
