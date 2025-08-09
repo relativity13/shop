@@ -21,7 +21,7 @@ export function HomePageContent() {
   const { products } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState('wishlist');
+  const [activeTab, setActiveTab] = useState('products');
   
   const categories = useMemo(() => {
     return ['All', ...productCategories];
@@ -107,13 +107,13 @@ export function HomePageContent() {
             </TabsContent>
             
             <TabsList className="grid w-full grid-cols-3 h-auto md:h-16 fixed bottom-0 left-0 right-0 z-10 bg-background/95 backdrop-blur-sm border-t md:rounded-none">
-            <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
-                <Heart className="w-5 h-5" />
-                Wishlist
-            </TabsTrigger>
             <TabsTrigger value="products" className="py-3 flex-col h-full gap-1">
                 <ShoppingBag className="w-5 h-5" />
                 Products
+            </TabsTrigger>
+            <TabsTrigger value="wishlist" className="py-3 flex-col h-full gap-1">
+                <Heart className="w-5 h-5" />
+                Wishlist
             </TabsTrigger>
             <TabsTrigger value="about" className="py-3 flex-col h-full gap-1">
                 <Building2 className="w-5 h-5" />
