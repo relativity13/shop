@@ -77,12 +77,6 @@ export function ProductsTab() {
       return typeof product.price === 'number' && product.price > 0;
   }
   
-  const getMoqValue = (product: Product | null) => {
-    if (!product || !product.moq) return "1";
-    const moqValue = parseInt(product.moq.replace(/\D/g, ''), 10);
-    return isNaN(moqValue) || moqValue < 1 ? "1" : moqValue.toString();
-  };
-
   if (products.length === 0) {
     return (
       <div className="text-center py-10">
@@ -171,7 +165,6 @@ export function ProductsTab() {
                 min="1"
                 placeholder="Quantity"
                 className="w-full text-center"
-                defaultValue={getMoqValue(selectedProduct)}
                 aria-label={`Quantity for ${selectedProduct?.name} in ${selectedProduct?.unit}s`}
               />
               <span className="text-sm font-medium text-muted-foreground">{selectedProduct?.unit}</span>
