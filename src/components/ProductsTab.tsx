@@ -25,8 +25,12 @@ import { WhatsappIcon } from './icons/WhatsappIcon';
 
 type ActionType = 'order' | 'price';
 
-export function ProductsTab() {
-  const { products, addToWishlist, removeFromWishlist, isInWishlist, openWhatsApp } = useApp();
+interface ProductsTabProps {
+  products: Product[];
+}
+
+export function ProductsTab({ products }: ProductsTabProps) {
+  const { addToWishlist, removeFromWishlist, isInWishlist, openWhatsApp } = useApp();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [actionType, setActionType] = useState<ActionType | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
