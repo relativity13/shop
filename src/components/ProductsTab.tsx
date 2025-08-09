@@ -74,37 +74,68 @@ export function ProductsTab() {
 
   return (
     <div className="space-y-4">
-      {products.map((product) => (
-        <Card key={product.id} className="transition-shadow duration-300 hover:shadow-lg hover:border-accent">
-          <CardContent className="p-4 flex items-center gap-4">
-            <div className="flex-grow">
-              <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
-              <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
-                <p className="text-lg font-bold text-primary">{renderPrice(product)}</p>
-                {product.moq && (
-                  <p className="font-semibold">MOQ: {product.moq}</p>
-                )}
-                <p>Ex: {product.factoryLocation}</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
-              <div className="flex items-center gap-2">
-                <Input
-                    type="number"
-                    min="1"
-                    placeholder="Qty"
-                    className="w-20 h-8 text-center"
-                    value={quantities[product.id.toString()] || ''}
-                    onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-                    aria-label={`Quantity for ${product.name} in ${product.unit}s`}
-                  />
-                  <span className="text-sm text-muted-foreground">{product.unit}</span>
-              </div>
+      {products.map((product) => {
+        const quantity = quantities[product.id.toString()];
+        const isQuantityValid = quantity && quantity > 0;
 
-              {canOrder(product) ? (
-                  <div className="flex gap-2 w-full">
-                      <Button
+        return (
+          <Card key={product.id} className="transition-shadow duration-300 hover:shadow-lg hover:border-accent">
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="flex-grow">
+                <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
+                <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
+                  <p className="text-lg font-bold text-primary">{renderPrice(product)}</p>
+                  {product.moq && (
+                    <p className="font-semibold">MOQ: {product.moq}</p>
+                  )}
+                  <p>Ex: {product.factoryLocation}</p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
+                <div className="flex items-center gap-2">
+                  <Input
+                      type="number"
+                      min="1"
+                      placeholder="Qty"
+                      className="w-20 h-8 text-center"
+                      value={quantity || ''}
+                      onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                      aria-label={`Quantity for ${product.name} in ${product.unit}s`}
+                    />
+                    <span className="text-sm text-muted-foreground">{product.unit}</span>
+                </div>
+
+                {canOrder(product) ? (
+                    <div className="flex gap-2 w-full">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleWishlistAction(product)}
+                          aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                        >
+                          <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
+                        </Button>
+                        <Button
+                          onClick={() => handleOrder(product)}
+                          aria-label="Order now via WhatsApp"
+                          className="flex-grow"
+                          disabled={!isQuantityValid}
+                        >
+                          Order
+                        </Button>
+                    </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 w-full">
+                     <Button 
+                       onClick={() => handleAskForQuote(product)} 
+                       className="w-full"
+                       disabled={!isQuantityValid}
+                     >
+                       <MessageCircle className="mr-2 h-4 w-4" />
+                       Ask for Quote
+                     </Button>
+                     <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleWishlistAction(product)}
@@ -112,34 +143,13 @@ export function ProductsTab() {
                       >
                         <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
                       </Button>
-                      <Button
-                        onClick={() => handleOrder(product)}
-                        aria-label="Order now via WhatsApp"
-                        className="flex-grow"
-                      >
-                        Order
-                      </Button>
                   </div>
-              ) : (
-                <div className="flex flex-col items-center gap-2 w-full">
-                   <Button onClick={() => handleAskForQuote(product)} className="w-full">
-                     <MessageCircle className="mr-2 h-4 w-4" />
-                     Ask for Quote
-                   </Button>
-                   <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleWishlistAction(product)}
-                      aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                      <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
-                    </Button>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )
+      })}
     </div>
   );
 }
