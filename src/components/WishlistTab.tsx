@@ -36,7 +36,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
         <h2 className="text-2xl font-semibold mb-2 text-card-foreground">Your Wishlist is Empty</h2>
         <p className="text-muted-foreground">
           Browse our{' '}
-            <Button variant="link" className="p-0 h-auto text-primary uppercase font-bold text-lg underline hover:text-accent" onClick={() => setActiveTab('products')}>
+            <Button variant="link" className="p-0 h-auto text-primary underline hover:text-accent" onClick={() => setActiveTab('products')}>
                 products
             </Button>
           {' '} and add them here.
