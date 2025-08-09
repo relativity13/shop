@@ -84,7 +84,7 @@ export function HomePageContent() {
                             <Button
                             variant={selectedCategory === category || (category === 'All' && !selectedCategory) ? "default" : "outline"}
                             onClick={() => setSelectedCategory(category === 'All' ? null : category)}
-                            className="rounded-full"
+                            className="rounded-full border-foreground"
                             >
                             {category}
                             </Button>
@@ -96,11 +96,11 @@ export function HomePageContent() {
                 </>
             )}
             
-            <TabsContent value="wishlist">
-                <WishlistTab setActiveTab={setActiveTab} />
-            </TabsContent>
             <TabsContent value="products">
                 <ProductsTab />
+            </TabsContent>
+            <TabsContent value="wishlist">
+                <WishlistTab setActiveTab={setActiveTab} />
             </TabsContent>
             <TabsContent value="about">
                 <AboutTab />
