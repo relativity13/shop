@@ -39,7 +39,7 @@ export function HomePageContent() {
     <main className="container mx-auto px-4 py-8 pb-24">
         <header className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 mb-8">
             <div className="w-full md:flex-1 flex justify-center items-center gap-4">
-                <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-10 h-10 md:w-12 md:h-12" />
+                <Image src="https://placehold.co/48x48.png" alt="Logo" width={40} height={40} className="w-10 h-10 md:w-12 md:h-12" />
                 <h1 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-accent whitespace-nowrap">
                     {companyInfo.name}
                 </h1>
@@ -70,7 +70,7 @@ export function HomePageContent() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input 
                     placeholder="Search for products..." 
-                    className="pl-10 w-full border-border"
+                    className="pl-10 w-full"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -97,7 +97,7 @@ export function HomePageContent() {
             )}
             
             <TabsContent value="products">
-                <ProductsTab />
+                <ProductsTab products={filteredProducts} />
             </TabsContent>
             <TabsContent value="wishlist">
                 <WishlistTab setActiveTab={setActiveTab} />
