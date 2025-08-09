@@ -11,6 +11,7 @@ import { useState, useRef } from 'react';
 import type { Product } from '@/lib/types';
 import { formatIndianCurrency } from '@/lib/utils';
 import { companyInfo } from '@/lib/data';
+import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -122,10 +123,12 @@ export function ProductsTab() {
                   {canOrder(product) ? (
                       <div className="flex flex-col items-center gap-2 w-full">
                            <Button
+                            variant="whatsapp"
                             onClick={() => openDialog(product, 'order')}
                             aria-label="Order now via WhatsApp"
                             className="w-full"
                           >
+                            <WhatsappIcon />
                             Order
                           </Button>
                           <Button
