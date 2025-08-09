@@ -7,47 +7,76 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { Product } from '@/lib/types';
 import { formatIndianCurrency } from '@/lib/utils';
 import { companyInfo } from '@/lib/data';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+type ActionType = 'order' | 'quote' | 'wishlist';
 
 export function ProductsTab() {
   const { products, addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useApp();
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [actionType, setActionType] = useState<ActionType | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const quantityRef = useRef<HTMLInputElement>(null);
 
-  const handleQuantityChange = (productId: string | number, quantity: string) => {
-    const numQuantity = parseInt(quantity, 10);
-    setQuantities(prev => ({ ...prev, [productId.toString()]: isNaN(numQuantity) ? 0 : numQuantity }));
-  };
-  
-  const handleOrder = (product: Product) => {
-    if (typeof product.price !== 'number') return;
-    const quantity = quantities[product.id.toString()] || 1;
-    addToCart(product, quantity);
-    
-    const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${product.name}\n- *Quantity:* ${quantity} ${product.unit}\n- *Price per unit:* ₹${formatIndianCurrency(product.price)}\n\nThank you!`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+  const openDialog = (product: Product, type: ActionType) => {
+    setSelectedProduct(product);
+    setActionType(type);
+    setIsDialogOpen(true);
   };
 
   const handleWishlistAction = (product: Product) => {
-    const quantity = quantities[product.id.toString()] || 1;
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
-      addToWishlist(product, quantity);
+      // For wishlist, we can ask for quantity or just add with a default of 1
+      openDialog(product, 'wishlist');
     }
   };
+  
+  const handleConfirmAction = () => {
+    const quantity = parseInt(quantityRef.current?.value || '0', 10);
+    if (!selectedProduct || quantity <= 0) {
+      // Optionally show an error message
+      return;
+    }
+    
+    if (actionType === 'order') {
+        if (typeof selectedProduct.price !== 'number') return;
+        addToCart(selectedProduct, quantity);
+        const message = `*New Order Request*\n\nI would like to order the following item:\n\n- *Product:* ${selectedProduct.name}\n- *Quantity:* ${quantity} ${selectedProduct.unit}\n- *Price per unit:* ₹${formatIndianCurrency(selectedProduct.price)}\n\nThank you!`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    } else if (actionType === 'quote') {
+        const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${selectedProduct.name}\n- *Description:* ${selectedProduct.description}\n- *Quantity:* ${quantity} ${selectedProduct.unit}\n\nPlease provide a quote. Thank you!`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    } else if (actionType === 'wishlist') {
+        addToWishlist(selectedProduct, quantity);
+    }
 
-  const handleAskForQuote = (product: Product) => {
-    const quantity = quantities[product.id.toString()] || 1;
-    const message = `*Quote Needed*\n\nI'm interested in the following product:\n\n- *Product:* ${product.name}\n- *Description:* ${product.description}\n- *Quantity:* ${quantity} ${product.unit}\n\nPlease provide a quote. Thank you!`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${companyInfo.whatsappNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    closeDialog();
   };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+    setSelectedProduct(null);
+    setActionType(null);
+  }
 
   const renderPrice = (product: Product) => {
     if (typeof product.price === 'number' && product.price > 0) {
@@ -73,12 +102,9 @@ export function ProductsTab() {
   }
 
   return (
-    <div className="space-y-4">
-      {products.map((product) => {
-        const quantity = quantities[product.id.toString()];
-        const isQuantityValid = quantity && quantity > 0;
-
-        return (
+    <>
+      <div className="space-y-4">
+        {products.map((product) => (
           <Card key={product.id} className="transition-shadow duration-300 hover:shadow-lg hover:border-accent">
             <CardContent className="p-4 flex items-center gap-4">
               <div className="flex-grow">
@@ -93,22 +119,34 @@ export function ProductsTab() {
                 </div>
               </div>
               <div className="flex flex-col gap-2 flex-shrink-0 items-center w-32">
-                <div className="flex items-center gap-2">
-                  <Input
-                      type="number"
-                      min="1"
-                      placeholder="Qty"
-                      className="w-20 h-8 text-center"
-                      value={quantity || ''}
-                      onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-                      aria-label={`Quantity for ${product.name} in ${product.unit}s`}
-                    />
-                    <span className="text-sm text-muted-foreground">{product.unit}</span>
-                </div>
-
-                {canOrder(product) ? (
-                    <div className="flex gap-2 w-full">
-                        <Button
+                  {canOrder(product) ? (
+                      <div className="flex flex-col items-center gap-2 w-full">
+                           <Button
+                            onClick={() => openDialog(product, 'order')}
+                            aria-label="Order now via WhatsApp"
+                            className="w-full"
+                          >
+                            Order
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleWishlistAction(product)}
+                            aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                          >
+                            <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
+                          </Button>
+                      </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 w-full">
+                       <Button 
+                         onClick={() => openDialog(product, 'quote')} 
+                         className="w-full"
+                       >
+                         <MessageCircle className="mr-2 h-4 w-4" />
+                         Ask for Quote
+                       </Button>
+                       <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => handleWishlistAction(product)}
@@ -116,40 +154,40 @@ export function ProductsTab() {
                         >
                           <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
                         </Button>
-                        <Button
-                          onClick={() => handleOrder(product)}
-                          aria-label="Order now via WhatsApp"
-                          className="flex-grow"
-                          disabled={!isQuantityValid}
-                        >
-                          Order
-                        </Button>
                     </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2 w-full">
-                     <Button 
-                       onClick={() => handleAskForQuote(product)} 
-                       className="w-full"
-                       disabled={!isQuantityValid}
-                     >
-                       <MessageCircle className="mr-2 h-4 w-4" />
-                       Ask for Quote
-                     </Button>
-                     <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleWishlistAction(product)}
-                        aria-label={isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                      >
-                        <Heart className={cn("h-6 w-6", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground')} />
-                      </Button>
-                  </div>
-                )}
+                  )}
               </div>
             </CardContent>
           </Card>
-        )
-      })}
-    </div>
+        ))}
+      </div>
+
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Enter Quantity for {selectedProduct?.name}</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please specify the quantity you would like to {actionType}.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex items-center gap-2 py-4">
+              <Input
+                ref={quantityRef}
+                type="number"
+                min="1"
+                placeholder="Quantity"
+                className="w-full text-center"
+                defaultValue="1"
+                aria-label={`Quantity for ${selectedProduct?.name} in ${selectedProduct?.unit}s`}
+              />
+              <span className="text-sm font-medium text-muted-foreground">{selectedProduct?.unit}</span>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={closeDialog}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmAction}>Confirm</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
