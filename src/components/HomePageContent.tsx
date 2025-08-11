@@ -66,7 +66,7 @@ export function HomePageContent() {
                         <span className="hidden md:inline">Send WhatsApp</span>
                     </a>
                     </Button>
-                    <Button asChild variant="outline" className="p-2 md:px-4 md:py-2">
+                    <Button asChild variant="whatsapp" className="p-2 md:px-4 md:py-2">
                     <a href={`tel:${companyInfo.phoneNumber}`} aria-label="Call the store" className="flex items-center gap-2">
                         <Phone className="h-5 w-5" />
                         <span className="hidden md:inline">Call us</span>
