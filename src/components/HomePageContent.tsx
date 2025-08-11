@@ -60,13 +60,13 @@ export function HomePageContent() {
         
             <div className="flex-1 flex justify-center md:justify-end">
                 <div className="flex items-center gap-2">
-                    <Button asChild variant="whatsapp" className="p-2 md:px-4 md:py-2">
+                    <Button asChild variant="default" className="p-2 md:px-4 md:py-2">
                     <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="flex items-center gap-2">
                         <WhatsappIcon />
                         <span className="hidden md:inline">Send WhatsApp</span>
                     </a>
                     </Button>
-                    <Button asChild variant="whatsapp" className="p-2 md:px-4 md:py-2">
+                    <Button asChild variant="default" className="p-2 md:px-4 md:py-2">
                     <a href={`tel:${companyInfo.phoneNumber}`} aria-label="Call the store" className="flex items-center gap-2">
                         <Phone className="h-5 w-5" />
                         <span className="hidden md:inline">Call us</span>
