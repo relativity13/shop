@@ -52,7 +52,7 @@ export function HomePageContent() {
   return (
     <main className="container mx-auto px-4 py-8 pb-24">
         <header className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 mb-8">
-            <div className="w-full md:flex-1 flex justify-center items-center">
+            <div className="w-full md:flex-1 flex justify-start items-center">
                 <h1 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-accent whitespace-nowrap">
                     {companyInfo.name}
                 </h1>
