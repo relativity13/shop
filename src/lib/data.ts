@@ -27,7 +27,7 @@ export const products: Product[] = [
   {
     id: 1,
     name: 'Stearic Acid',
-    description: 'Godrej Distric Grade, Packaging-25Kg Bags',
+    description: '',
     price: 109,
     unit: 'KG',
     moq: '500 KG',
@@ -40,7 +40,7 @@ export const products: Product[] = [
   {
     id: 2,
     name: 'PVC Resin',
-    description: 'CGPC H66 Packaging- 25Kg Paper Bag',
+    description: '',
     price: { min: 69, max: 75 },
     unit: 'MT',
     moq: '1 MT',
@@ -53,7 +53,7 @@ export const products: Product[] = [
   {
     id: 3,
     name: 'DMP',
-    description: 'KLG Group- Dimethyl Phthalate, 250 KG Sealed Drum',
+    description: 'Dimethyl Phthalate',
     //price : 120,
     unit: 'KG',
     moq: '250 KG',
@@ -66,7 +66,7 @@ export const products: Product[] = [
   {
     id: 4,
     name: 'Talcum Powder',
-    description: 'Golcha- Rajat Grade. Pakaging-50Kg Bags, Tags: soapstone.',
+    description: 'Tags: soapstone.',
     price: 10,
     unit: 'KG',
     moq: '100 KG',
