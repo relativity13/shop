@@ -35,6 +35,7 @@ export const products: Product[] = [
     category: 'Acids',
     brand: 'Godrej',
     grade: 'Distric',
+    packaging: '25Kg Bags',
   },
   {
     id: 2,
@@ -47,6 +48,7 @@ export const products: Product[] = [
     category: 'PVC Resin',
     brand: 'CGPC',
     grade: 'H66',
+    packaging: '25Kg Paper Bag',
   },
   {
     id: 3,
@@ -59,6 +61,7 @@ export const products: Product[] = [
     category: 'Phthalate',
     brand: 'KLG Group',
     grade: 'Dimethyl Phthalate',
+    packaging: '250 KG Sealed Drum',
   },
   {
     id: 4,
@@ -72,6 +75,7 @@ export const products: Product[] = [
     category: 'Minerals',
     brand: 'Golcha',
     grade: 'Rajat',
+    packaging: '50Kg Bags',
   },
   
  /* {

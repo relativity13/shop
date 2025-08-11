@@ -95,6 +95,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
                 <div className="text-sm text-muted-foreground flex gap-4 items-center flex-wrap">
                   {product.brand && <p><span className="font-semibold">Brand:</span> {product.brand}</p>}
                   {product.grade && <p><span className="font-semibold">Grade:</span> {product.grade}</p>}
+                  {product.packaging && <p><span className="font-semibold">Packaging:</span> {product.packaging}</p>}
                 </div>
                 <p className="text-base font-medium text-muted-foreground">
                   {typeof product.price === 'number' ? `₹${formatIndianCurrency(product.price)}` : 'Price on request'} / {product.unit}

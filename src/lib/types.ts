@@ -10,6 +10,7 @@ export interface Product {
   moq?: string;
   brand?: string;
   grade?: string;
+  packaging?: string;
 }
 
 export interface WishlistItem extends Omit<Product, 'price'> {
