@@ -111,12 +111,12 @@ export function ProductsTab({ products }: ProductsTabProps) {
                   {canOrder(product) ? (
                       <div className="flex flex-col items-center gap-2 w-full">
                            <Button
-                            variant="default"
+                            variant="whatsapp"
                             onClick={() => openDialog(product, 'order')}
-                            aria-label="Order now via WhatsApp"
+                            aria-label="Buy now via WhatsApp"
                             className="w-full"
                           >
-                            Order
+                            Buy
                           </Button>
                           <Button
                             variant="ghost"
