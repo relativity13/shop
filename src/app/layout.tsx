@@ -20,12 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={cn("font-sans antialiased bg-background", inter.variable)}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
+          defaultTheme="light"
         >
           {children}
         </ThemeProvider>
