@@ -52,13 +52,13 @@ export function HomePageContent() {
   return (
     <main className="container mx-auto px-4 py-8 pb-24">
         <header className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 mb-8">
-            <div className="w-full md:flex-1 flex justify-start items-center gap-4">
-                <h1 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-accent whitespace-nowrap mx-auto">
+            <div className="w-full md:flex-1 flex justify-center items-center">
+                <h1 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-accent whitespace-nowrap">
                     {companyInfo.name}
                 </h1>
             </div>
         
-            <div className="flex-1 flex justify-center md:justify-end">
+            <div className="flex md:flex-1 justify-center md:justify-end">
                 <div className="flex items-center gap-2">
                     <Button asChild variant="default" className="p-2 md:px-4 md:py-2">
                     <a href={`https://wa.me/${companyInfo.whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="flex items-center gap-2">
