@@ -92,6 +92,10 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
             <CardContent className="p-4 flex items-center gap-4">
               <div className="flex-grow">
                 <p className="font-semibold">{product.name}</p>
+                <div className="text-sm text-muted-foreground flex gap-4 items-center flex-wrap">
+                  {product.brand && <p><span className="font-semibold">Brand:</span> {product.brand}</p>}
+                  {product.grade && <p><span className="font-semibold">Grade:</span> {product.grade}</p>}
+                </div>
                 <p className="text-base font-medium text-muted-foreground">
                   {typeof product.price === 'number' ? `₹${formatIndianCurrency(product.price)}` : 'Price on request'} / {product.unit}
                 </p>

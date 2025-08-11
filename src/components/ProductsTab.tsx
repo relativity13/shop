@@ -99,6 +99,10 @@ export function ProductsTab({ products }: ProductsTabProps) {
               <div className="flex-grow">
                 <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
+                 <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
+                  {product.brand && <p><span className="font-semibold">Brand:</span> {product.brand}</p>}
+                  {product.grade && <p><span className="font-semibold">Grade:</span> {product.grade}</p>}
+                </div>
                 <div className="text-sm text-muted-foreground mt-2 flex gap-4 items-center flex-wrap">
                   <p className="text-lg font-bold text-primary">{renderPrice(product)}</p>
                   {product.moq && (

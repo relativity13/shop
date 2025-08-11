@@ -8,6 +8,8 @@ export interface Product {
   factoryLocation: string;
   category: string;
   moq?: string;
+  brand?: string;
+  grade?: string;
 }
 
 export interface WishlistItem extends Omit<Product, 'price'> {

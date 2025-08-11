@@ -33,6 +33,8 @@ export const products: Product[] = [
     moq: '500 KG',
     factoryLocation: 'Bawana, Delhi',
     category: 'Acids',
+    brand: 'Godrej',
+    grade: 'Distric',
   },
   {
     id: 2,
@@ -43,6 +45,8 @@ export const products: Product[] = [
     moq: '1 MT',
     factoryLocation: 'Bawana, Delhi',
     category: 'PVC Resin',
+    brand: 'CGPC',
+    grade: 'H66',
   },
   {
     id: 3,
@@ -53,6 +57,8 @@ export const products: Product[] = [
     moq: '250 KG',
     factoryLocation: 'Bawana, Delhi',
     category: 'Phthalate',
+    brand: 'KLG Group',
+    grade: 'Dimethyl Phthalate',
   },
   {
     id: 4,
@@ -64,7 +70,8 @@ export const products: Product[] = [
     factoryLocation: 'Bawana, Delhi',
    
     category: 'Minerals',
-
+    brand: 'Golcha',
+    grade: 'Rajat',
   },
   
  /* {
