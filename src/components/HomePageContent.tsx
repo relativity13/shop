@@ -16,6 +16,7 @@ import React, { useState, useMemo } from 'react';
 import { productCategories, companyInfo } from '@/lib/data';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
+import type { Product } from '@/lib/types';
 
 
 export function HomePageContent() {
@@ -28,12 +29,24 @@ export function HomePageContent() {
     return ['All', ...productCategories];
   }, []);
 
+  const getPriceSortOrder = (product: Product) => {
+    if (typeof product.price === 'number') {
+      return 1; // Highest priority for fixed price
+    }
+    if (typeof product.price === 'object' && product.price !== null) {
+      return 2; // Second priority for price range
+    }
+    return 3; // Lowest priority for "Price on request"
+  };
+
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+    const filtered = products.filter(product => {
       const matchesCategory = selectedCategory === 'All' || !selectedCategory || product.category === selectedCategory;
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
+
+    return filtered.sort((a, b) => getPriceSortOrder(a) - getPriceSortOrder(b));
   }, [products, searchQuery, selectedCategory]);
 
   return (
