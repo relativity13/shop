@@ -38,7 +38,7 @@ export const products: Product[] = [
     id: 2,
     name: 'PVC Resin',
     description: 'CGPC H66 Packaging- 25Kg Paper Bag',
-    //price: 72,
+    price: { min: 69, max: 75 },
     unit: 'MT',
     moq: '1 MT',
     factoryLocation: 'Bawana, Delhi',
