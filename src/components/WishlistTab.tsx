@@ -109,7 +109,7 @@ export function WishlistTab({ setActiveTab }: WishlistTabProps) {
               </div>
               <div className="flex flex-col gap-2 flex-shrink-0 w-32">
                  {canOrder(product) ? (
-                    <Button variant="whatsapp" className="w-full" onClick={() => openDialog(product, 'order')}>
+                    <Button variant="default" className="w-full" onClick={() => openDialog(product, 'order')}>
                         Order
                     </Button>
                  ) : (
