@@ -190,7 +190,7 @@ export const AppProvider = ({ children, initialProducts = [] }: { children: Reac
   const openWhatsAppForWishlist = () => {
     if (wishlist.length === 0) return;
 
-    let message = '*Wishlist Request*\n\nI would like to inquire about the following items:\n';
+    let message = '*Request*\n\nI would like to inquire about the following items:\n';
 
     const orderItems = wishlist.filter(item => typeof item.price === 'number');
     const priceRequestItems = wishlist.filter(item => typeof item.price !== 'number');
